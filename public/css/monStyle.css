@@ -4,3 +4,12 @@
 #monLogo{
     max-width: 3%;
 }
+.myInput{
+    margin:10px 15px 5px 15px ;
+}
+
+.ligne{
+    width:100%;
+    text-align:left;
+    margin-left:0;
+}
