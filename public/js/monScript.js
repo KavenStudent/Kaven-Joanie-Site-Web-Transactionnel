@@ -22,11 +22,5 @@ let cacher = (idElem) => {
     document.getElementById(idElem).style.display = 'none';
 }
 
-// var myModal = document.getElementById('modalMembre')
-// var myInput = document.getElementById('formMembre')
-
-// myModal.addEventListener('shown.bs.modal', function () {
-//   myInput.focus()
-// })
 
 
