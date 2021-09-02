@@ -122,7 +122,7 @@
 								<div class="modal-body">
 								  <!-- Form -->
 
-								  <form class= "formMembre" id="formMembre" action="serveur/pages/enregistrer.php" method="POST" onsubmit="return valider();" >
+								  <form class= "formMembre" id="formMembre" action="serveur/enregistrerMembre.php" method="POST" onsubmit="return valider()" >
 									<div class="myInput">
 									  <label for="prenom" class="form-label">Prénom</label>
 									  <input type="text" class="form-control" id="prenom" name="prenom" required>
@@ -184,13 +184,15 @@
 											<label for="dateNaissance" class="form-label">Date de naissance</label>
 											<input type="date" class="form-control" id="dateNaissance" name="dateNaissance" required>
 										</div>
+
+										<div class="modal-footer">
+											<button type="submit" class="btn btn-primary">Enregistrer</button>
+										  </div>
 								  </form>
 
 								  <!-- Fin form -->
 								</div>
-								<div class="modal-footer">
-								  <button type="submit" class="btn btn-primary">Enregistrer</button>
-								</div>
+								
 							  </div>
 							</div>
 						  </div>

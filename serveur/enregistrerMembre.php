@@ -3,11 +3,10 @@
   define("FMEMBRE", "./donnees/membre.txt");
   define("FCONNEXION", "./donnees/connexion.txt");
   
-    if((!$f_membre = fopen(FMEMBRE,"a+")) && (!$f_connexion = fopen(FCONNEXION,"a+"))) {
+    if(!$f_membre = fopen(FMEMBRE,"a+")) {
         echo "Probleme pour ouvrir le fichier";
         exit;
     }
-
 
     $prenom = $_POST['prenom'];
     $nom = $_POST['nom'];
@@ -25,7 +24,11 @@
     fputs($f_membre,$ligne); 
 
     fclose($f_membre);
-
+ 
+    if(!$f_connexion = fopen(FCONNEXION,"a+")) {
+      echo "Probleme pour ouvrir le fichier";
+      exit;
+  }
     // ligne pour fichier connexion
     $ligne = $email.";".$password.";".$actif.";".$role."\n";
 
@@ -34,7 +37,7 @@
     fclose($f_connexion);
 
 
-    echo "Vous êtes enregistré ".$numf." bien enregiste";
+   // echo "Vous êtes enregistré ".$numf." bien enregiste";
 ?>
 
 </br>

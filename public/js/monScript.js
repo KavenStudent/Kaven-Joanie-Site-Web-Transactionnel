@@ -1,14 +1,16 @@
 let valider = () => {
-    let formEnreg = document.getElementById('form-Enreg');
-    let num = formEnreg.num.value;
-    let titre = formEnreg.titre.value;
-    let pages = formEnreg.pages.value;
-    let etat = true;
+    let myForm = document.getElementById('formMembre');
+    let password = myForm.password.value;
+    let confirmPassword = myForm.confirmPassword.value;
+    let etat = false;
 
-    if(num.length == 0 || titre.length == 0 || pages.length == 0){
+    alert(`${password} ${confirmPasswordpassword}`);
+
+    if(password == confirmPassword){
         etat = false;
+        
+        alert("allo");
     }
-
     return etat;
 }
 
@@ -20,11 +22,11 @@ let cacher = (idElem) => {
     document.getElementById(idElem).style.display = 'none';
 }
 
-var myModal = document.getElementById('modalMembre')
-var myInput = document.getElementById('formMembre')
+// var myModal = document.getElementById('modalMembre')
+// var myInput = document.getElementById('formMembre')
 
-myModal.addEventListener('shown.bs.modal', function () {
-  myInput.focus()
-})
+// myModal.addEventListener('shown.bs.modal', function () {
+//   myInput.focus()
+// })
 
 
