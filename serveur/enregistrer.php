@@ -8,7 +8,7 @@
 
 
     try{
-        $fic = fopen(FICHIER,"a+")
+        $fic = fopen(FICHIER,"a+");
         $ligne= $num.";".$titre.";".$pages."\n";
         fputs($fic,$ligne);
         fclose($fic);
