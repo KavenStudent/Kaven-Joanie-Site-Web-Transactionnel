@@ -1,347 +1,284 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
-		
-		<title>Movie Review</title>
 
-		<!-- Jquery -->
-		<!-- <script src="public/util/js/jquery-3.6.0.min.js"></script> -->
-		<!-- bootstrap -->
-		<script src="public/util/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="public/util/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
-		
-		<!-- Loading third party fonts -->
-		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
-		<link href="public/util/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
 
-		<!-- Loading main css file -->
-		<link rel="stylesheet" href="public/util/css/style.css">
+	<title>Movie Review</title>
 
-		<link rel="stylesheet" href="public/css/monStyle.css">
-		<script src="public/js/monScript.js"></script>
-		<!--[if lt IE 9]>
+	<!-- Jquery -->
+	<!-- <script src="public/util/js/jquery-3.6.0.min.js"></script> -->
+	<!-- bootstrap -->
+	<script src="public/util/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="public/util/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
+
+	<!-- Loading third party fonts -->
+	<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+	<link href="public/util/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	<!-- Loading main css file -->
+	<link rel="stylesheet" href="public/util/css/style.css">
+
+	<link rel="stylesheet" href="public/css/monStyle.css">
+	<script src="public/js/monScript.js"></script>
+	<!--[if lt IE 9]>
 		<script src="js/ie-support/html5.js"></script>
 		<script src="js/ie-support/respond.js"></script>
 		<![endif]-->
 
-		<title>TP Joanie-Kaven</title>
-	</head>
+	<title>TP Joanie-Kaven</title>
+</head>
 
 
-	<body>
-		
-		<div id="site-content">
-			<!-- nav bar -->
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body>
 
-				<div class="container-fluid">
+	<div id="site-content">
+		<!-- nav bar -->
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-					<!-- <a href="index.html" id="branding">
+			<div class="container-fluid">
+
+				<!-- <a href="index.html" id="branding">
 						<img src="images/logo.png" alt="" class="logo">
 						<div class="logo-copy">
 							<h1 class="site-title">Company Name</h1>
 							<small class="site-description">Tagline goes here</small>
 						</div>
 					</a> -->
-					<!-- logo a mettre -->
-					<img id="monLogo" class="navbar-brand"  src="public/images/icon-logo-film.png" alt="" class="logo">
-					<p> Fait par Joanie Birtz </br>et Kaven Ung</p>
-				  <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-				  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<!-- logo a mettre -->
+				<img id="monLogo" class="navbar-brand" src="public/images/icon-logo-film.png" alt="" class="logo">
+				<p> Fait par Joanie Birtz </br>et Kaven Ung</p>
+				<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
-				  </button>
-				  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					  <li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">Accueil</a>
-					  </li>
-					  <li class="nav-item">
-						<a class="nav-link" href="Javascript: montrer()" data-bs-toggle="modal" data-bs-target="#modalMembre">Devenir membre</a>
-					  </li>
-					  <li class="nav-item">
-						<a class="nav-link" href="#">Lister membre</a>
-					  </li>
-					  <li class="nav-item">
-						<a class="nav-link" href="#">Information</a>
-					  </li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#">Accueil</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Devenir
+								membre</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="" data-bs-toggle="modal"
+								data-bs-target="#modal-Connexion">Connexion</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Lister membre</a>
+						</li>
+
 					</ul>
 					<form class="d-flex">
-					  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-					  <button class="btn btn-outline-success" type="submit">Search</button>
+						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
 					</form>
-				  </div>
 				</div>
-			</nav> 
-			<!-- fin nav bar -->
+			</div>
+		</nav>
+		<!-- fin nav bar -->
 
-			  <!--<header class="site-header">
-				<div class="container">
-					<a href="index.html" id="branding">
-						<img src="images/logo.png" alt="" class="logo">
-						<div class="logo-copy">
-							<h1 class="site-title">Company Name</h1>
-							<small class="site-description">Tagline goes here</small>
-						</div>
-					</a>  #branding
+		<main class="main-content">
 
-					
-					<div class="main-navigation">
-						<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
-						<ul class="menu">
-							<li class="menu-item current-menu-item"><a href="index.html">Home</a></li>
-							<li class="menu-item"><a href="about.html">About</a></li>
-							<li class="menu-item"><a href="review.html">Movie reviews</a></li>
-							<li class="menu-item"><a href="joinus.html">Join us</a></li>
-							<li class="menu-item"><a href="contact.html">Contact</a></li>
-						</ul> .menu
+			<div class="container">
 
-						<form action="#" class="search-form">
-							<input type="text" placeholder="Search...">
-							<button><i class="fa fa-search"></i></button>
-						</form>
-					</div> .main-navigation
+				<!-- modal devenir membre-->
+				<div class="modal fade" id="modal-Membre" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Enregistrer</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<!-- Form devenir membre-->
 
-					<div class="mobile-navigation"></div>
-				</div>
-			</header> -->
-
-			<main class="main-content">
-				<div class="container">
-						
-						<!-- modal -->
-						<div class="modal fade" id="modalMembre" tabindex="-1">
-							<div class="modal-dialog">
-							  <div class="modal-content">
-								<div class="modal-header">
-								  <h5 class="modal-title">Enregistrer</h5>
-								  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-								  <!-- Form -->
-
-								  <form class= "formMembre" id="formMembre" action="serveur/enregistrerMembre.php" method="POST" onsubmit="return valider()" >
+								<form class="formMembre" id="formMembre" action="serveur/php/enregistrerMembre.php"
+									method="POST" onSubmit="return valider()">
 									<div class="myInput">
-									  <label for="prenom" class="form-label">Prénom</label>
-									  <input type="text" class="form-control" id="prenom" name="prenom" required>
-									  <div class="valid-feedback">
-										
-									  </div>
-									</div>
-									<div class="myInput">
-									  <label for="nom" class="form-label">Nom</label>
-									  <input type="text" class="form-control" id="nom" name="nom" required>
-									  <div class="valid-feedback">
-									  
-									  </div>
-									</div>
-							  
-									<div class="myInput">
-									  <label for="pages" class="form-label">Courriel</label>
-									  <input type="email" class="form-control" id="email" name="email" required>
-									  <div class="valid-feedback">
-									  
-									  </div>
-									</div>
-
-									<div class="myInput">
-										<label for="password" class="form-label">Mot passe</label>
-										<input type="password" class="form-control" id="password" name="password" required>
+										<label for="prenom" class="form-label">Prénom</label>
+										<input type="text" class="form-control" id="prenom" name="prenom" required>
 										<div class="valid-feedback">
-										
-										</div>
-									  </div>
 
-									  <div class="myInput">
-										<label for="confirmPassword" class="form-label">Confirmer passe</label>
-										<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-										<div class="valid-feedback">
-				
 										</div>
-									  </div>
+									</div>
+									<div class="myInput">
+										<label for="nom" class="form-label">Nom</label>
+										<input type="text" class="form-control" id="nom" name="nom" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="pages" class="form-label">Courriel</label>
+										<input type="email" class="form-control" id="email" name="email" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="password" class="form-label">Mot de passe</label>
+										<input type="password" class="form-control" id="password" name="password"
+											required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="confirmPassword" class="form-label">Confirmer mot de passe</label>
+										<input type="password" class="form-control" id="confirmPassword"
+											name="confirmPassword" required>
+										<span id="msg-password-erreur">Confirmation invalide</span>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
 
 									<hr class="line">
 
 									<div class="myInput">
 
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="sexe" id="M" checked>
-										<label class="form-check-label" for="M">
-										  Homme
-										</label>
-									  </div>
-									  <div class="form-check">
-										<input class="form-check-input" type="radio" name="sexe" id="F">
-										<label class="form-check-label" for="F">
-										  Femme
-										</label>
-									  </div>
-
-									  </div>
-										<div class="myInput">
-											<label for="dateNaissance" class="form-label">Date de naissance</label>
-											<input type="date" class="form-control" id="dateNaissance" name="dateNaissance" required>
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="sexe" id="M" checked>
+											<label class="form-check-label" for="M">
+												Homme
+											</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="sexe" id="F">
+											<label class="form-check-label" for="F">
+												Femme
+											</label>
 										</div>
 
-										<div class="modal-footer">
-											<button type="submit" class="btn btn-primary">Enregistrer</button>
-										  </div>
-								  </form>
-
-								  <!-- Fin form -->
-								</div>
-								
-							  </div>
-							</div>
-						  </div>
-						  <!-- fin modal -->
-					
-					<div class="page">
-						<div class="row">
-							
-							<!-- <div class="col-md-9">
-								<div class="slider">
-									<ul class="slides">
-										<li><a href="#"><img src="dummy/slide-1.jpg" alt="Slide 1"></a></li>
-										<li><a href="#"><img src="dummy/slide-2.jpg" alt="Slide 2"></a></li>
-										<li><a href="#"><img src="dummy/slide-3.jpg" alt="Slide 3"></a></li>
-									</ul>
-								</div>
-							</div> -->
-							<!-- <div class="col-md-3">
-								<div class="row">
-									<div class="col-sm-6 col-md-12">
-										<div class="latest-movie">
-											<a href="#"><img src="dummy/thumb-1.jpg" alt="Movie 1"></a>
-										</div>
 									</div>
-									<div class="col-sm-6 col-md-12">
-										<div class="latest-movie">
-											<a href="#"><img src="dummy/thumb-2.jpg" alt="Movie 2"></a>
-										</div>
+									<div class="myInput">
+										<label for="dateNaissance" class="form-label">Date de naissance</label>
+										<input type="date" class="form-control" id="dateNaissance" name="dateNaissance"
+											required>
 									</div>
-								</div>
-							</div> -->
-							<div class="col-sm-6 col-md-3">
-								<div class="latest-movie">
-									<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
-								</div>
+
+									<div class="modal-footer">
+										<button type="submit" id="submit" class="btn btn-primary">Enregistrer</button>
+									</div>
+								</form>
+
+								<!-- Fin form devenir membre-->
 							</div>
-							<div class="col-sm-6 col-md-3">
-								<div class="latest-movie">
-									<a href="#"><img src="dummy/thumb-4.jpg" alt="Movie 4"></a>
-								</div>
-							</div>
-							<div class="col-sm-6 col-md-3">
-								<div class="latest-movie">
-									<a href="#"><img src="dummy/thumb-5.jpg" alt="Movie 5"></a>
-								</div>
-							</div>
-							<div class="col-sm-6 col-md-3">
-								<div class="latest-movie">
-									<a href="#"><img src="dummy/thumb-6.jpg" alt="Movie 6"></a>
-								</div>
-							</div>
-						</div> <!-- .row -->
-						<div class="row">
-							<div class="col-sm-6 col-md-3">
-								<div class="latest-movie">
-									<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
-								</div>
-							</div>
-							<div class="col-sm-6 col-md-3">
-								<div class="latest-movie">
-									<a href="#"><img src="dummy/thumb-4.jpg" alt="Movie 4"></a>
-								</div>
-							</div>
-							<div class="col-sm-6 col-md-3">
-								<div class="latest-movie">
-									<a href="#"><img src="dummy/thumb-5.jpg" alt="Movie 5"></a>
-								</div>
-							</div>
-							<div class="col-sm-6 col-md-3">
-								<div class="latest-movie">
-									<a href="#"><img src="dummy/thumb-6.jpg" alt="Movie 6"></a>
-								</div>
-							</div>
-						</div> <!-- .row -->
-						
-						<!-- <div class="row">
-							<div class="col-md-4">
-								<h2 class="section-title">December premiere</h2>
-								<p>Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
-								<ul class="movie-schedule">
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-								</ul> <!-- .movie-schedule -->
-							<!-- </div> -->
-							<!-- <div class="col-md-4">
-								<h2 class="section-title">November premiere</h2>
-								<p>Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
-								<ul class="movie-schedule">
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-								</ul> <!-- .movie-schedule -->
-							<!-- </div>
-							<div class="col-md-4">
-								<h2 class="section-title">October premiere</h2>
-								<p>Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
-								<ul class="movie-schedule">
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-									<li>
-										<div class="date">16/12</div>
-										<h2 class="entry-title"><a href="#">Perspiciatis unde omnis</a></h2>
-									</li>
-								</ul>  .movie-schedule -->
-							<!-- </div>  -->
-						<!-- </div>  -->
+
+						</div>
 					</div>
-				</div> <!-- .container -->
-			</main>
-			<footer class="site-footer">
-				<div class="container">
-					<!-- <div class="row">
+				</div>
+				<!-- Fin modal devenir membre-->
+
+				<!-- modal connexion -->
+				<div class="modal fade" id="modal-Connexion" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Connexion</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<!-- Form connexion -->
+
+								<form class="form-connexion" id="form-connexion" action="serveur/php/connexion.php"
+									method="POST">
+									<div class="myInput">
+										<label for="pages" class="form-label">Courriel</label>
+										<input type="email" class="form-control" id="email" name="email" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="password" class="form-label">Mot de passe</label>
+										<input type="password" class="form-control" id="password" name="password"
+											required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+
+									<div class="modal-footer">
+										<button type="submit" id="submit" class="btn btn-primary">Connexion</button>
+									</div>
+								</form>
+
+								<!-- Fin form connexion -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Fin modal connexion -->
+
+				<div class="page">
+					<div class="row">
+
+						<div class="col-sm-6 col-md-3">
+							<div class="latest-movie">
+								<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<div class="latest-movie">
+								<a href="#"><img src="dummy/thumb-4.jpg" alt="Movie 4"></a>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<div class="latest-movie">
+								<a href="#"><img src="dummy/thumb-5.jpg" alt="Movie 5"></a>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<div class="latest-movie">
+								<a href="#"><img src="dummy/thumb-6.jpg" alt="Movie 6"></a>
+							</div>
+						</div>
+					</div> <!-- .row -->
+					<div class="row">
+						<div class="col-sm-6 col-md-3">
+							<div class="latest-movie">
+								<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<div class="latest-movie">
+								<a href="#"><img src="dummy/thumb-4.jpg" alt="Movie 4"></a>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<div class="latest-movie">
+								<a href="#"><img src="dummy/thumb-5.jpg" alt="Movie 5"></a>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<div class="latest-movie">
+								<a href="#"><img src="dummy/thumb-6.jpg" alt="Movie 6"></a>
+							</div>
+						</div>
+					</div> <!-- .row -->
+
+				</div>
+			</div> <!-- .container -->
+		</main>
+
+		<footer class="site-footer">
+			<div class="container">
+				<!-- <div class="row">
 						<div class="col-md-2">
 							<div class="widget">
 								<h3 class="widget-title">About Us</h3>
@@ -402,19 +339,19 @@
 						</div>
 					</div>  -->
 
-					<div class="colophon">Copyright 2014 Company name, Designed by Themezy. All rights reserved</div>
-				</div> <!-- .container -->
+				<div class="colophon">Copyright 2014 Company name, Designed by Themezy. All rights reserved</div>
+			</div> <!-- .container -->
 
-			</footer>
-		</div>
-		<!-- Default snippet for navigation -->
-		
+		</footer>
+	</div>
+	<!-- Default snippet for navigation -->
 
-		<!-- <script src="public/util/js/jquery-3.6.0.min.js"></script> -->
-		<script src="public/util/js/jquery-1.11.1.min.js"></script>
-		<script src="public/util/js/plugins.js"></script>
-		<script src="public/util/js/app.js"></script>
-		
-	</body>
+
+	<!-- <script src="public/util/js/jquery-3.6.0.min.js"></script> -->
+	<script src="public/util/js/jquery-1.11.1.min.js"></script>
+	<script src="public/util/js/plugins.js"></script>
+	<script src="public/util/js/app.js"></script>
+
+</body>
 
 </html>

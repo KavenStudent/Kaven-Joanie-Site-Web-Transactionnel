@@ -1,26 +1,31 @@
 let valider = () => {
+
     let myForm = document.getElementById('formMembre');
     let password = myForm.password.value;
     let confirmPassword = myForm.confirmPassword.value;
-    let etat = false;
+    let isValid = password.trim() === confirmPassword.trim();
 
-    alert(`${password} ${confirmPasswordpassword}`);
 
-    if(password == confirmPassword){
-        etat = false;
-        
-        alert("allo");
+    if(isValid == false){
+        document.getElementById('msg-password-erreur').style.display = 'block';
     }
-    return etat;
+
+    return isValid;
 }
 
-let montrer = (idElem) => {
-    $('#').toggle();
-}
+//pas besoin ?
+// let montrer = (idElem) => {
+//     //$('#').toggle();
+//     $('modalMembre').toggle();
+// }
 
-let cacher = (idElem) => {
-    document.getElementById(idElem).style.display = 'none';
-}
+// function connexion(idElem) {
+//     $('modalConnexion').toggle();
+// }
+
+// let cacher = (idElem) => {
+//     document.getElementById(idElem).style.display = 'none';
+// }
 
 
 

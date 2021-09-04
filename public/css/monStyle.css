@@ -13,3 +13,8 @@
     text-align:left;
     margin-left:0;
 }
+
+#msg-password-erreur{
+    color: red;
+    display: none;
+}
