@@ -1,7 +1,6 @@
 <?php
   define("FCONNEXION", "../donnees/connexion.txt");
   define("MSG_ERREUR", "Problème pour ouvrir le fichier");
-  define("MSG_CONNEXION", "Vous êtes bien connecté");
   define("MSG_ERREUR_CONNEXION", "Erreur de connexion");
   $email = $_POST['email'];
   $password = $_POST['password'];
@@ -28,7 +27,9 @@
   fclose($fic);
 
   if($isValid == true){
-    echo MSG_CONNEXION;
+   // echo MSG_CONNEXION;
+   echo "<script> location.href='./membre.php'; </script>";
+   exit;
   }else{
       echo MSG_ERREUR_CONNEXION;
   }
@@ -36,4 +37,4 @@
 
 </br>
 </br>
-<a href="../../index.html">Retour a la page d'accueil </a>
+<a href="../../index.html">Retour a la page d'accueil</a>
