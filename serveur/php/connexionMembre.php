@@ -5,7 +5,7 @@
   $email = $_POST['email'];
   $password = $_POST['password'];
   $isValid = false;
-
+  // lire fichier
   if(!$fic = fopen(FCONNEXION,"r")) {
     echo MSG_ERREUR;
     exit;
@@ -17,6 +17,7 @@
     $unMembre = explode(";", $ligne);
 
     if($unMembre[0] === $email && $unMembre[1] === $password){
+      $statut = $unMembre[3];
       $isValid = true;
       break;
     }
@@ -27,9 +28,17 @@
   fclose($fic);
 
   if($isValid == true){
-   // echo MSG_CONNEXION;
-   echo "<script> location.href='./membre.php'; </script>";
-   exit;
+
+  if($statut === "A"){
+   echo "<script> location.href='./admin.php'; </script>";
+  }
+
+  if($statut === "M"){
+  echo "<script> location.href='./membre.php'; </script>";
+  }
+  
+  exit;
+  
   }else{
       echo MSG_ERREUR_CONNEXION;
   }

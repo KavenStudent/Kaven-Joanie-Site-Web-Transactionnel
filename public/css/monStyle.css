@@ -18,3 +18,8 @@
     color: red;
     display: none;
 }
+
+#msg-confirm-password-erreur{
+    color: red;
+    display: none;
+}

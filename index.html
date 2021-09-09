@@ -118,7 +118,7 @@
 
 									<div class="myInput">
 										<label for="pages" class="form-label">Courriel</label>
-										<input type="email" class="form-control" id="email" name="email" required>
+										<input type="email" class="form-control" id="email-Enreg" name="email" required>
 										<div class="valid-feedback">
 
 										</div>
@@ -128,6 +128,8 @@
 										<label for="password" class="form-label">Mot de passe</label>
 										<input type="password" class="form-control" id="password" name="password"
 											required>
+											<input type="checkbox" onclick="montrerPassword('password')">Montrer le mot de passe
+										<span id="msg-password-erreur">Le mot de passe doit être entre 8 et 10 charactères et doit contenir des lettres majuscules, minuscules, des chiffres et les charactères "-_" </span>
 										<div class="valid-feedback">
 
 										</div>
@@ -137,7 +139,8 @@
 										<label for="confirmPassword" class="form-label">Confirmer mot de passe</label>
 										<input type="password" class="form-control" id="confirmPassword"
 											name="confirmPassword" required>
-										<span id="msg-password-erreur">Confirmation invalide</span>
+											<input type="checkbox" onclick="montrerPassword('confirmPassword')">Montrer le mot de passe
+										<span id="msg-confirm-password-erreur">Confirmation invalide</span>
 										<div class="valid-feedback">
 
 										</div>
@@ -148,13 +151,13 @@
 									<div class="myInput">
 										<p>Pour des raisons statistiques</p>
 										<div class="form-check">
-											<input class="form-check-input" type="radio" name="sexe" id="M" checked>
+											<input class="form-check-input" type="radio" name="sexe" value="M" id="M" checked>
 											<label class="form-check-label" for="M">
 												Homme
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="radio" name="sexe" id="F">
+											<input class="form-check-input" type="radio" name="sexe" value="F" id="F">
 											<label class="form-check-label" for="F">
 												Femme
 											</label>
@@ -168,7 +171,7 @@
 									</div>
 
 									<div class="modal-footer">
-										<button type="submit" id="submit" class="btn btn-primary">Enregistrer</button>
+										<button type="submit" id="submit-Enreg" class="btn btn-primary">Enregistrer</button>
 									</div>
 								</form>
 
@@ -196,7 +199,7 @@
 									method="POST">
 									<div class="myInput">
 										<label for="pages" class="form-label">Courriel</label>
-										<input type="email" class="form-control" id="email" name="email" required>
+										<input type="email" class="form-control" id="email-Connexion" name="email" required>
 										<div class="valid-feedback">
 
 										</div>
@@ -204,8 +207,12 @@
 
 									<div class="myInput">
 										<label for="password" class="form-label">Mot de passe</label>
-										<input type="password" class="form-control" id="password" name="password"
+										<input type="password" class="form-control" id="passwordConnexion" name="password"
 											required>
+											<input type="checkbox" onclick="montrerPassword('passwordConnexion')">Montrer le mot de passe
+											<div class="input-group-addon">
+											
+											  </div>
 										<div class="valid-feedback">
 
 										</div>
@@ -213,7 +220,7 @@
 
 
 									<div class="modal-footer">
-										<button type="submit" id="submit" class="btn btn-primary">Connexion</button>
+										<button type="submit" id="submit-Connexion" class="btn btn-primary">Connexion</button>
 									</div>
 								</form>
 
@@ -227,12 +234,38 @@
 
 				<div class="page">
 					<div class="row">
-
-						<div class="col-sm-6 col-md-3">
-							<div class="latest-movie">
-								<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+						<div class="card" style="width: 16rem;">
+							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							<div class="card-body">
+							  <h5 class="card-title">Card title</h5>
+							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							  <a href="#" class="btn btn-primary">Go somewhere</a>
 							</div>
-						</div>
+						  </div>
+						  <div class="card" style="width: 16rem;">
+							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							<div class="card-body">
+							  <h5 class="card-title">Card title</h5>
+							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							  <a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						  </div>
+						  <div class="card" style="width: 16rem;">
+							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							<div class="card-body">
+							  <h5 class="card-title">Card title</h5>
+							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							  <a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						  </div>
+						  <div class="card" style="width: 16rem;">
+							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							<div class="card-body">
+							  <h5 class="card-title">Card title</h5>
+							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							  <a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						  </div>
 						<div class="col-sm-6 col-md-3">
 							<div class="latest-movie">
 								<a href="#"><img src="dummy/thumb-4.jpg" alt="Movie 4"></a>

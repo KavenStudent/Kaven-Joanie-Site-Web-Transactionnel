@@ -47,7 +47,7 @@
   // ouvrir fichier membre.txt
     try {
       $f_membre = fopen(FMEMBRE,"a+");
-      $ligne = $prenom.";".$nom.";".$email.";".$sexe.$dateNaissance."\n";
+      $ligne = $prenom.";".$nom.";".$email.";".$sexe.";".$dateNaissance."\n";
       fputs($f_membre,$ligne);  
       fclose($f_membre);
     } catch (Exeption $e) {
