@@ -1,11 +1,12 @@
 <?php
   define("FCONNEXION", "../donnees/connexion.txt");
   define("MSG_ERREUR", "Problème pour ouvrir le fichier");
-  define("MSG_ERREUR_CONNEXION", "Erreur de connexion");
+  define("MSG_ERREUR_CONNEXION", "<h1>Erreur de connexion</h1>");
   $email = $_POST['email'];
   $password = $_POST['password'];
   $isValid = false;
   $statut;
+  $isActif;
   // lire fichier
   if(!$fic = fopen(FCONNEXION,"r")) {
     echo MSG_ERREUR;
@@ -18,6 +19,7 @@
     $unMembre = explode(";", $ligne);
 
     if($unMembre[0] === $email && $unMembre[1] === $password){
+      $isActif = $unMembre[2];
       $statut = $unMembre[3];
       $isValid = true;
       break;
@@ -29,20 +31,22 @@
   fclose($fic);
 
   if($isValid == true){
-    // if pas valide doit pas rediriger
-    switch (trim($statut)) {
-      case 'A':
-        header("Location: ./admin.php");
-        break;
-      case 'E':
-        header("Location: ./employe.php");
-        break;
-      default:
-      header("Location: ./membre.php");
-        break;
+    if($isActif == true){
+      switch (trim($statut)) {
+        case 'A':
+          header("Location: ./admin.php");
+          break;
+        case 'E':
+          header("Location: ./employe.php");
+          break;
+        default:
+        header("Location: ./membre.php");
+          break;
+      }
+    }else{
+      echo MSG_ERREUR_CONNEXION;
     }
 
-  
   exit;
 
   }else{
