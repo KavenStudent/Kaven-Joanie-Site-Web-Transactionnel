@@ -1,12 +1,12 @@
 <?php
-  define("FCONNEXION", "../donnees/connexion.txt");
+  require_once("../util/fichier-params.inc.php");
   define("MSG_ERREUR", "Problème pour ouvrir le fichier");
   define("MSG_ERREUR_CONNEXION", "<h1>Erreur de connexion</h1>");
+  define("MSG_ERREUR_INACTIF", "<h1>Compte inactif. Contacter un employé</h1>");
   $email = $_POST['email'];
   $password = $_POST['password'];
   $isValid = false;
-  $statut;
-  $isActif;
+  
   // lire fichier
   if(!$fic = fopen(FCONNEXION,"r")) {
     echo MSG_ERREUR;
@@ -44,7 +44,7 @@
           break;
       }
     }else{
-      echo MSG_ERREUR_CONNEXION;
+      echo MSG_ERREUR_INACTIF;
     }
 
   exit;

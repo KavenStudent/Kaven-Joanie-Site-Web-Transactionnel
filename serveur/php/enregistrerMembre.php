@@ -1,7 +1,5 @@
 
 <?php
-    // define("FMEMBRE", "../donnees/membre.txt");
-    // define("FCONNEXION", "../donnees/connexion.txt");
     require_once("../util/fichier-params.inc.php");
     define("MSG_ERREUR", "Problème pour ouvrir le fichier");
     
@@ -24,8 +22,9 @@
       exit;
     }
 
+  // regarde si le courriel n'est pas utilisé
     $ligne=fgets($fic);
-
+  
     while (!feof($fic)){
       $unMembre = explode(";", $ligne);
 
@@ -39,7 +38,8 @@
 
     fclose($fic);
 
-   if($existant == true){
+    
+   if($existant == true){ 
 
    echo MSG_EXISTE_DEJA;
 
