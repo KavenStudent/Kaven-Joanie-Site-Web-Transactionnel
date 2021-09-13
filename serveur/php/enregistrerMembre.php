@@ -1,7 +1,8 @@
 
 <?php
-    define("FMEMBRE", "../donnees/membre.txt");
-    define("FCONNEXION", "../donnees/connexion.txt");
+    // define("FMEMBRE", "../donnees/membre.txt");
+    // define("FCONNEXION", "../donnees/connexion.txt");
+    require_once("../util/fichier-params.inc.php");
     define("MSG_ERREUR", "Problème pour ouvrir le fichier");
     
     $prenom = $_POST['prenom'];
@@ -50,7 +51,7 @@
       $ligne = $prenom.";".$nom.";".$email.";".$sexe.";".$dateNaissance."\n";
       fputs($f_membre,$ligne);  
       fclose($f_membre);
-    } catch (Exeption $e) {
+    } catch (Exception $e) {
       echo MSG_ERREUR;
     }
 
@@ -60,7 +61,7 @@
       $ligne = $email.";".$password.";".$actif.";".$role."\n";
       fputs($f_connexion,$ligne); 
       fclose($f_connexion);
-    } catch (Exeption $e) {
+    } catch (Exception $e) {
       echo MSG_ERREUR;
     }
 

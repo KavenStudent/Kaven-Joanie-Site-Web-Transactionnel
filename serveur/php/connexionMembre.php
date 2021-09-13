@@ -5,6 +5,7 @@
   $email = $_POST['email'];
   $password = $_POST['password'];
   $isValid = false;
+  $statut;
   // lire fichier
   if(!$fic = fopen(FCONNEXION,"r")) {
     echo MSG_ERREUR;
@@ -28,17 +29,22 @@
   fclose($fic);
 
   if($isValid == true){
+    // if pas valide doit pas rediriger
+    switch (trim($statut)) {
+      case 'A':
+        header("Location: ./admin.php");
+        break;
+      case 'E':
+        header("Location: ./employe.php");
+        break;
+      default:
+      header("Location: ./membre.php");
+        break;
+    }
 
-  if($statut === "A"){
-   echo "<script> location.href='./admin.php'; </script>";
-  }
-
-  if($statut === "M"){
-  echo "<script> location.href='./membre.php'; </script>";
-  }
   
   exit;
-  
+
   }else{
       echo MSG_ERREUR_CONNEXION;
   }
