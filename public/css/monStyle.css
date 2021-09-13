@@ -2,7 +2,7 @@
     display: none;
 }
 #monLogo{
-    max-width: 3%;
+    max-width: 3rem;
 }
 .myInput{
     margin:10px 15px 5px 15px ;
@@ -22,4 +22,20 @@
 #msg-confirm-password-erreur{
     color: red;
     display: none;
+}
+.card{
+    align-items: center;
+    padding: 5px;
+    width:17rem;
+    margin:auto;
+}
+.page{
+    align-items: center;
+}
+.row{
+    margin-top: 10px;
+}
+.montrerPassword{
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
