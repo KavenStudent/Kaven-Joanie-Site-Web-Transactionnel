@@ -47,12 +47,13 @@
 							<small class="site-description">Tagline goes here</small>
 						</div>
 					</a> -->
-					<!-- logo a mettre -->
-					<img id="monLogo" class="navbar-brand"  src="public/images/icon-logo-film.png" alt="" class="logo">
-					<p>Kajo Moovie</p>
-				  <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-				  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					  
+				<!-- logo a mettre -->
+				<img id="monLogo" class="navbar-brand" src="public/images/icon-logo-film.png" alt="" class="logo">
+				<p> Kajo movie </p>
+				<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -127,7 +128,7 @@
 										<label for="password" class="form-label">Mot de passe</label>
 										<input type="password" class="form-control" id="password" name="password"
 											required>
-											<input type="checkbox" onclick="montrerPassword('password')">Montrer le mot de passe
+											<input class="montrerPassword" type="checkbox" onclick="montrerPassword('password')">Montrer le mot de passe
 										<span id="msg-password-erreur">Le mot de passe doit être entre 8 et 10 charactères et doit contenir des lettres majuscules, minuscules, des chiffres et les charactères "-_" </span>
 										<div class="valid-feedback">
 
@@ -138,7 +139,7 @@
 										<label for="confirmPassword" class="form-label">Confirmer mot de passe</label>
 										<input type="password" class="form-control" id="confirmPassword"
 											name="confirmPassword" required>
-											<input type="checkbox" onclick="montrerPassword('confirmPassword')">Montrer le mot de passe
+											<input class="montrerPassword" type="checkbox" onclick="montrerPassword('confirmPassword')">Montrer le mot de passe
 										<span id="msg-confirm-password-erreur">Confirmation invalide</span>
 										<div class="valid-feedback">
 
@@ -208,7 +209,7 @@
 										<label for="password" class="form-label">Mot de passe</label>
 										<input type="password" class="form-control" id="passwordConnexion" name="password"
 											required>
-											<input type="checkbox" onclick="montrerPassword('passwordConnexion')">Montrer le mot de passe
+											<input class="montrerPassword" type="checkbox" onclick="montrerPassword('passwordConnexion')">Montrer le mot de passe
 											<div class="input-group-addon">
 											
 											  </div>
@@ -233,77 +234,108 @@
 
 				<div class="page">
 					<div class="row">
-						<div class="card" style="width: 16rem;">
+						<div class="card">
 							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
 							<div class="card-body">
 							  <h5 class="card-title">Card title</h5>
 							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							  <a href="#" class="btn btn-primary">Go somewhere</a>
+							  <a href="#" class="btn btn-primary">Plus d'info</a>
 							</div>
 						  </div>
-						  <div class="card" style="width: 16rem;">
+						  <div class="card">
 							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
 							<div class="card-body">
 							  <h5 class="card-title">Card title</h5>
 							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							  <a href="#" class="btn btn-primary">Go somewhere</a>
+							  <a href="#" class="btn btn-primary">Plus d'info</a>
 							</div>
 						  </div>
-						  <div class="card" style="width: 16rem;">
+						  <div class="card">
 							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
 							<div class="card-body">
 							  <h5 class="card-title">Card title</h5>
 							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							  <a href="#" class="btn btn-primary">Go somewhere</a>
+							  <a href="#" class="btn btn-primary">Plus d'info</a>
 							</div>
 						  </div>
-						  <div class="card" style="width: 16rem;">
+						  <div class="card">
 							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
 							<div class="card-body">
 							  <h5 class="card-title">Card title</h5>
 							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							  <a href="#" class="btn btn-primary">Go somewhere</a>
+							  <a href="#" class="btn btn-primary">Plus d'info</a>
 							</div>
 						  </div>
-						<div class="col-sm-6 col-md-3">
-							<div class="latest-movie">
-								<a href="#"><img src="dummy/thumb-4.jpg" alt="Movie 4"></a>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">
-							<div class="latest-movie">
-								<a href="#"><img src="dummy/thumb-5.jpg" alt="Movie 5"></a>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">
-							<div class="latest-movie">
-								<a href="#"><img src="dummy/thumb-6.jpg" alt="Movie 6"></a>
-							</div>
-						</div>
+				
 					</div> <!-- .row -->
 					<div class="row">
-						<div class="col-sm-6 col-md-3">
-							<div class="latest-movie">
-								<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+						<div class="card">
+							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							<div class="card-body">
+							  <h5 class="card-title">Card title</h5>
+							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							  <a href="#" class="btn btn-primary">Plus d'info</a>
 							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">
-							<div class="latest-movie">
-								<a href="#"><img src="dummy/thumb-4.jpg" alt="Movie 4"></a>
+						  </div>
+						  <div class="card">
+							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							<div class="card-body">
+							  <h5 class="card-title">Card title</h5>
+							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							  <a href="#" class="btn btn-primary">Plus d'info</a>
 							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">
-							<div class="latest-movie">
-								<a href="#"><img src="dummy/thumb-5.jpg" alt="Movie 5"></a>
+						  </div>
+						  <div class="card">
+							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							<div class="card-body">
+							  <h5 class="card-title">Card title</h5>
+							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							  <a href="#" class="btn btn-primary">Plus d'info</a>
 							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">
-							<div class="latest-movie">
-								<a href="#"><img src="dummy/thumb-6.jpg" alt="Movie 6"></a>
+						  </div>
+						  <div class="card">
+							<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+							<div class="card-body">
+							  <h5 class="card-title">Card title</h5>
+							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							  <a href="#" class="btn btn-primary">Plus d'info</a>
 							</div>
-						</div>
 					</div> <!-- .row -->
 
+				</div> <!-- .row -->
+				<div class="row">
+					<div class="card">
+						<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+						<div class="card-body">
+						  <h5 class="card-title">Card title</h5>
+						  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						  <a href="#" class="btn btn-primary">Plus d'info</a>
+						</div>
+					  </div>
+					  <div class="card">
+						<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+						<div class="card-body">
+						  <h5 class="card-title">Card title</h5>
+						  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						  <a href="#" class="btn btn-primary">Plus d'info</a>
+						</div>
+					  </div>
+					  <div class="card">
+						<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+						<div class="card-body">
+						  <h5 class="card-title">Card title</h5>
+						  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						  <a href="#" class="btn btn-primary">Plus d'info</a>
+						</div>
+					  </div>
+					  <div class="card">
+						<a href="#"><img src="dummy/thumb-3.jpg" alt="Movie 3"></a>
+						<div class="card-body">
+						  <h5 class="card-title">Card title</h5>
+						  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						  <a href="#" class="btn btn-primary">Plus d'info</a>
+						</div>
+				</div> <!-- .row -->
 				</div>
 			</div> <!-- .container -->
 		</main>
