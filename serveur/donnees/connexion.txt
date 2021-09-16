@@ -1,6 +1,6 @@
 admin@KaJo.com;Admin-12;1;A
 asd@gmail.com;q;0;M
-aas@gmail.com;a;1;M
+aas@gmail.com;a;1;E
 ta@gmail.com;a;1;M
 ta1@gmail.com;q;1;M
 ta2@gmail.com;a;1;M
