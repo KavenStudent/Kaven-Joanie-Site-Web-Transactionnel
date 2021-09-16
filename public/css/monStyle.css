@@ -28,6 +28,8 @@
     padding: 5px;
     width:17rem;
     margin:auto;
+    height: 547.2px;
+    max-height: 547.2px;
 }
 .page{
     align-items: center;
@@ -38,4 +40,11 @@
 .montrerPassword{
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.image-film{
+    width: 260px;
+    max-width: 260px;
+    height: 390px;
+    max-height: 390px;
 }
