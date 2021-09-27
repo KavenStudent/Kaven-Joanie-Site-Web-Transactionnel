@@ -1,5 +1,5 @@
 <?php
- require_once("../util/fichier-params.inc.php");
+ require_once("../BD/connexion.inc.php");
  $prenom = $_POST['prenom'];
  $nom = $_POST['nom'];
  $email = $_POST['email'];
@@ -7,10 +7,6 @@
  $sexe = $_POST['sexe'];
  $dateNaissance = $_POST['dateNaissance'];
 
- if(!$fic = fopen(FMEMBRE,"r")) {
-    echo MSG_ERREUR;
-    exit;
-  }
 
   $ligne=fgets($fic);
 
