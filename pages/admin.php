@@ -6,4 +6,4 @@
 
 </br>
 </br>
-<a href="../../index.html">Retour a la page d'accueil</a>
+<a href="../index.html">Retour a la page d'accueil</a>
