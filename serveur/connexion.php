@@ -19,7 +19,7 @@
       if ($ligne->role === 'M'){// regarde le role
         header("Location: ../pages/membres.php");
       } else{
-          header('Location: ../pages/admin.html');
+          header('Location: ../pages/admin.php');
       }
 
     } else{
