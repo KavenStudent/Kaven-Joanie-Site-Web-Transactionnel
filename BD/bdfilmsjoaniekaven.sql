@@ -222,6 +222,9 @@ ALTER TABLE `genre`
 --
 ALTER TABLE `membres`
   MODIFY `idMembre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+  ALTER TABLE `connexion`
+  MODIFY `idMembre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `paiment`
 --
