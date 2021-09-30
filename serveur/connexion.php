@@ -17,7 +17,7 @@
     if($ligne->statut){ // regarde si le compte est valide
 
       if ($ligne->role === 'M'){// regarde le role
-        header("Location: ../pages/membres.php");
+        header("Location: ../pages/membre.php");
       } else{
           header('Location: ../pages/admin.php');
       }

@@ -1,5 +1,5 @@
-// var jsonUrl = require('../util/bdfilms.json');
-var jsonUrl = './public/util/bdfilms.json'
+var jsonUrl = './public/util/bdfilms.json';
+
 let valider = () => {
     let myForm = document.getElementById('formMembre');
     let password = myForm.password.value;
@@ -61,8 +61,8 @@ function listerFilms(){
 
     $('#liste-film').html(contenu);
 });
-
 }
+
 $(document).ready(function(){
-  listerFilms()
+  listerFilms();
 });
