@@ -63,6 +63,6 @@ function listerFilms(){
 });
 }
 
-$(document).ready(function(){
-  listerFilms();
-});
+// $(document).ready(function(){
+//   listerFilms();
+// });
