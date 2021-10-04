@@ -1,10 +1,9 @@
 <?php
-   if (isset($_GET['msg'])){
-	$msg=$_GET['msg'];
-   }
-   else {
-	   $msg="";
-   }
+if (isset($_GET['msg'])) {
+	$msg = $_GET['msg'];
+} else {
+	$msg = "";
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -37,7 +36,8 @@
 </head>
 
 
-<body onLoad="initialiser(<?php echo "'".$msg."'" ?>);">
+<body onLoad="initialiser(<?php echo "'" . $msg . "'" ?>);">
+
 
 	<div id="site-content">
 		<!-- nav bar -->
@@ -85,7 +85,19 @@
 		<main class="main-content">
 
 			<div class="container">
-
+				<!-- TOAST -->
+				<div class="toast-container posToast">
+					<div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+						<div class="toast-header">
+							<img src="public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
+							<strong class="me-auto">Messages</strong>
+							<small class="text-muted"></small>
+							<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+						</div>
+						<div id="textToast" class="toast-body">
+						</div>
+					</div>
+				</div>
 				<!-- modal devenir membre-->
 				<div class="modal fade" id="modal-Membre" tabindex="-1">
 					<div class="modal-dialog">
@@ -415,7 +427,7 @@
 									<div class="myInput">
 										<label for="image" class="form-label">Image</label>
 										<input type="file" class="form-control" id="image" name="image">
-					
+
 									</div>
 									<!-- fin genres -->
 
@@ -433,58 +445,57 @@
 				<!-- Fin modal creer film-->
 
 				<?php
-					 require_once("BD/connexion.inc.php");
-					 $requette="SELECT * FROM films ORDER BY `films`.`annee` DESC";
-					  try{
-						  $listeFilms=mysqli_query($connexion,$requette);
-						  $rep="<div class='page' id='liste-film'>";
-						  $i=0;
-						 
-						  $rep.=' <div class="row">';
+				require_once("BD/connexion.inc.php");
+				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
+				try {
+					$listeFilms = mysqli_query($connexion, $requette);
+					$rep = "<div class='page' id='liste-film'>";
+					$i = 0;
 
-						  $test = 'httpasdasd';
+					$rep .= ' <div class="row">';
 
-						  while($ligne=mysqli_fetch_object($listeFilms)){
-							 if ($i%4==0){
-								 $rep.='</div>';
-								 $rep.=' <div class="row">';
-							 }
-								 
-									 $rep.='<div class="card">';
-									 
-									 
-				 
-									if(substr($ligne->image,0,4) === "http"){
-										$rep.='<img class="image-film" src="'.($ligne->image).'" alt="image-film">';
-									}
-									else{
-										$rep.='<img class="image-film" src="imageFilm/'.($ligne->image).'" alt="image film">';
-									}
-									
-								   
-									  $rep.='<div class="card-body">';
-									  $rep.='<h5 class="card-title">'.($ligne->titre).'('.($ligne->annee).')'."</h5>";
-									  $rep.='<p class="card-text">'.($ligne->realisateurs).'</p>';
-									  $rep.='<p class="card-text">'.($ligne->prix).'$</p>';
-									  $rep.='<a href="#" class="btn btn-primary">Plus d info </a>';
-									  $rep.='</div>';
-									  $rep.='</div>';
-							 
-								 $i++;
-						 }
-							 $rep.="</div>";//fermer le dernier row
-						 $rep.="</div>";//fermer le container
-						 mysqli_free_result($listeFilms);
-					  }catch (Exception $e){
-						 echo "Probleme pour lister";
-					  }finally {
-						 echo $rep;
-						 unset($rep);
-					  }
-					  mysqli_close($connexion);
-					?>
+					$test = 'httpasdasd';
 
-				</div> <!-- .container -->
+					while ($ligne = mysqli_fetch_object($listeFilms)) {
+						if ($i % 4 == 0) {
+							$rep .= '</div>';
+							$rep .= ' <div class="row">';
+						}
+
+						$rep .= '<div class="card">';
+
+
+
+						if (substr($ligne->image, 0, 4) === "http") {
+							$rep .= '<img class="image-film" src="' . ($ligne->image) . '" alt="image-film">';
+						} else {
+							$rep .= '<img class="image-film" src="imageFilm/' . ($ligne->image) . '" alt="image film">';
+						}
+
+
+						$rep .= '<div class="card-body">';
+						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
+						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
+						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
+						$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
+						$rep .= '</div>';
+						$rep .= '</div>';
+
+						$i++;
+					}
+					$rep .= "</div>"; //fermer le dernier row
+					$rep .= "</div>"; //fermer le container
+					mysqli_free_result($listeFilms);
+				} catch (Exception $e) {
+					echo "Probleme pour lister";
+				} finally {
+					echo $rep;
+					unset($rep);
+				}
+				mysqli_close($connexion);
+				?>
+
+			</div> <!-- .container -->
 		</main>
 
 		<footer class="site-footer">
@@ -497,19 +508,7 @@
 		</footer>
 	</div>
 
-	<!-- TOAST -->
-	<div class="toast-container posToast">
-		<div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-header">
-			<img src="images/message.png" width=24 height=24 class="rounded me-2" alt="message">
-			<strong class="me-auto">Messages</strong>
-			<small class="text-muted"></small>
-			<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-			<div id="textToast" class="toast-body">
-			</div>
-		</div>
-		</div>
+
 
 	<script src="public/util/js/jquery-1.11.1.min.js"></script>
 	<script src="public/util/js/plugins.js"></script>
