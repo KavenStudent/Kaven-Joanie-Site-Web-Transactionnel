@@ -1,5 +1,10 @@
 <?php
+<<<<<<< Updated upstream
 	 require_once("BD/connexion.inc.php");
+=======
+	require_once("../BD/connexion.inc.php");
+	
+>>>>>>> Stashed changes
 	$requette="SELECT * FROM films";
 	 try{
 		 $listeFilms=mysqli_query($connexion,$requette);
@@ -13,6 +18,7 @@
 				$rep.=' <div class="row">';
 			}
 				
+<<<<<<< Updated upstream
 					$rep.='<div class="card">';
                     
 					//$rep.='<img src="../pochettes/'.($ligne->pochette).'" width=80 height=280 class="card-img-top" alt="...">';
@@ -38,6 +44,27 @@
 					 $rep.='<a href="#" class="btn btn-primary">Plus d info </a>';
 					 $rep.='</div>';
 					 $rep.='</div>';
+=======
+					$rep.='<div class="card';
+                    $rep.='<a href="#">';
+					//$rep.='<img src="../pochettes/'.($ligne->pochette).'" width=80 height=280 class="card-img-top" alt="...">';
+                    $requette ="SELECT image FROM films WHERE $ligne->idFilms"
+                    if(str_starts_with(string $requette, string $http)){
+
+                    }
+                    else{
+                        $rep.='<img class"image-film" src="../pochettes/'.($ligne->pochette).' alt="image film">'
+                    }
+                    $rep.='</a>';
+					$rep.='<div class="card-body">';
+					$rep.='<h5 class="card-title">'.($ligne->titre).'</h5>';
+					$rep.='<p class="card-text">'.($ligne->idf).'</p>';
+					$rep.='<p class="card-text">'.($ligne->duree).'</p>';
+					$rep.='<p class="card-text">'.($ligne->res).'</p>';
+					$rep.='<a href="#" class="btn btn-primary">Détails</a>';
+					$rep.='</div>';
+					$rep.='</div>';
+>>>>>>> Stashed changes
 			
 				$i++;
 		}
