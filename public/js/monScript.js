@@ -71,9 +71,12 @@ let initialiser = (message) =>{
   })
   if(message.length > 0){
     textToast.innerHTML = message;
+    $(".toast-container").css("display", "block");
     toastList[0].show();
   }
 }
-// $(document).ready(function(){
-//   listerFilms();
-// });
+
+ $(document).ready(function(){
+  $(".toast-container").css("display", "none");
+ });
+
