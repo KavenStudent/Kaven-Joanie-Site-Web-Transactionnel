@@ -75,6 +75,8 @@ let initialiser = (message) =>{
     toastList[0].show();
   }
 }
+
  $(document).ready(function(){
   $(".toast-container").css("display", "none");
  });
+
