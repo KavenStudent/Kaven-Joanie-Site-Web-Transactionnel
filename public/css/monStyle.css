@@ -31,10 +31,12 @@
     height: 547.2px;
     max-height: 547.2px;
     color: black;
+    
 }
 .page{
     align-items: center;
 }
+
 .row{
     margin-top: 10px;
 }

@@ -29,40 +29,40 @@ function montrerPassword(id) {
     }
   }
 
-function listerFilms(){
-  $.getJSON(jsonUrl, function(json){
-    let contenu = `<div class="row">`;
-    let compteur = 0;
-    let compteur_row = 0;
+// function listerFilms(){
+//   $.getJSON(jsonUrl, function(json){
+//     let contenu = `<div class="row">`;
+//     let compteur = 0;
+//     let compteur_row = 0;
 
-    for (let i = 0; i < 12; i++) { // 012340123401234
+//     for (let i = 0; i < 12; i++) { // 012340123401234
       
-      contenu += `<div class="card">
-      <a href="#"><img class="image-film" src="${json.movies[i].posterUrl}" alt="image film"></a>
-      <div class="card-body">
-        <h5 class="card-title">${json.movies[i].title} (${json.movies[i].year})</h5>
-        <p class="card-text">${json.movies[i].director}</p>
-        <a href="#" class="btn btn-primary">Plus d'info</a>
-      </div>
-      </div>`;
+//       contenu += `<div class="card">
+//       <a href="#"><img class="image-film" src="${json.movies[i].posterUrl}" alt="image film"></a>
+//       <div class="card-body">
+//         <h5 class="card-title">${json.movies[i].title} (${json.movies[i].year})</h5>
+//         <p class="card-text">${json.movies[i].director}</p>
+//         <a href="#" class="btn btn-primary">Plus d'info</a>
+//       </div>
+//       </div>`;
 
-      compteur++;
-      if(compteur == 4){
-        compteur_row++;
-        contenu += `</div>`;
-        if(compteur_row != 3){
-          contenu += `<div class="row">`;
-        }
-        compteur = 0;
-      }
+//       compteur++;
+//       if(compteur == 4){
+//         compteur_row++;
+//         contenu += `</div>`;
+//         if(compteur_row != 3){
+//           contenu += `<div class="row">`;
+//         }
+//         compteur = 0;
+//       }
 
-    }
-    contenu += `</div>`;
+//     }
+//     contenu += `</div>`;
 
-    $('#liste-film').html(contenu);
-});
-}
+//     $('#liste-film').html(contenu);
+// });
+// }
 
-$(document).ready(function(){
-  listerFilms();
-});
+// $(document).ready(function(){
+//   listerFilms();
+// });
