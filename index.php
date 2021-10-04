@@ -37,7 +37,7 @@
 </head>
 
 
-<body onLoad="initialiser(<?php echo "'".$msg."'" ?>);>
+<body onLoad="initialiser(<?php echo "'".$msg."'" ?>);">
 
 	<div id="site-content">
 		<!-- nav bar -->
