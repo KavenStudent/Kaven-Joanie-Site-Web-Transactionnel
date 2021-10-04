@@ -84,6 +84,7 @@ if (isset($_GET['msg'])) {
 		<main class="main-content">
 
 			<div class="container">
+
 				<!-- TOAST -->
 				<div class="toast-container posToast">
 					<div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
@@ -97,423 +98,423 @@ if (isset($_GET['msg'])) {
 						</div>
 					</div>
 				</div>
-			
-			<!-- modal devenir membre-->
-			<div class="modal fade" id="modal-Membre" tabindex="-1">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Enregistrer</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+				<!-- modal devenir membre-->
+				<div class="modal fade" id="modal-Membre" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Enregistrer</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<!-- Form devenir membre-->
+
+								<form class="formMembre" id="formMembre" action="serveur/enregistrerMembre.php" method="POST" onSubmit="return valider()">
+									<div class="myInput">
+										<label for="prenom" class="form-label">Prénom</label>
+										<input type="text" class="form-control" id="prenom" name="prenom" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+									<div class="myInput">
+										<label for="nom" class="form-label">Nom</label>
+										<input type="text" class="form-control" id="nom" name="nom" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="pages" class="form-label">Courriel</label>
+										<input type="email" class="form-control" id="email-Enreg" name="email" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="password" class="form-label">Mot de passe</label>
+										<input type="password" class="form-control" id="password" name="password" required>
+										<input class="montrerPassword" type="checkbox" onclick="montrerPassword('password')">Montrer le mot de passe
+										<span id="msg-password-erreur">Le mot de passe doit être entre 8 et 10 charactères et doit contenir des lettres majuscules, minuscules, des chiffres et les charactères "-_" </span>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="confirmPassword" class="form-label">Confirmer mot de passe</label>
+										<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+										<input class="montrerPassword" type="checkbox" onclick="montrerPassword('confirmPassword')">Montrer le mot de passe
+										<span id="msg-confirm-password-erreur">Confirmation invalide</span>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<hr class="line">
+
+									<div class="myInput">
+										<p>Pour des raisons statistiques</p>
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="sexe" value="M" id="M" checked>
+											<label class="form-check-label" for="M">
+												Homme
+											</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="sexe" value="F" id="F">
+											<label class="form-check-label" for="F">
+												Femme
+											</label>
+										</div>
+
+									</div>
+									<div class="myInput">
+										<label for="dateNaissance" class="form-label">Date de naissance</label>
+										<input type="date" class="form-control" id="dateNaissance" name="dateNaissance" required>
+									</div>
+
+									<div class="modal-footer">
+										<button type="submit" id="submit-Enreg" class="btn btn-primary">Enregistrer</button>
+									</div>
+								</form>
+
+								<!-- Fin form devenir membre-->
+							</div>
+
 						</div>
-						<div class="modal-body">
-							<!-- Form devenir membre-->
-
-							<form class="formMembre" id="formMembre" action="serveur/enregistrerMembre.php" method="POST" onSubmit="return valider()">
-								<div class="myInput">
-									<label for="prenom" class="form-label">Prénom</label>
-									<input type="text" class="form-control" id="prenom" name="prenom" required>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-								<div class="myInput">
-									<label for="nom" class="form-label">Nom</label>
-									<input type="text" class="form-control" id="nom" name="nom" required>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-
-								<div class="myInput">
-									<label for="pages" class="form-label">Courriel</label>
-									<input type="email" class="form-control" id="email-Enreg" name="email" required>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-
-								<div class="myInput">
-									<label for="password" class="form-label">Mot de passe</label>
-									<input type="password" class="form-control" id="password" name="password" required>
-									<input class="montrerPassword" type="checkbox" onclick="montrerPassword('password')">Montrer le mot de passe
-									<span id="msg-password-erreur">Le mot de passe doit être entre 8 et 10 charactères et doit contenir des lettres majuscules, minuscules, des chiffres et les charactères "-_" </span>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-
-								<div class="myInput">
-									<label for="confirmPassword" class="form-label">Confirmer mot de passe</label>
-									<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-									<input class="montrerPassword" type="checkbox" onclick="montrerPassword('confirmPassword')">Montrer le mot de passe
-									<span id="msg-confirm-password-erreur">Confirmation invalide</span>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-
-								<hr class="line">
-
-								<div class="myInput">
-									<p>Pour des raisons statistiques</p>
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="sexe" value="M" id="M" checked>
-										<label class="form-check-label" for="M">
-											Homme
-										</label>
-									</div>
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="sexe" value="F" id="F">
-										<label class="form-check-label" for="F">
-											Femme
-										</label>
-									</div>
-
-								</div>
-								<div class="myInput">
-									<label for="dateNaissance" class="form-label">Date de naissance</label>
-									<input type="date" class="form-control" id="dateNaissance" name="dateNaissance" required>
-								</div>
-
-								<div class="modal-footer">
-									<button type="submit" id="submit-Enreg" class="btn btn-primary">Enregistrer</button>
-								</div>
-							</form>
-
-							<!-- Fin form devenir membre-->
-						</div>
-
 					</div>
 				</div>
-			</div>
-			<!-- Fin modal devenir membre-->
+				<!-- Fin modal devenir membre-->
 
-			<!-- modal connexion -->
-			<div class="modal fade" id="modal-Connexion" tabindex="-1">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Connexion</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<!-- modal connexion -->
+				<div class="modal fade" id="modal-Connexion" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Connexion</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<!-- Form connexion -->
+
+								<form class="form-connexion" id="form-connexion" action="serveur/connexion.php" method="POST">
+									<div class="myInput">
+										<label for="pages" class="form-label">Courriel</label>
+										<input type="email" class="form-control" id="email-Connexion" name="email" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="password" class="form-label">Mot de passe</label>
+										<input type="password" class="form-control" id="passwordConnexion" name="password" required>
+										<input class="montrerPassword" type="checkbox" onclick="montrerPassword('passwordConnexion')">Montrer le mot de passe
+										<div class="input-group-addon">
+
+										</div>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+
+									<div class="modal-footer">
+										<button type="submit" id="submit-Connexion" class="btn btn-primary">Connexion</button>
+									</div>
+								</form>
+
+								<!-- Fin form connexion -->
+							</div>
+
 						</div>
-						<div class="modal-body">
-							<!-- Form connexion -->
-
-							<form class="form-connexion" id="form-connexion" action="serveur/connexion.php" method="POST">
-								<div class="myInput">
-									<label for="pages" class="form-label">Courriel</label>
-									<input type="email" class="form-control" id="email-Connexion" name="email" required>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-
-								<div class="myInput">
-									<label for="password" class="form-label">Mot de passe</label>
-									<input type="password" class="form-control" id="passwordConnexion" name="password" required>
-									<input class="montrerPassword" type="checkbox" onclick="montrerPassword('passwordConnexion')">Montrer le mot de passe
-									<div class="input-group-addon">
-
-									</div>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-
-
-								<div class="modal-footer">
-									<button type="submit" id="submit-Connexion" class="btn btn-primary">Connexion</button>
-								</div>
-							</form>
-
-							<!-- Fin form connexion -->
-						</div>
-
 					</div>
 				</div>
-			</div>
-			<!-- Fin modal connexion -->
+				<!-- Fin modal connexion -->
 
 
-			<!-- modal creer film-->
-			<div class="modal fade" id="modal-creer-film" tabindex="-1">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Créer film</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<!-- modal creer film-->
+				<div class="modal fade" id="modal-creer-film" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Créer film</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<!-- Form creer film-->
+
+								<form class="formMembre" id="formMembre" enctype="multipart/form-data" action="serveur/enregistrerFilm.php" method="POST">
+									<div class="myInput">
+										<label for="titre" class="form-label">Titre</label>
+										<input type="text" class="form-control" id="titre" name="titre" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+									<div class="myInput">
+										<label for="annee" class="form-label">Année</label>
+										<input type="number" class="form-control" id="annee" name="annee" min="0" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="duree" class="form-label">Durée</label>
+										<input type="number" class="form-control" id="duree" name="duree" min="0" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="realisateur" class="form-label">Réalisateur</label>
+										<input type="text" class="form-control" id="realisateur" name="realisateur" required>
+
+
+									</div>
+
+									<div class="myInput">
+										<label for="acteur" class="form-label">Acteur</label>
+										<input type="text" class="form-control" id="acteur" name="acteur" required>
+
+									</div>
+									<div class="myInput">
+										<label for="description" class="form-label">Description</label>
+										<input type="text" class="form-control" id="description" name="description" required>
+
+									</div>
+									<!-- genres -->
+									<div class="genres-container">
+
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="Comedy" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Comedy
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Fantasy" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Fantasy
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Crime" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Crime
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Drama" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Drama
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Music" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Music
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Adventure" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Adventure
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="History" name="genres[]">
+											<label class="form-check-label" for="genres">
+												History
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Thriller" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Thriller
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Animation" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Animation
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Family" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Family
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Mystery" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Mystery
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Biography" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Biography
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Action" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Action
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Film-Noir" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Film-Noir
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Romance" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Romance
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Sci-Fi" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Sci-Fi
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="War" name="genres[]">
+											<label class="form-check-label" for="genres">
+												War
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Western" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Western
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Horror" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Horror
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Musical" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Musical
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Sport" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Sport
+											</label>
+										</div>
+
+									</div>
+									<div class="myInput">
+										<label for="prix" class="form-label">Prix</label>
+										<input type="text" class="form-control" id="prix" name="prix" required>
+
+									</div>
+									<div class="myInput">
+										<label for="image" class="form-label">Image</label>
+										<input type="file" class="form-control" id="image" name="image">
+
+									</div>
+									<!-- fin genres -->
+
+									<div class="modal-footer">
+										<button type="submit" id="submit-Film" class="btn btn-primary">Enregistrer Film</button>
+									</div>
+								</form>
+
+								<!-- Fin form creer film-->
+							</div>
+
 						</div>
-						<div class="modal-body">
-							<!-- Form creer film-->
-
-							<form class="formMembre" id="formMembre" enctype="multipart/form-data" action="serveur/enregistrerFilm.php" method="POST">
-								<div class="myInput">
-									<label for="titre" class="form-label">Titre</label>
-									<input type="text" class="form-control" id="titre" name="titre" required>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-								<div class="myInput">
-									<label for="annee" class="form-label">Année</label>
-									<input type="number" class="form-control" id="annee" name="annee" min="0" required>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-
-								<div class="myInput">
-									<label for="duree" class="form-label">Durée</label>
-									<input type="number" class="form-control" id="duree" name="duree" min="0" required>
-									<div class="valid-feedback">
-
-									</div>
-								</div>
-
-								<div class="myInput">
-									<label for="realisateur" class="form-label">Réalisateur</label>
-									<input type="text" class="form-control" id="realisateur" name="realisateur" required>
-
-
-								</div>
-
-								<div class="myInput">
-									<label for="acteur" class="form-label">Acteur</label>
-									<input type="text" class="form-control" id="acteur" name="acteur" required>
-
-								</div>
-								<div class="myInput">
-									<label for="description" class="form-label">Description</label>
-									<input type="text" class="form-control" id="description" name="description" required>
-
-								</div>
-								<!-- genres -->
-								<div class="genres-container">
-
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="Comedy" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Comedy
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Fantasy" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Fantasy
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Crime" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Crime
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Drama" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Drama
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Music" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Music
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Adventure" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Adventure
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="History" name="genres[]">
-										<label class="form-check-label" for="genres">
-											History
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Thriller" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Thriller
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Animation" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Animation
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Family" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Family
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Mystery" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Mystery
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Biography" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Biography
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Action" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Action
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Film-Noir" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Film-Noir
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Romance" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Romance
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Sci-Fi" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Sci-Fi
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="War" name="genres[]">
-										<label class="form-check-label" for="genres">
-											War
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Western" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Western
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Horror" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Horror
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Musical" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Musical
-										</label>
-									</div>
-									<div class="form-check ">
-										<input class="form-check-input" type="checkbox" value="Sport" name="genres[]">
-										<label class="form-check-label" for="genres">
-											Sport
-										</label>
-									</div>
-
-								</div>
-								<div class="myInput">
-									<label for="prix" class="form-label">Prix</label>
-									<input type="text" class="form-control" id="prix" name="prix" required>
-
-								</div>
-								<div class="myInput">
-									<label for="image" class="form-label">Image</label>
-									<input type="file" class="form-control" id="image" name="image">
-
-								</div>
-								<!-- fin genres -->
-
-								<div class="modal-footer">
-									<button type="submit" id="submit-Film" class="btn btn-primary">Enregistrer Film</button>
-								</div>
-							</form>
-
-							<!-- Fin form creer film-->
-						</div>
-
 					</div>
 				</div>
-			</div>
-			<!-- Fin modal creer film-->
+				<!-- Fin modal creer film-->
 
-			<?php
-			require_once("BD/connexion.inc.php");
-			$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-			try {
-				$listeFilms = mysqli_query($connexion, $requette);
-				$rep = "<div class='page' id='liste-film'>";
-				$i = 0;
+				<?php
+				require_once("BD/connexion.inc.php");
+				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
+				try {
+					$listeFilms = mysqli_query($connexion, $requette);
+					$rep = "<div class='page' id='liste-film'>";
+					$i = 0;
 
-				$rep .= ' <div class="row">';
+					$rep .= ' <div class="row">';
 
-				$test = 'httpasdasd';
+					$test = 'httpasdasd';
 
-				while ($ligne = mysqli_fetch_object($listeFilms)) {
-					if ($i % 4 == 0) {
+					while ($ligne = mysqli_fetch_object($listeFilms)) {
+						if ($i % 4 == 0) {
+							$rep .= '</div>';
+							$rep .= ' <div class="row">';
+						}
+
+						$rep .= '<div class="card">';
+
+
+
+						if (substr($ligne->image, 0, 4) === "http") {
+							$rep .= '<img class="image-film" src="' . ($ligne->image) . '" alt="image-film">';
+						} else {
+							$rep .= '<img class="image-film" src="imageFilm/' . ($ligne->image) . '" alt="image film">';
+						}
+
+
+						$rep .= '<div class="card-body">';
+						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
+						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
+						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
+						$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
 						$rep .= '</div>';
-						$rep .= ' <div class="row">';
+						$rep .= '</div>';
+
+						$i++;
 					}
-
-					$rep .= '<div class="card">';
-
-
-
-					if (substr($ligne->image, 0, 4) === "http") {
-						$rep .= '<img class="image-film" src="' . ($ligne->image) . '" alt="image-film">';
-					} else {
-						$rep .= '<img class="image-film" src="imageFilm/' . ($ligne->image) . '" alt="image film">';
-					}
-
-
-					$rep .= '<div class="card-body">';
-					$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
-					$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
-					$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-					$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
-					$rep .= '</div>';
-					$rep .= '</div>';
-
-					$i++;
+					$rep .= "</div>"; //fermer le dernier row
+					$rep .= "</div>"; //fermer le container
+					mysqli_free_result($listeFilms);
+				} catch (Exception $e) {
+					echo "Probleme pour lister";
+				} finally {
+					echo $rep;
+					unset($rep);
 				}
-				$rep .= "</div>"; //fermer le dernier row
-				$rep .= "</div>"; //fermer le container
-				mysqli_free_result($listeFilms);
-			} catch (Exception $e) {
-				echo "Probleme pour lister";
-			} finally {
-				echo $rep;
-				unset($rep);
-			}
-			mysqli_close($connexion);
-			?>
+				mysqli_close($connexion);
+				?>
 
-	</div> <!-- .container -->
-	</main>
+			</div> <!-- .container -->
+		</main>
 
-	<footer class="site-footer">
-		<div class="container">
+		<footer class="site-footer">
+			<div class="container">
 
 
-			<div class="colophon">Copyright 2014 Company name, Designed by Themezy. All rights reserved</div>
-		</div> <!-- .container -->
+				<div class="colophon">Copyright 2014 Company name, Designed by Themezy. All rights reserved</div>
+			</div> <!-- .container -->
 
-	</footer>
+		</footer>
 
 
 
 
 
-	<script src="public/util/js/jquery-1.11.1.min.js"></script>
-	<script src="public/util/js/plugins.js"></script>
-	<script src="public/util/js/app.js"></script>
+		<script src="public/util/js/jquery-1.11.1.min.js"></script>
+		<script src="public/util/js/plugins.js"></script>
+		<script src="public/util/js/app.js"></script>
 
 </body>
 
