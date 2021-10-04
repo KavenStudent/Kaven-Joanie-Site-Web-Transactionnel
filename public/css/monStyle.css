@@ -64,3 +64,10 @@
 .main-content{
     margin-top: 15px;
 }
+
+.genres-container{ 
+    border:2px solid #ccc; 
+    width:300px; 
+    height: 100px; 
+    overflow-y: scroll; 
+}
