@@ -97,7 +97,7 @@ if (isset($_GET['msg'])) {
 						</div>
 					</div>
 				</div>
-			</div>
+			
 			<!-- modal devenir membre-->
 			<div class="modal fade" id="modal-Membre" tabindex="-1">
 				<div class="modal-dialog">
