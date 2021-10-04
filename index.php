@@ -39,52 +39,65 @@ if (isset($_GET['msg'])) {
 <body onLoad="initialiser(<?php echo "'" . $msg . "'" ?>);">
 
 	<div id=" site-content">
-	<!-- nav bar -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<!-- nav bar -->
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-		<div class="container-fluid">
+			<div class="container-fluid">
 
-			<!-- logo a mettre -->
-			<div class="company">
-				<img id="monLogo" class="navbar-brand" src="public/images/icon-logo-film.png" alt="" class="logo">
-				<h3> Kajo movie </h3>
-			</div>
-			<!-- <a class="navbar-brand" href="#">Navbar</a> -->
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">Accueil</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Devenir
-							membre</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Connexion">Connexion</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-creer-film">Enregistrer Film</a>
-					</li>
-					<!-- <li class="nav-item">
+				<!-- logo a mettre -->
+				<div class="company">
+					<img id="monLogo" class="navbar-brand" src="public/images/icon-logo-film.png" alt="" class="logo">
+					<h3> Kajo movie </h3>
+				</div>
+				<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#">Accueil</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Devenir
+								membre</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Connexion">Connexion</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-creer-film">Enregistrer Film</a>
+						</li>
+						<!-- <li class="nav-item">
 							<a class="nav-link" href="serveur/inserer.php">Inserer</a>
 						</li> -->
-				</ul>
-				<form class="d-flex">
-					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">Search</button>
-				</form>
+					</ul>
+					<form class="d-flex">
+						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
+				</div>
 			</div>
-		</div>
-	</nav>
-	<!-- fin nav bar -->
+		</nav>
+		<!-- fin nav bar -->
 
-	<main class="main-content">
+		<main class="main-content">
 
-		<div class="container">
-
+			<div class="container">
+				<!-- TOAST -->
+				<div class="toast-container posToast">
+					<div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+						<div class="toast-header">
+							<img src="public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
+							<strong class="me-auto">Messages</strong>
+							<small class="text-muted"></small>
+							<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+						</div>
+						<div id="textToast" class="toast-body">
+						</div>
+					</div>
+				</div>
+			</div>
 			<!-- modal devenir membre-->
 			<div class="modal fade" id="modal-Membre" tabindex="-1">
 				<div class="modal-dialog">
@@ -482,7 +495,7 @@ if (isset($_GET['msg'])) {
 			mysqli_close($connexion);
 			?>
 
-		</div> <!-- .container -->
+	</div> <!-- .container -->
 	</main>
 
 	<footer class="site-footer">
@@ -494,21 +507,8 @@ if (isset($_GET['msg'])) {
 
 	</footer>
 
-	
-	<!-- TOAST -->
-	<div class="toast-container posToast">
-		<div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-header">
-				<img src="images/message.png" width=24 height=24 class="rounded me-2" alt="message">
-				<strong class="me-auto">Messages</strong>
-				<small class="text-muted"></small>
-				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-			<div id="textToast" class="toast-body">
-			</div>
-		</div>
-	</div>
-	</div>
+
+
 
 
 	<script src="public/util/js/jquery-1.11.1.min.js"></script>
