@@ -23,7 +23,7 @@
 		$image=$nomImage.$extension;
 	}
 
-    // eregistrer film dans la bd
+    // enregistrer film dans la bd
     $requete="INSERT INTO films values(0,?,?,?,?,?,?,?,?)";
     $stmt = $connexion->prepare($requete);
     $stmt->bind_param("siisssss",  $titre,$annee,$duree,$realisateur,$acteur,$description,$image,$prix);
