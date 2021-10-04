@@ -22,7 +22,7 @@
 
         foreach($tabGenres as $genre){
             $index = array_search($genre, $json['genres']);
-            if($index!= -1){
+            if($index>=0){
                 $idGenre =  $index+1;
                 $requete="INSERT INTO filmgenre values(?,?)";
                 $stmt = $connexion->prepare($requete);
