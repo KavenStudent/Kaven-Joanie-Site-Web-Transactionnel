@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 04 oct. 2021 à 14:36
+-- Généré le :  jeu. 07 oct. 2021 à 15:09
 -- Version du serveur :  5.7.17
 -- Version de PHP :  7.1.3
 
@@ -43,7 +43,8 @@ CREATE TABLE `connexion` (
 --
 
 INSERT INTO `connexion` (`idMembre`, `courriel`, `motDePasse`, `statut`, `role`) VALUES
-(1, 'admin@KaJo.com', 'Admin-12', 1, 'A');
+(1, 'admin@gmail.com', 'Admin-12', 1, 'A'),
+(2, 'asd@gmail.com', 'Test_123', 1, 'M');
 
 -- --------------------------------------------------------
 
@@ -419,7 +420,13 @@ INSERT INTO `filmgenre` (`idFilm`, `idGenre`) VALUES
 (140, 11),
 (141, 12),
 (141, 1),
-(141, 4);
+(141, 4),
+(142, 1),
+(142, 2),
+(143, 4),
+(143, 7),
+(144, 4),
+(145, 1);
 
 -- --------------------------------------------------------
 
@@ -585,7 +592,11 @@ INSERT INTO `films` (`idFilm`, `titre`, `annee`, `duree`, `realisateurs`, `acteu
 (138, 'To Kill a Mockingbird', 1962, 129, 'Robert Mulligan', 'Gregory Peck, John Megna, Frank Overton, Rosemary Murphy', 'Atticus Finch, a lawyer in the Depression-era South, defends a black man against an undeserved rape charge, and his kids against prejudice.', 'https://ia.media-imdb.com/images/M/MV5BMjA4MzI1NDY2Nl5BMl5BanBnXkFtZTcwMTcyODc5Mw@@._V1_SX300.jpg', 19.99),
 (139, 'The Hateful Eight', 2015, 187, 'Quentin Tarantino', 'Samuel L. Jackson, Kurt Russell, Jennifer Jason Leigh, Walton Goggins', 'In the dead of a Wyoming winter, a bounty hunter and his prisoner find shelter in a cabin currently inhabited by a collection of nefarious characters.', 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA1MTc1NTg5NV5BMl5BanBnXkFtZTgwOTM2MDEzNzE@._V1_SX300.jpg', 4.99),
 (140, 'A Separation', 2011, 123, 'Asghar Farhadi', 'Peyman Moaadi, Leila Hatami, Sareh Bayat, Shahab Hosseini', 'A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer\'s disease.', 'https://ia.media-imdb.com/images/M/MV5BMTYzMzU4NDUwOF5BMl5BanBnXkFtZTcwMTM5MjA5Ng@@._V1_SX300.jpg', 19.99),
-(141, 'The Big Short', 2015, 130, 'Adam McKay', 'Ryan Gosling, Rudy Eisenzopf, Casey Groves, Charlie Talbert', 'Four denizens in the world of high-finance predict the credit and housing bubble collapse of the mid-2000s, and decide to take on the big banks for their greed and lack of foresight.', 'https://images-na.ssl-images-amazon.com/images/M/MV5BNDc4MThhN2EtZjMzNC00ZDJmLThiZTgtNThlY2UxZWMzNjdkXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg', 19.99);
+(141, 'The Big Short', 2015, 130, 'Adam McKay', 'Ryan Gosling, Rudy Eisenzopf, Casey Groves, Charlie Talbert', 'Four denizens in the world of high-finance predict the credit and housing bubble collapse of the mid-2000s, and decide to take on the big banks for their greed and lack of foresight.', 'https://images-na.ssl-images-amazon.com/images/M/MV5BNDc4MThhN2EtZjMzNC00ZDJmLThiZTgtNThlY2UxZWMzNjdkXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg', 19.99),
+(142, 'test', 200, 159, 'moi', 'moi', 'Petithhh', 'default.png', 8.99),
+(143, 'test123', 2008, 167, 'Alex Garland', 'Joe Blow', 'un chien perdu', 'default.png', 8.99),
+(144, 'AAA', 2019, 500, 'Alex Garland', 'Joe Blow', 'Un film plate', 'default.png', 8.99),
+(145, 'dsf', 234, 245, 'fdsf', 'sdf', 'aGD', 'default.png', 1.99);
 
 -- --------------------------------------------------------
 
@@ -670,7 +681,8 @@ CREATE TABLE `membres` (
 --
 
 INSERT INTO `membres` (`idMembre`, `prenom`, `nom`, `courriel`, `sexe`, `dateDeNaissance`) VALUES
-(1, 'admin', 'admin', 'admin@KaJo.com', 'M', '2000-09-01');
+(1, 'admin', 'admin', 'admin@gmail.com', 'M', '2000-09-01'),
+(2, 'asd', 'asdasd', 'asd@gmail.com', 'M', '2021-10-13');
 
 -- --------------------------------------------------------
 
@@ -748,10 +760,15 @@ ALTER TABLE `paiment`
 --
 
 --
+-- AUTO_INCREMENT pour la table `connexion`
+--
+ALTER TABLE `connexion`
+  MODIFY `idMembre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT pour la table `films`
 --
 ALTER TABLE `films`
-  MODIFY `idFilm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `idFilm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 --
 -- AUTO_INCREMENT pour la table `genre`
 --
@@ -761,7 +778,7 @@ ALTER TABLE `genre`
 -- AUTO_INCREMENT pour la table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `idMembre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idMembre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `paiment`
 --
