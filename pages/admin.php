@@ -57,7 +57,7 @@ if (isset($_GET['msg'])) {
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="#">Accueil</a>
-                        </li>
+						</li>
 					</ul>
 					<form class="d-flex">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -117,7 +117,7 @@ if (isset($_GET['msg'])) {
 						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
 						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
 						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
+						$rep .= '<a href="' . $ligne->idFilm . '" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-Supprimer">Supprimer</a>';
 						$rep .= '</div>';
 						$rep .= '</div>';
 
@@ -136,6 +136,26 @@ if (isset($_GET['msg'])) {
 				?>
 
 			</div> <!-- .container -->
+			<!-- modal supprimer -->
+			<div class="modal fade" id="modal-Supprimer" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Connexion</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+						<div class="modal-footer">
+							<button type="submit" id="submit-Connexion" class="btn btn-primary">Confirmer Suppression</button>
+						</div>
+						</form>
+
+
+					</div>
+				</div>
+			</div>
+			<!-- Fin modal supprimer -->
+
 		</main>
 
 		<footer class="site-footer">
