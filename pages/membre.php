@@ -1,10 +1,21 @@
 <?php
-if (isset($_GET['msg'])) {
+   if(isset($_GET['id'])){
+	$id = $_GET['id'];
 	$msg = $_GET['msg'];
-} else {
-	$msg = "";
-}
+	//echo "ID = ".$id."  MSG = ".$msg;
+
+	$requete="SELECT * FROM membres WHERE idMembre = ?";
+	$stmt = $connexion->prepare($requete);
+	$stmt->bind_param("i", $id);
+	$stmt->execute();
+	$result = $stmt->get_result();
+  
+   }else {
+	   $id = "-1";
+	   $msg = " ";
+   }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
