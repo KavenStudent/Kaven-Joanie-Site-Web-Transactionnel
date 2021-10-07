@@ -20,8 +20,8 @@
         //header("Location: ../pages/membre.php");
         header("Location:../index.php?id=$id&msg=Bienvenue");
       } else{
-        // header('Location: ../pages/admin.php');
-        header("Location:../index.php?id=$id&msg=Admin+connecté");
+         header('Location: ../pages/admin.php');
+        //header("Location:../index.php?id=$id&msg=Admin+connecté");
       }
 
     } else{

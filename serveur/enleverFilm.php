@@ -32,6 +32,12 @@ $image=$ligne->image;
 	$stmt = $connexion->prepare($requete);
 	$stmt->bind_param("i", $idFilm);
 	$stmt->execute();
+
+	$requete="DELETE FROM filmgenre WHERE idFilm=?";
+	$stmt = $connexion->prepare($requete);
+	$stmt->bind_param("i", $idFilm);
+	$stmt->execute();
+	
 	mysqli_close($connexion);
 	header("Location:../films.php?id=$num&msg=Le+film+à+été+enlevé");
 ?>
