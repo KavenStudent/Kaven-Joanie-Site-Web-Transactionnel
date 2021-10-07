@@ -76,6 +76,10 @@ let initialiser = (message) =>{
   }
 }
 
+function envoyerId(id){
+  document.getElementById('id-film-delete').value = id;
+}
+
  $(document).ready(function(){
   $(".toast-container").css("display", "none");
  });

@@ -12,7 +12,7 @@ if(!$ligne = $result->fetch_object()){
     //echo "Film ".$idFilm." introuvable";
     mysqli_close($connexion);
     exit;
-    header("Location:../films.php?id=$num&msg=Le+film+$idFIlm+n'existe+pas");
+    header("Location:../films.php?id=$num&msg=Le+film+$idFilm+n'existe+pas");
 }
 $image=$ligne->image;
 	if($image!="default.jpg"){
@@ -39,5 +39,5 @@ $image=$ligne->image;
 	$stmt->execute();
 	
 	mysqli_close($connexion);
-	header("Location:../films.php?id=$num&msg=Le+film+à+été+enlevé");
+	header("Location:../pages/admin.php?id=$num&msg=Le+film+à+été+enlevé");
 ?>

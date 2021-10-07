@@ -71,3 +71,8 @@
     height: 100px; 
     overflow-y: scroll; 
 }
+
+#formModifier {
+    display: inline;
+    margin-right: 10px;
+}
