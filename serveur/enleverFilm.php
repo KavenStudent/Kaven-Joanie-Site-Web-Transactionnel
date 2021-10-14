@@ -8,17 +8,18 @@
  $stmt->execute();
  $result = $stmt->get_result();
 
-if(!$ligne = $result->fetch_object()){
-    //echo "Film ".$idFilm." introuvable";
-    mysqli_close($connexion);
+if(!$ligne = $result->fetch_object()){ // si le filme n'existe pas
+ 
+    header("Location:../pages/listerFilms.php?msg=Le+film+$idFilm+n\'existe+pas");
+	mysqli_close($connexion);
     exit;
-    header("Location:../films.php?id=$num&msg=Le+film+$idFilm+n'existe+pas");
 }
+
 $image=$ligne->image;
-	if($image!="default.jpg"){
+	if($image!="default.png"){
 		$rmPoc='../imageFilm/'.$image;
 		$tabFichiers = glob('../imageFilm/*');
-		//print_r($tabFichiers);
+
 		// parcourir les fichier
 		foreach($tabFichiers as $fichier){
 		  if(is_file($fichier) && $fichier==trim($rmPoc)) {
@@ -28,16 +29,18 @@ $image=$ligne->image;
 		  }
 		}
 	}
+	// enleve le film de la bd
 	$requete="DELETE FROM films WHERE idFilm=?";
 	$stmt = $connexion->prepare($requete);
 	$stmt->bind_param("i", $idFilm);
 	$stmt->execute();
 
+	// enleve les genres du film de la bd
 	$requete="DELETE FROM filmgenre WHERE idFilm=?";
 	$stmt = $connexion->prepare($requete);
 	$stmt->bind_param("i", $idFilm);
 	$stmt->execute();
 	
 	mysqli_close($connexion);
-	header("Location:../pages/admin.php?id=$num&msg=Le+film+à+été+enlevé");
+	header("Location:../pages/listerFilms.php?msg=Le+film+$idFilm+a+été+enlevé");
 ?>

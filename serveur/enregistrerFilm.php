@@ -47,5 +47,5 @@
     }
 
     mysqli_close($connexion);
-    header("Location:../index.php?id=$id&msg=Le+film+a+été+enregistré");
+    header("Location:../pages/admin.php?msg=Le+film+$id+a+été+enregistré");
 ?>

@@ -78,5 +78,5 @@
     }
 
 	mysqli_close($connexion);
-	header("Location:../pages/admin.php?id=$idFilm&msg=Le+film+à+été+modifié");
+	header("Location:../pages/listerFilms.php?msg=Le+film+$idFilm+a+été+modifié");
 ?>

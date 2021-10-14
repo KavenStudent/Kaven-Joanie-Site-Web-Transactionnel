@@ -97,6 +97,7 @@ let initialiser = (message) => {
   let toastList = toastElList.map(function (toastEl) {
     return new bootstrap.Toast(toastEl)
   })
+
   if (message.length > 0) {
     textToast.innerHTML = message;
     $(".toast-container").css("display", "block");
@@ -150,4 +151,16 @@ function populerModal(id){
    
   }).finally(() => {$("#modal-modifier-film").modal('show');});
   
+}
+
+function listerFilms(){
+  document.getElementById('formListerFilms').submit();
+}
+
+function listerMembres(){
+  document.getElementById('formListerMembres').submit();
+}
+
+function AccueilAdmin(){
+  document.getElementById('formAccueilAdmin').submit();
 }
