@@ -1,19 +1,30 @@
 <?php
-   if(isset($_GET['id'])){
+require_once("../BD/connexion.inc.php");
+if (isset($_GET['id'])) {
 	$id = $_GET['id'];
 	$msg = $_GET['msg'];
 	//echo "ID = ".$id."  MSG = ".$msg;
 
-	$requete="SELECT * FROM membres WHERE idMembre = ?";
+	//$requete="SELECT * FROM membres WHERE idMembre = ?";
+	$requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.motDePasse, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE m.idMembre = ?";
 	$stmt = $connexion->prepare($requete);
 	$stmt->bind_param("i", $id);
 	$stmt->execute();
 	$result = $stmt->get_result();
-  
-   }else {
-	   $id = "-1";
-	   $msg = " ";
-   }
+
+	if ($ligne = $result->fetch_object()) {
+		$idM = $ligne->idMembre;
+		$prenom = $ligne->prenom;
+		$nom = $ligne->nom;
+		$courriel = $ligne->courriel;
+		$sexe = $ligne->sexe;
+		$motDePasse = $ligne->motDePasse;
+		$dateDeNaissance = $ligne->dateDeNaissance;
+	}
+}else {
+	$id = "-1";
+	$msg = " ";
+}
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +79,16 @@
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="#">Accueil</a>
-                        </li>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Profil</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-historique">Historique d'achat</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="../index.php">Deconnexion</a>
+						</li>
 					</ul>
 					<form class="d-flex">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -96,6 +116,174 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- modal devenir membre-->
+				<div class="modal fade" id="modal-Membre" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Modifier Profil</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+
+								<!-- Form devenir membre-->
+
+								<form class="formMembre" id="ProfilMembre" action="../serveur/modifierProfil.php" method="POST" onSubmit="return valider()">
+									<input id="idMembre" name="idMembre" type="hidden" value="<?php echo $idM ?>">
+									<div class="myInput">
+										<label for="prenom" class="form-label">Prénom</label>
+										<input type="text" class="form-control" id="prenom" name="prenom" value="<?php echo $prenom ?>" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+									<div class="myInput">
+										<label for="nom" class="form-label">Nom</label>
+										<input type="text" class="form-control" id="nom" name="nom" value="<?php echo $nom ?>" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="pages" class="form-label">Courriel</label>
+										<input type="email" class="form-control" id="email-Enreg" name="email" value="<?php echo $courriel ?>" required>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput">
+										<label for="password" class="form-label">Mot de passe</label>
+										<input type="password" class="form-control" id="password" name="password" value="<?php echo $motDePasse ?>" required>
+										<input class="montrerConfirmer" type="checkbox" onclick="montrerConfirmerPass()">Modifier le mot de passe
+										<span id="msg-password-erreur">Le mot de passe doit être entre 8 et 10 charactères et doit contenir des lettres majuscules, minuscules, des chiffres et les charactères "-_" </span>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<div class="myInput" id="confirmerPasse">
+										<label for="confirmPassword" class="form-label">Confirmer mot de passe</label>
+										<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="<?php echo $motDePasse ?>" required>
+										<input class="montrerPassword" type="checkbox" onclick="montrerPassword2()">Montrer le mot de passe
+										<span id="msg-confirm-password-erreur">Confirmation invalide</span>
+										<div class="valid-feedback">
+
+										</div>
+									</div>
+
+									<hr class="line">
+
+									<div class="myInput">
+										<p>Pour des raisons statistiques</p>
+
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="sexe" value="M" id="M" <?php if ($sexe === 'M') echo 'checked' ?>>
+											<label class="form-check-label" for="M">
+												Homme
+											</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="sexe" value="F" id="F" <?php if ($sexe === 'F') echo 'checked' ?>>
+											<label class="form-check-label" for="F">
+												Femme
+											</label>
+										</div>
+
+									</div>
+									<div class="myInput">
+										<label for="dateNaissance" class="form-label">Date de naissance</label>
+										<input type="date" class="form-control" id="dateNaissance" name="dateNaissance" value="<?php echo $dateDeNaissance ?>" required>
+									</div>
+
+									<div class="modal-footer">
+										<button type="submit" id="submit-Enreg" class="btn btn-primary">Modifier</button>
+									</div>
+								</form>
+
+								<!-- Fin form devenir membre-->
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Fin modal devenir membre-->
+
+				<!-- modal connexion -->
+				<div class="modal fade" id="modal-historique" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Location</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<h1>Location en cours</h1>
+
+								<h1>Historique Location</h1>
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">Titre</th>
+											<th scope="col">Date d'achat</th>
+											<th scope="col">Pochette</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+										<!-- load sont historique -->
+										<?php 
+										//require_once("../BD/connexion.inc.php");
+										$requette="SELECT h.idMembre, f.idFilm, f.titre, h.dateAchat, f.image FROM historiquelocation h  INNER JOIN films f ON h.idFilm = f.idFilm WHERE h.idMembre = $idM ORDER by h.dateAchat DESC";
+										try {
+											$listHistorique = mysqli_query($connexion, $requette);
+
+											$rep ="";
+										
+											while ($ligne = mysqli_fetch_object($listHistorique)) {
+												$rep.="<tr>";
+												$rep.="<td>".($ligne->titre)."</td>";
+												$rep.="<td>".($ligne->dateAchat)."</td>";
+												
+												$rep.="<td>";
+												if (substr($ligne->image, 0, 4) === "http") {
+													$rep .= '<img class="petit-image-film" src="' . ($ligne->image) . '" alt="image-film">';
+												} else {
+													$rep .= '<img class="petit-image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film">';
+												}
+												$rep.="</td>";
+												$rep .="</tr>";
+											}
+											
+											
+											mysqli_free_result($listHistorique);
+										} catch (Exception $e) {
+											echo "Probleme pour lister";
+										} finally {
+											echo $rep;
+											unset($rep);
+										}
+										?>
+										
+									</tbody>
+								</table>
+
+								<div class="modal-footer">
+
+								</div>
+
+
+								<!-- Fin form connexion -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Fin modal connexion -->
 
 				<?php
 				require_once("../BD/connexion.inc.php");
@@ -157,10 +345,6 @@
 			</div> <!-- .container -->
 
 		</footer>
-
-
-
-
 
 		<script src="../public/util/js/jquery-1.11.1.min.js"></script>
 		<script src="../public/util/js/plugins.js"></script>

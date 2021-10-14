@@ -29,6 +29,32 @@ function montrerPassword(id) {
   }
 }
 
+function montrerConfirmerPass(){
+   
+  if(visibleConfirmer === true){
+    $("#confirmerPasse").css("display", "none");
+    visibleConfirmer = false;
+  }
+  else{
+    $("#confirmerPasse").css("display", "block");
+    visibleConfirmer = true;
+  }
+}
+
+  function montrerPassword2(){
+
+    if(visibleMotdePasse === true){
+      $("#password").prop("type", "password");
+      $("#confirmPassword").prop("type", "password");
+      visibleMotdePasse = false;
+    }
+    else{
+      $("#password").prop("type", "text");
+      $("#confirmPassword").prop("type", "text");
+      visibleMotdePasse = true;
+    }
+  }
+
 function listerFilms() {
   $.getJSON(jsonUrl, function (json) {
     let contenu = `<div class="row">`;
