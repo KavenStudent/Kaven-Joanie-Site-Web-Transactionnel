@@ -1,4 +1,6 @@
 var jsonUrl = './public/util/bdfilms.json';
+var visibleConfirmer = false;
+var visibleMotdePasse = true;
 
 let valider = () => {
   let myForm = document.getElementById('formMembre');
