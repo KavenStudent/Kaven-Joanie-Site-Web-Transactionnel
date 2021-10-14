@@ -1,9 +1,9 @@
 var jsonUrl = './public/util/bdfilms.json';
 var visibleConfirmer = false;
-var visibleMotdePasse = true;
+var visibleMotdePasse = false;
 
-let valider = () => {
-  let myForm = document.getElementById('formMembre');
+let valider = (id) => {
+  let myForm = document.getElementById(id);
   let password = myForm.password.value;
   let confirmPassword = myForm.confirmPassword.value;
   let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_])[A-Za-z\d\-_]{8,10}$/;

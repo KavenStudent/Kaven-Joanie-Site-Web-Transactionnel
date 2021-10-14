@@ -110,7 +110,7 @@ if (isset($_GET['msg'])) {
 							<div class="modal-body">
 								<!-- Form devenir membre-->
 
-								<form class="formMembre" id="formMembre" action="serveur/enregistrerMembre.php" method="POST" onSubmit="return valider()">
+								<form class="formMembre" id="formMembre" action="serveur/enregistrerMembre.php" method="POST" onSubmit="return valider('formMembre')">
 									<div class="myInput">
 										<label for="prenom" class="form-label">Prénom</label>
 										<input type="text" class="form-control" id="prenom" name="prenom" required>
