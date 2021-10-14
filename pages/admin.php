@@ -24,13 +24,12 @@ if (isset($_GET['msg'])) {
 	<!-- Loading third party fonts -->
 	<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
 	<link href="../public/util/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
-
 	<!-- Loading main css file -->
 	<link rel="stylesheet" href="../public/util/css/style.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 	<link rel="stylesheet" href="../public/css/monStyle.css">
 	<script src="../public/js/monScript.js"></script>
-
 
 	<title>TP Joanie-Kaven</title>
 </head>
@@ -62,6 +61,14 @@ if (isset($_GET['msg'])) {
 						<li class="nav-item">
 							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-creer-film">Enregistrer Film</a>
 						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="#">Lister Films</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="#" onclick="">Lister Membres</a>
+						</li>
 					</ul>
 					<form class="d-flex">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -92,54 +99,106 @@ if (isset($_GET['msg'])) {
 
 				<?php
 				require_once("../BD/connexion.inc.php");
-				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-				try {
-					$listeFilms = mysqli_query($connexion, $requette);
-					$rep = "<div class='page' id='liste-film'>";
-					$i = 0;
 
-					$rep .= ' <div class="row">';
+				function listerFilms()
+				{
 
-					while ($ligne = mysqli_fetch_object($listeFilms)) {
-						if ($i % 4 == 0) {
-							$rep .= '</div>';
-							$rep .= ' <div class="row">';
+					global $connexion;
+					$requette = "SELECT * FROM films ORDER BY `films`.`idFilm` ASC";
+
+					try {
+						$listeFilms = mysqli_query($connexion, $requette);
+						$rep = "<div class='page' id='liste-film'>";
+						$i = 0;
+
+						$rep .= '<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">';
+						$rep .= '<thead> <tr> <th>ID</th> <th>Titre</th> <th>Année</th> <th>Durée</th> <th>Réalisateur</th>';
+						$rep .= '<th>Acteurs</th> <th>Prix</th> <th>Image</th> <th>Actions</th> </tr> </thead> <tbody>';
+
+						while ($ligne = mysqli_fetch_object($listeFilms)) {
+							// table
+							$rep .= '<tr><td>' . ($ligne->idFilm) . '</td>';
+							$rep .= '<td>' . ($ligne->titre) . '</td>';
+							$rep .= '<td>' . ($ligne->annee) . '</td>';
+							$rep .= '<td>' . ($ligne->duree) . '</td>';
+							$rep .= '<td>' . ($ligne->realisateurs) . '</td>';
+							$rep .= '<td>' . ($ligne->acteurs) . '</td>';
+							$rep .= '<td>' . ($ligne->prix) . '$</td>';
+
+							if (substr($ligne->image, 0, 4) === "http") {
+								$rep .= '<td><img id="icon-film" class="image-film" src="' . ($ligne->image) . '" alt="image-film"></td>';
+							} else {
+								$rep .= '<td><img id="icon-film" class="image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film"></td>';
+							}
+							$rep .= '<td><form id="formModifier" action="../serveur/modifierFilm.php" method="POST">';
+							$rep .= '<input type="hidden" name="idFilm" value="' . $ligne->idFilm . '">';
+							$rep .= '<button type="button" id="submit-Connexion" class="btn btn-primary" onclick="obtenirInfo(' . $ligne->idFilm . ')"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button></form>';
+
+							$rep .= '<td> <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Film" onclick="envoyerIdFilm(' . $ligne->idFilm . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> </td>	</tr>';
 						}
 
-						$rep .= '<div class="card">';
-
-
-
-						if (substr($ligne->image, 0, 4) === "http") {
-							$rep .= '<img class="image-film" src="' . ($ligne->image) . '" alt="image-film">';
-						} else {
-							$rep .= '<img class="image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film">';
-						}
-
-
-						$rep .= '<div class="card-body">';
-						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
-						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
-						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<form id="formModifier" action="../serveur/modifierFilm.php" method="POST">';
-						$rep .= '<input type="hidden" name="idFilm" value="' . $ligne->idFilm . '">';
-						$rep .= '<button type="submit" id="submit-Connexion" class="btn btn-primary">Modifier</button></form>';
-						$rep .= '<a id="' . $ligne->idFilm . '" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-Supprimer" onclick="envoyerId(id)">Supprimer</a>';
-						$rep .= '</div>';
-						$rep .= '</div>';
-
-						$i++;
+						$rep .= '</tbody> </table> </div> </div> </div>'; //fin 
+						$rep .= "</div>"; //fermer le container
+						mysqli_free_result($listeFilms);
+					} catch (Exception $e) {
+						echo "Probleme pour lister";
+					} finally {
+						echo $rep;
+						unset($rep);
 					}
-					$rep .= "</div>"; //fermer le dernier row
-					$rep .= "</div>"; //fermer le container
-					mysqli_free_result($listeFilms);
-				} catch (Exception $e) {
-					echo "Probleme pour lister";
-				} finally {
-					echo $rep;
-					unset($rep);
+					// mysqli_close($connexion);
+					
 				}
-				mysqli_close($connexion);
+
+				function listerMembres()
+				{
+
+					global $connexion;
+					// $requette = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
+					$requette = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
+					
+
+					try {
+						$listeMembres = mysqli_query($connexion, $requette);
+						$rep = "<div class='page' id='liste-membre'>";
+						$i = 0;
+
+						$rep .= '<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">';
+						$rep .= '<thead> <tr> <th>ID</th> <th>Prénom</th> <th>Nom</th> <th>Courriel</th> <th>Sexe</th>';
+						$rep .= '<th>Date de naissance</th> <th>Statut</th> <th>Rôle</th> <th>Actions</th> </tr> </thead> <tbody>';
+
+						while ($ligne = mysqli_fetch_object($listeMembres)) {
+							// table
+							$rep .= '<tr><td>' . ($ligne->idMembre) . '</td>';
+							$rep .= '<td>' . ($ligne->prenom) . '</td>';
+							$rep .= '<td>' . ($ligne->nom) . '</td>';
+							$rep .= '<td>' . ($ligne->courriel) . '</td>';
+							$rep .= '<td>' . ($ligne->sexe) . '</td>';
+							$rep .= '<td>' . ($ligne->dateDeNaissance) . '</td>';
+							$rep .= '<td>' . ($ligne->statut) . '</td>';
+							$rep .= '<td>' . ($ligne->role) . '</td>';
+				
+							$rep .= '<td><form id="formModifier" action="../serveur/modifierFilm.php" method="POST">';
+							$rep .= '<input type="hidden" name="idFilm" value="' . $ligne->idMembre . '">';
+							$rep .= '<button type="button" id="submit-Connexion" class="btn btn-primary" onclick="obtenirInfo(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button></form>';
+
+							$rep .= '<td> <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Membre" onclick="envoyerIdMembre(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> </td>	</tr>';
+						}
+
+						$rep .= '</tbody> </table> </div> </div> </div>'; //fin 
+						$rep .= "</div>"; //fermer le container
+						mysqli_free_result($listeMembres);
+					} catch (Exception $e) {
+						echo "Probleme pour lister";
+					} finally {
+						echo $rep;
+						unset($rep);
+					}
+					 mysqli_close($connexion);
+					
+				}
+				listerFilms();
+				listerMembres();
 				?>
 
 			</div> <!-- .container -->
@@ -352,12 +411,12 @@ if (isset($_GET['msg'])) {
 			</div>
 			<!-- Fin modal creer film-->
 
-			<!-- modal supprimer -->
-			<div class="modal fade" id="modal-Supprimer" tabindex="-1">
+			<!-- modal supprimer film-->
+			<div class="modal fade" id="modal-Supprimer-Film" tabindex="-1">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title">Confirmer la suppression</h5>
+							<h5 class="modal-title">Confirmer la suppression du film</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 
@@ -375,7 +434,32 @@ if (isset($_GET['msg'])) {
 					</div>
 				</div>
 			</div>
-			<!-- Fin modal supprimer -->
+			<!-- Fin modal supprimer film-->
+
+					<!-- modal supprimer membres-->
+					<div class="modal fade" id="modal-Supprimer-Membre" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Confirmer la suppression du membre</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+						<div class="modal-footer">
+							<form id="formFiche" action="../serveur/enleverMembre.php" method="POST">
+								<input type="hidden" id="id-membre-delete" name="idMembre" value="">
+
+								<button type="submit" id="submit-Connexion" class="btn btn-primary">Confirmer Suppression</button>
+							</form>
+
+						</div>
+						</form>
+
+
+					</div>
+				</div>
+			</div>
+			<!-- Fin modal supprimer membres-->
 		</main>
 
 		<footer class="site-footer">
@@ -386,10 +470,6 @@ if (isset($_GET['msg'])) {
 			</div> <!-- .container -->
 
 		</footer>
-
-
-
-
 
 		<script src="../public/util/js/jquery-1.11.1.min.js"></script>
 		<script src="../public/util/js/plugins.js"></script>
