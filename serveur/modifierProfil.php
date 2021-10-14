@@ -21,6 +21,7 @@ $requete = "SELECT * FROM membres WHERE courriel=? and idMembre NOT IN ($idMembr
         header("Location:../pages/membre.php?id=$idMembre&msg=Le+courriel+$email+est+déjà+utilisé.+Choisissez+un+autre+courriel.");
     }
 
+
 	$requette="UPDATE membres SET prenom=?,nom=?,courriel=?,sexe=?,dateDeNaissance=? WHERE idMembre=?";
 	$stmt = $connexion->prepare($requette);
 	$stmt->bind_param("sssssi",$prenom,$nom,$email,$sexe,$dateNaissance,$idMembre);
