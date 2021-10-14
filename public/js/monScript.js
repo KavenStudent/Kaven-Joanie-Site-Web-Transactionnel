@@ -124,16 +124,30 @@ $(document).ready(function () {
 async function obtenirInfo(id) {
 
   const response = await fetch('../serveur/fiche.php', {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
+    method: 'POST', 
+    mode: 'cors', 
     headers: {
       'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
 
-    body: JSON.stringify({ "idFilm": id }) // body data type must match "Content-Type" header
+    body: JSON.stringify({ "idFilm": id }) 
   });
-  let test = response.json(); // parses JSON response into native JavaScript objects
+  return response.json();
 
-  alert(JSON.stringify(response));
+}
+
+function populerModal(id){
+  obtenirInfo(id).then(data => {
+    console.log(data);
+    document.getElementById('id-modifier').value = data.idFilm;
+    document.getElementById('titre-modifier').value = data.titre;
+    document.getElementById('annee-modifier').value = data.annee;
+    document.getElementById('duree-modifier').value = data.duree;
+    document.getElementById('realisateur-modifier').value = data.realisateurs;
+    document.getElementById('acteur-modifier').value = data.acteurs;
+    document.getElementById('description-modifier').value = data.description;
+    document.getElementById('prix-modifier').value = data.prix;
+   
+  }).finally(() => {$("#modal-modifier-film").modal('show');});
+  
 }
