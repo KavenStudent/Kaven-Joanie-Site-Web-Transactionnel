@@ -17,18 +17,15 @@
     if($ligne->statut){ // regarde si le compte est valide
 
       if ($ligne->role === 'M'){// regarde le role
-        //header("Location: ../pages/membre.php");
         header("Location:../pages/membre.php?id=$id&msg=Bienvenue");
       } else{
 
-        // header('Location: ../pages/admin.php');
         header("Location:../pages/admin.php?id=$id&msg=Admin+connecté");
 
       }
 
     } else{
       header("Location:../index.php?id=$id&msg=Compte+inactif+.+Contacter+un+employé");
-     // echo MSG_ERREUR_INACTIF;
       mysqli_close($connexion);
       exit;
     }
@@ -36,7 +33,6 @@
 
     } else {
         header("Location:../index.php?id=$id&msg=Erreur+de+connexion+.+Vérifiez+vos+paramètes+de+connexion");
-        //echo MSG_ERREUR_CONNEXION;
         mysqli_close($connexion);
         exit;
     }
