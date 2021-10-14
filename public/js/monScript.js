@@ -131,7 +131,7 @@ async function obtenirInfo(id) {
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
 
-    body: JSON.stringify({ "id": id }) // body data type must match "Content-Type" header
+    body: JSON.stringify({ "idFilm": id }) // body data type must match "Content-Type" header
   });
   let test = response.json(); // parses JSON response into native JavaScript objects
 
