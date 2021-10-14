@@ -178,10 +178,7 @@ if (isset($_GET['msg'])) {
 							$rep .= '<td>' . ($ligne->statut) . '</td>';
 							$rep .= '<td>' . ($ligne->role) . '</td>';
 				
-							$rep .= '<td><form id="formModifier" action="../serveur/modifierFilm.php" method="POST">';
-							$rep .= '<input type="hidden" name="idFilm" value="' . $ligne->idMembre . '">';
-							$rep .= '<button type="button" id="submit-Connexion" class="btn btn-primary" onclick="obtenirInfo(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button></form>';
-
+							$rep .= '<td> <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-Activer-Membre" onclick="envoyerIdMembreActive(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xe876;</i></a> </td>';
 							$rep .= '<td> <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Membre" onclick="envoyerIdMembre(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> </td>	</tr>';
 						}
 
@@ -460,6 +457,31 @@ if (isset($_GET['msg'])) {
 				</div>
 			</div>
 			<!-- Fin modal supprimer membres-->
+			
+						<!-- modal activer membres-->
+						<div class="modal fade" id="modal-Activer-Membre" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Confirmer la réactivation du membre</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+						<div class="modal-footer">
+							<form id="formFiche" action="../serveur/activerMembre.php" method="POST">
+								<input type="hidden" id="id-membre-activer" name="idMembre" value="">
+
+								<button type="submit" id="submit-Connexion" class="btn btn-primary">Confirmer réactivation</button>
+							</form>
+
+						</div>
+						</form>
+
+
+					</div>
+				</div>
+			</div>
+			<!-- Fin modal activer membres-->
 		</main>
 
 		<footer class="site-footer">

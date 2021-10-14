@@ -110,6 +110,10 @@ function envoyerIdMembre(id) {
   document.getElementById('id-membre-delete').value = id;
 }
 
+function envoyerIdMembreActive(id) {
+  document.getElementById('id-membre-activer').value = id;
+}
+
 $(document).ready(function () {
   $(".toast-container").css("display", "none");
 });
