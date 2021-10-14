@@ -130,7 +130,7 @@ if (isset($_GET['id'])) {
 
 								<!-- Form devenir membre-->
 
-								<form class="formMembre" id="ProfilMembre" action="../serveur/modifierProfil.php" method="POST" onSubmit="return valider()">
+								<form class="formMembre" id="ProfilMembre" action="../serveur/modifierProfil.php" method="POST" onSubmit="return valider('ProfilMembre')">
 									<input id="idMembre" name="idMembre" type="hidden" value="<?php echo $idM ?>">
 									<div class="myInput">
 										<label for="prenom" class="form-label">Prénom</label>
