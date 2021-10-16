@@ -135,6 +135,17 @@ async function obtenirInfo(id) {
   });
   return response.json();
 
+
+  alert(JSON.stringify(response));
+
+}
+
+function listerHistorique(){
+  document.getElementById('formHistorique').submit();
+}
+
+function retourAccueilM(){
+  document.getElementById('formAccueilM').submit();
 }
 
 function populerModal(id){
@@ -163,4 +174,5 @@ function listerMembres(){
 
 function AccueilAdmin(){
   document.getElementById('formAccueilAdmin').submit();
+
 }

@@ -89,3 +89,11 @@
     height: 50px;
     width: 35px;
 }
+.scroll-historique{
+    border:2px solid #ccc; 
+    height: 10px;
+    overflow-y: scroll; 
+}
+html{
+    background-color: #131a20;
+}

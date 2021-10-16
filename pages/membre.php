@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
 		$motDePasse = $ligne->motDePasse;
 		$dateDeNaissance = $ligne->dateDeNaissance;
 	}
-}else {
+} else {
 	$id = "-1";
 	$msg = " ";
 }
@@ -78,16 +78,19 @@ if (isset($_GET['id'])) {
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">Accueil</a>
+							<a class="nav-link active" aria-current="page" href="javascript:retourAccueilM()">Accueil</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Profil</a>
 						</li>
-						<li class="nav-item">
+						<!-- <li class="nav-item">
 							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-historique">Historique d'achat</a>
+						</li> -->
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="javascript:listerHistorique();">Historique d'achat</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="../index.php">Deconnexion</a>
+							<a class="nav-link" aria-current="page" href="../index.php">Deconnexion</a>
 						</li>
 					</ul>
 					<form class="d-flex">
@@ -212,79 +215,6 @@ if (isset($_GET['id'])) {
 				</div>
 				<!-- Fin modal devenir membre-->
 
-				<!-- modal connexion -->
-				<div class="modal fade" id="modal-historique" tabindex="-1">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Location</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-
-								<h1>Location en cours</h1>
-
-								<h1>Historique Location</h1>
-								<table class="table">
-									<thead>
-										<tr>
-											<th scope="col">Titre</th>
-											<th scope="col">Date d'achat</th>
-											<th scope="col">Pochette</th>
-										</tr>
-									</thead>
-									<tbody>
-										
-										<!-- load sont historique -->
-										<?php 
-										//require_once("../BD/connexion.inc.php");
-										$requette="SELECT h.idMembre, f.idFilm, f.titre, h.dateAchat, f.image FROM historiquelocation h  INNER JOIN films f ON h.idFilm = f.idFilm WHERE h.idMembre = $idM ORDER by h.dateAchat DESC";
-										try {
-											$listHistorique = mysqli_query($connexion, $requette);
-
-											$rep ="";
-										
-											while ($ligne = mysqli_fetch_object($listHistorique)) {
-												$rep.="<tr>";
-												$rep.="<td>".($ligne->titre)."</td>";
-												$rep.="<td>".($ligne->dateAchat)."</td>";
-												
-												$rep.="<td>";
-												if (substr($ligne->image, 0, 4) === "http") {
-													$rep .= '<img class="petit-image-film" src="' . ($ligne->image) . '" alt="image-film">';
-												} else {
-													$rep .= '<img class="petit-image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film">';
-												}
-												$rep.="</td>";
-												$rep .="</tr>";
-											}
-											
-											
-											mysqli_free_result($listHistorique);
-										} catch (Exception $e) {
-											echo "Probleme pour lister";
-										} finally {
-											echo $rep;
-											unset($rep);
-										}
-										?>
-										
-									</tbody>
-								</table>
-
-								<div class="modal-footer">
-
-								</div>
-
-
-								<!-- Fin form connexion -->
-							</div>
-
-						</div>
-					</div>
-				</div>
-				<!-- Fin modal connexion -->
-
 				<?php
 				require_once("../BD/connexion.inc.php");
 				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
@@ -345,6 +275,18 @@ if (isset($_GET['id'])) {
 			</div> <!-- .container -->
 
 		</footer>
+
+		<!-- accueil membre -->
+		<form id="formAccueilM" action="membre.php" methode="post">
+			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
+			<input id="msg" name="msg" type="hidden" value="Bienvenu dans l\'accueil">
+		</form>
+
+		<!-- historique d'achat -->
+		<form id="formHistorique" action="membreHistorique.php" methode="post">
+			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
+			<input id="msg" name="msg" type="hidden" value="Bienvenu dans votre historique de location">
+		</form>
 
 		<script src="../public/util/js/jquery-1.11.1.min.js"></script>
 		<script src="../public/util/js/plugins.js"></script>
