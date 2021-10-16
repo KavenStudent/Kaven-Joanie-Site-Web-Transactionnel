@@ -159,7 +159,8 @@ function populerModal(id){
     document.getElementById('acteur-modifier').value = data.acteurs;
     document.getElementById('description-modifier').value = data.description;
     document.getElementById('prix-modifier').value = data.prix;
-   
+    document.getElementById('bandeAnnonce-modifier').value = data.bandeAnnonce;
+    
   }).finally(() => {$("#modal-modifier-film").modal('show');});
   
 }

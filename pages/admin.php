@@ -348,7 +348,11 @@ if (isset($_GET['msg'])) {
 									<input type="file" class="form-control" id="image" name="image">
 
 								</div>
+								<div class="myInput">
+									<label for="bandeAnnonce" class="form-label">Bande Annonce</label>
+									<input type="text" class="form-control" id="bandeAnnonce" name="bandeAnnonce">
 
+								</div>
 
 								<div class="modal-footer">
 									<button type="submit" id="submit-Film" class="btn btn-primary">Enregistrer Film</button>
