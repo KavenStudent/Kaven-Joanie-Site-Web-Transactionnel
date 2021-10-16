@@ -4,11 +4,17 @@ require_once("../BD/connexion.inc.php");
 $idMembre = $_POST['idMembre'];
 $statut = 1;
 
+if($idMembre == 1){
+    header("Location:../pages/listerMembres.php?msg=Impossible+de+modifier+l\'administrateur");
+    mysqli_close($connexion);
+    exit;
+}
+
 $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
 $stmt = $connexion->prepare($requete);
 $stmt->bind_param("ii", $statut,$idMembre);
 $stmt->execute();
 
 mysqli_close($connexion);
-header("Location:../pages/admin.php?id=$num&msg=Le+membre+à+été+réactivé");
+header("Location:../pages/listerMembres.php?msg=Le+membre+$idMembre+a+été+réactivé");
 ?>

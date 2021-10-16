@@ -55,7 +55,7 @@ if (isset($_GET['msg'])) {
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="javascript:AccueilAdmin();">Accueil</a>
+							<a class="nav-link" href="javascript:AccueilAdmin();">Accueil</a>
 						</li>
 
 						<li class="nav-item">
@@ -63,7 +63,7 @@ if (isset($_GET['msg'])) {
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" href="javascript:listerFilms();">Lister Films</a>
+							<a class="nav-link active" aria-current="page" href="javascript:listerFilms();">Lister Films</a>
 						</li>
 
 						<li class="nav-item">
@@ -103,42 +103,37 @@ if (isset($_GET['msg'])) {
 				<?php
 				require_once("../BD/connexion.inc.php");
 
-				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
+				$requette = "SELECT * FROM films ORDER BY `films`.`idFilm` ASC";
+
 				try {
 					$listeFilms = mysqli_query($connexion, $requette);
 					$rep = "<div class='page' id='liste-film'>";
-					$i = 0;
 
-					$rep .= ' <div class="row">';
+					$rep .= '<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">';
+					$rep .= '<thead> <tr> <th>ID</th> <th>Titre</th> <th>Année</th> <th>Durée</th> <th>Réalisateur</th>';
+					$rep .= '<th>Acteurs</th> <th>Prix</th> <th>Image</th> <th>Actions</th> </tr> </thead> <tbody>';
 
 					while ($ligne = mysqli_fetch_object($listeFilms)) {
-						if ($i % 4 == 0) {
-							$rep .= '</div>';
-							$rep .= ' <div class="row">';
-						}
-
-						$rep .= '<div class="card">';
-
-
+						// table
+						$rep .= '<tr><td>' . ($ligne->idFilm) . '</td>';
+						$rep .= '<td>' . ($ligne->titre) . '</td>';
+						$rep .= '<td>' . ($ligne->annee) . '</td>';
+						$rep .= '<td>' . ($ligne->duree) . '</td>';
+						$rep .= '<td>' . ($ligne->realisateurs) . '</td>';
+						$rep .= '<td>' . ($ligne->acteurs) . '</td>';
+						$rep .= '<td>' . ($ligne->prix) . '$</td>';
 
 						if (substr($ligne->image, 0, 4) === "http") {
-							$rep .= '<img class="image-film" src="' . ($ligne->image) . '" alt="image-film">';
+							$rep .= '<td><img id="icon-film" class="image-film" src="' . ($ligne->image) . '" alt="image-film"></td>';
 						} else {
-							$rep .= '<img class="image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film">';
+							$rep .= '<td><img id="icon-film" class="image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film"></td>';
 						}
 
-
-						$rep .= '<div class="card-body">';
-						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
-						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
-						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
-						$rep .= '</div>';
-						$rep .= '</div>';
-
-						$i++;
+						$rep .= '<td> <a class="btn btn-primary" onclick="populerModal(' . $ligne->idFilm . ')"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> </td>';
+						$rep .= '<td> <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Film" onclick="envoyerIdFilm(' . $ligne->idFilm . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> </td>	</tr>';
 					}
-					$rep .= "</div>"; //fermer le dernier row
+
+					$rep .= '</tbody> </table> </div> </div> </div>'; //fin 
 					$rep .= "</div>"; //fermer le container
 					mysqli_free_result($listeFilms);
 				} catch (Exception $e) {
@@ -148,6 +143,7 @@ if (isset($_GET['msg'])) {
 					unset($rep);
 				}
 				mysqli_close($connexion);
+
 				?>
 
 			</div> <!-- .container -->
@@ -362,6 +358,246 @@ if (isset($_GET['msg'])) {
 				</div>
 			</div>
 			<!-- Fin modal creer film-->
+
+			<!-- modal supprimer film-->
+			<div class="modal fade" id="modal-Supprimer-Film" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Confirmer la suppression du film</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+						<div class="modal-footer">
+							<form id="formFiche" action="../serveur/enleverFilm.php" method="POST">
+								<input type="hidden" id="id-film-delete" name="idFilm" value="">
+
+								<button type="submit" id="submit-Connexion" class="btn btn-primary">Confirmer Suppression</button>
+							</form>
+
+						</div>
+						</form>
+
+
+					</div>
+				</div>
+			</div>
+			<!-- Fin modal supprimer film-->
+
+			<!-- modal modifier film-->
+			<div class="modal fade" id="modal-modifier-film" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Modifier film</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<!-- Form modifier film-->
+
+							<form class="formMembre" id="formMembre" enctype="multipart/form-data" action="../serveur/modifierFilm.php" method="POST">
+
+								<input type="hidden" class="form-control" id="id-modifier" name="id">
+
+								<div class="myInput">
+									<label for="titre" class="form-label">Titre</label>
+									<input type="text" class="form-control" id="titre-modifier" name="titre" required>
+									<div class="valid-feedback">
+
+									</div>
+								</div>
+								<div class="myInput">
+									<label for="annee" class="form-label">Année</label>
+									<input type="number" class="form-control" id="annee-modifier" name="annee" min="0" required>
+									<div class="valid-feedback">
+
+									</div>
+								</div>
+
+								<div class="myInput">
+									<label for="duree" class="form-label">Durée</label>
+									<input type="number" class="form-control" id="duree-modifier" name="duree" min="0" required>
+									<div class="valid-feedback">
+
+									</div>
+								</div>
+
+								<div class="myInput">
+									<label for="realisateur" class="form-label">Réalisateur</label>
+									<input type="text" class="form-control" id="realisateur-modifier" name="realisateur" required>
+
+
+								</div>
+
+								<div class="myInput">
+									<label for="acteur" class="form-label">Acteur</label>
+									<textarea rows="2" class="form-control" id="acteur-modifier" name="acteur" required></textarea>
+									<!-- <input type="text" class="form-control" id="acteur-modifier" name="acteur" required> -->
+
+								</div>
+								<div class="myInput">
+									<label for="description" class="form-label">Description</label>
+									<textarea rows="3" class="form-control" id="description-modifier" name="description" required></textarea>
+
+								</div>
+								<!-- genres -->
+								<div class="myInput">
+									<div class="genres-container">
+
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="Comedy" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Comedy
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Fantasy" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Fantasy
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Crime" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Crime
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Drama" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Drama
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Music" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Music
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Adventure" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Adventure
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="History" name="genres[]">
+											<label class="form-check-label" for="genres">
+												History
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Thriller" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Thriller
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Animation" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Animation
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Family" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Family
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Mystery" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Mystery
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Biography" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Biography
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Action" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Action
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Film-Noir" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Film-Noir
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Romance" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Romance
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Sci-Fi" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Sci-Fi
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="War" name="genres[]">
+											<label class="form-check-label" for="genres">
+												War
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Western" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Western
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Horror" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Horror
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Musical" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Musical
+											</label>
+										</div>
+										<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="Sport" name="genres[]">
+											<label class="form-check-label" for="genres">
+												Sport
+											</label>
+										</div>
+
+									</div>
+								</div>
+								<!-- fin genres -->
+								<div class="myInput">
+									<label for="prix" class="form-label">Prix</label>
+									<input type="text" class="form-control" id="prix-modifier" name="prix" required>
+
+								</div>
+								<div class="myInput">
+									<label for="image" class="form-label">Image</label>
+									<input type="file" class="form-control" id="image" name="image">
+
+								</div>
+
+
+								<div class="modal-footer">
+									<button type="submit" id="submit-Film" class="btn btn-primary">Modifier Film</button>
+								</div>
+							</form>
+
+							<!-- Fin form modifier film-->
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- Fin modal modifier film-->
 
 			<!--lister films  -->
 			<form id="formListerFilms" action="listerFilms.php" method="post"></form>

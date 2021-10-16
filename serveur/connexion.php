@@ -1,7 +1,5 @@
 <?php
   require_once("../BD/connexion.inc.php");
-  define("MSG_ERREUR_CONNEXION", "<p style='color:red; font-size: 14px;'><b>Erreur de connexion. Vérifiez vos paramètes de connexion.</b></p>");
-  define("MSG_ERREUR_INACTIF", "<p style='color:red; font-size: 14px;'><b>Compte inactif. Contacter un employé</b></p>");
   $email = $_POST['email'];
   $password = $_POST['password'];
   $isValid = false;
@@ -18,26 +16,26 @@
 
       if ($ligne->role === 'M'){// regarde le role
         header("Location:../pages/membre.php?id=$id&msg=Bienvenue");
+        mysqli_close($connexion);
+        exit;
+
       } else{
 
-        header("Location:../pages/admin.php?id=$id&msg=Admin+connecté");
-
+        header("Location:../pages/admin.php?msg=Admin+connecté");
+        mysqli_close($connexion);
+        exit;
       }
 
-    } else{
-      header("Location:../index.php?id=$id&msg=Compte+inactif+.+Contacter+un+employé");
+    } else{ // si le compte est inactif
+      header("Location:../index.php?msg=Compte+inactif.+Contacter+un+employé");
       mysqli_close($connexion);
       exit;
     }
       
 
-    } else {
-        header("Location:../index.php?id=$id&msg=Erreur+de+connexion+.+Vérifiez+vos+paramètes+de+connexion");
+    } else { // si erreur de connexion
+        header("Location:../index.php?msg=Erreur+de+connexion.+Vérifiez+vos+paramètes+de+connexion");
         mysqli_close($connexion);
         exit;
     }
 ?>
-<!-- 
-</br>
-</br>
-<a href="../index.html">Retour a la page d'accueil</a> -->

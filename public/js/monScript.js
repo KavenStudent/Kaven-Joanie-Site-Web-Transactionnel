@@ -97,6 +97,7 @@ let initialiser = (message) => {
   let toastList = toastElList.map(function (toastEl) {
     return new bootstrap.Toast(toastEl)
   })
+
   if (message.length > 0) {
     textToast.innerHTML = message;
     $(".toast-container").css("display", "block");
@@ -124,16 +125,16 @@ $(document).ready(function () {
 async function obtenirInfo(id) {
 
   const response = await fetch('../serveur/fiche.php', {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
+    method: 'POST', 
+    mode: 'cors', 
     headers: {
       'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
 
-    body: JSON.stringify({ "idFilm": id }) // body data type must match "Content-Type" header
+    body: JSON.stringify({ "idFilm": id }) 
   });
-  let test = response.json(); // parses JSON response into native JavaScript objects
+  return response.json();
+
 
   alert(JSON.stringify(response));
 
@@ -145,4 +146,33 @@ function listerHistorique(){
 
 function retourAccueilM(){
   document.getElementById('formAccueilM').submit();
+}
+
+function populerModal(id){
+  obtenirInfo(id).then(data => {
+    console.log(data);
+    document.getElementById('id-modifier').value = data.idFilm;
+    document.getElementById('titre-modifier').value = data.titre;
+    document.getElementById('annee-modifier').value = data.annee;
+    document.getElementById('duree-modifier').value = data.duree;
+    document.getElementById('realisateur-modifier').value = data.realisateurs;
+    document.getElementById('acteur-modifier').value = data.acteurs;
+    document.getElementById('description-modifier').value = data.description;
+    document.getElementById('prix-modifier').value = data.prix;
+   
+  }).finally(() => {$("#modal-modifier-film").modal('show');});
+  
+}
+
+function listerFilms(){
+  document.getElementById('formListerFilms').submit();
+}
+
+function listerMembres(){
+  document.getElementById('formListerMembres').submit();
+}
+
+function AccueilAdmin(){
+  document.getElementById('formAccueilAdmin').submit();
+
 }
