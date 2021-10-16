@@ -136,4 +136,13 @@ async function obtenirInfo(id) {
   let test = response.json(); // parses JSON response into native JavaScript objects
 
   alert(JSON.stringify(response));
+
+}
+
+function listerHistorique(){
+  document.getElementById('formHistorique').submit();
+}
+
+function retourAccueilM(){
+  document.getElementById('formAccueilM').submit();
 }
