@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 16 oct. 2021 à 23:58
+-- Généré le :  lun. 18 oct. 2021 à 18:55
 -- Version du serveur :  5.7.17
 -- Version de PHP :  7.1.3
 
@@ -43,7 +43,7 @@ CREATE TABLE `connexion` (
 --
 
 INSERT INTO `connexion` (`idMembre`, `courriel`, `motDePasse`, `statut`, `role`) VALUES
-(1, 'admin@gmail.com', 'Admin-12', 1, 'A'),
+(1, 'admin@KaJo.com', 'Admin-12', 1, 'A'),
 (2, 'asd@gmail.com', 'Test_123', 1, 'M'),
 (3, 'joanie.birtz@gmail.com', 'Lilou_349', 1, 'M'),
 (4, 'test@gmail.com', 'Test_349', 1, 'M');
@@ -594,7 +594,8 @@ INSERT INTO `films` (`idFilm`, `titre`, `annee`, `duree`, `realisateurs`, `acteu
 (138, 'To Kill a Mockingbird', 1962, 129, 'Robert Mulligan', 'Gregory Peck, John Megna, Frank Overton, Rosemary Murphy', 'Atticus Finch, a lawyer in the Depression-era South, defends a black man against an undeserved rape charge, and his kids against prejudice.', 'To_Kill_A_Mockingbird.jpg', 'https://www.youtube.com/embed/KR7loA_oziY', 19.99),
 (139, 'The Hateful Eight', 2015, 187, 'Quentin Tarantino', 'Samuel L. Jackson, Kurt Russell, Jennifer Jason Leigh, Walton Goggins', 'In the dead of a Wyoming winter, a bounty hunter and his prisoner find shelter in a cabin currently inhabited by a collection of nefarious characters.', 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA1MTc1NTg5NV5BMl5BanBnXkFtZTgwOTM2MDEzNzE@._V1_SX300.jpg', 'https://www.youtube.com/embed/cM0WxEv5mwg', 4.99),
 (140, 'A Separation', 2011, 123, 'Asghar Farhadi', 'Peyman Moaadi, Leila Hatami, Sareh Bayat, Shahab Hosseini', 'A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer\'s disease.', 'https://ia.media-imdb.com/images/M/MV5BMTYzMzU4NDUwOF5BMl5BanBnXkFtZTcwMTM5MjA5Ng@@._V1_SX300.jpg', 'https://www.youtube.com/embed/alh2uwztQbE', 19.99),
-(141, 'The Big Short', 2015, 130, 'Adam McKay', 'Ryan Gosling, Rudy Eisenzopf, Casey Groves, Charlie Talbert', 'Four denizens in the world of high-finance predict the credit and housing bubble collapse of the mid-2000s, and decide to take on the big banks for their greed and lack of foresight.', 'https://images-na.ssl-images-amazon.com/images/M/MV5BNDc4MThhN2EtZjMzNC00ZDJmLThiZTgtNThlY2UxZWMzNjdkXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg', 'https://www.youtube.com/embed/lKOC_kmBsJU', 19.99);
+(141, 'The Big Short', 2015, 130, 'Adam McKay', 'Ryan Gosling, Rudy Eisenzopf, Casey Groves, Charlie Talbert', 'Four denizens in the world of high-finance predict the credit and housing bubble collapse of the mid-2000s, and decide to take on the big banks for their greed and lack of foresight.', 'https://images-na.ssl-images-amazon.com/images/M/MV5BNDc4MThhN2EtZjMzNC00ZDJmLThiZTgtNThlY2UxZWMzNjdkXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg', 'https://www.youtube.com/embed/lKOC_kmBsJU', 19.99),
+(147, 'test', 1, 123, 'a', 'a', 'a', '492a1032418ce715f13eae5464d22ee9c6158d03.jpg', 'test1', 18.99);
 
 -- --------------------------------------------------------
 
@@ -694,7 +695,7 @@ CREATE TABLE `membres` (
 --
 
 INSERT INTO `membres` (`idMembre`, `prenom`, `nom`, `courriel`, `sexe`, `dateDeNaissance`) VALUES
-(1, 'admin', 'admin', 'admin@gmail.com', 'M', '2000-09-01'),
+(1, 'admin', 'admin', 'admin@KaJo.com', 'M', '2000-09-01'),
 (2, 'asd', 'asdasd', 'asd@gmail.com', 'M', '2021-10-13'),
 (3, 'Joanie', 'Birtz', 'joanie.birtz@gmail.com', 'F', '2000-07-12'),
 (4, 'Joanie Birtz', 'ads', 'test@gmail.com', 'M', '2021-10-21');
@@ -783,7 +784,7 @@ ALTER TABLE `connexion`
 -- AUTO_INCREMENT pour la table `films`
 --
 ALTER TABLE `films`
-  MODIFY `idFilm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `idFilm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 --
 -- AUTO_INCREMENT pour la table `genre`
 --
