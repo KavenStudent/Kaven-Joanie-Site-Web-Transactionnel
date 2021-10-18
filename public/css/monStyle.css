@@ -97,3 +97,11 @@
 html{
     background-color: #131a20;
 }
+.myButton{
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    background-color: transparent !important;
+    border: 0;
+    color:black !important;
+}

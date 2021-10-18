@@ -124,8 +124,8 @@ if (isset($_GET['msg'])) {
                         $rep .= '<td>' . ($ligne->statut) . '</td>';
                         $rep .= '<td>' . ($ligne->role) . '</td>';
 
-                        $rep .= '<td> <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-Activer-Membre" onclick="envoyerIdMembreActive(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xe876;</i></a> </td>';
-                        $rep .= '<td> <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Membre" onclick="envoyerIdMembre(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> </td>	</tr>';
+                        $rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Activer-Membre" onclick="envoyerIdMembreActive(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xe876;</i></a> </td>';
+                        $rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Membre" onclick="envoyerIdMembre(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> </td>	</tr>';
                         
                       
                     }
