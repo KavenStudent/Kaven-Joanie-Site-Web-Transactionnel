@@ -176,3 +176,7 @@ function AccueilAdmin(){
   document.getElementById('formAccueilAdmin').submit();
 
 }
+
+function listerLocation(){
+  
+}
