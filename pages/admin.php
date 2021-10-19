@@ -132,7 +132,7 @@ if (isset($_GET['msg'])) {
 						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
 						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
 						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
+						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ')">Bande Annonce</a>';
 						$rep .= '</div>';
 						$rep .= '</div>';
 
@@ -366,6 +366,25 @@ if (isset($_GET['msg'])) {
 				</div>
 			</div>
 			<!-- Fin modal creer film-->
+
+			<!-- modal bande annonce -->
+			<div class="modal fade" id="modal-trailer" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Bande Annonce</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="ratio ratio-16x9">
+								<iframe id="trailer" src="" title="YouTube video" allowfullscreen></iframe>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- Fin modal bande annonce -->
 
 			<!--lister films  -->
 			<form id="formListerFilms" action="listerFilms.php" method="post"></form>

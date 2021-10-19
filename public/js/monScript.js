@@ -122,6 +122,14 @@ $(document).ready(function () {
 });
 
 
+function listerHistorique(){
+  document.getElementById('formHistorique').submit();
+}
+
+function retourAccueilM(){
+  document.getElementById('formAccueilM').submit();
+}
+
 async function obtenirInfo(id) {
 
   const response = await fetch('../serveur/fiche.php', {
@@ -135,22 +143,10 @@ async function obtenirInfo(id) {
   });
   return response.json();
 
-
-  alert(JSON.stringify(response));
-
-}
-
-function listerHistorique(){
-  document.getElementById('formHistorique').submit();
-}
-
-function retourAccueilM(){
-  document.getElementById('formAccueilM').submit();
 }
 
 function populerModal(id){
   obtenirInfo(id).then(data => {
-    console.log(data);
     document.getElementById('id-modifier').value = data.idFilm;
     document.getElementById('titre-modifier').value = data.titre;
     document.getElementById('annee-modifier').value = data.annee;
@@ -163,6 +159,38 @@ function populerModal(id){
     
   }).finally(() => {$("#modal-modifier-film").modal('show');});
   
+}
+
+function afficherTrailer(id){
+  obtenirInfo(id)
+  .then(data => {
+    document.getElementById('trailer').src = data.bandeAnnonce;
+  })
+  .finally(() => {$("#modal-trailer").modal('show');});
+}
+
+async function indexTrailer(id) {
+
+  const response = await fetch('./serveur/fiche.php', {
+    method: 'POST', 
+    mode: 'cors', 
+    headers: {
+      'Content-Type': 'application/json'
+    },
+
+    body: JSON.stringify({ "idFilm": id }) 
+  })
+  return response.json();
+ 
+
+}
+
+function afficherIndexTrailer(id){
+  indexTrailer(id)
+  .then(data => {
+    document.getElementById('trailer').src = data.bandeAnnonce;
+  })
+  .finally(() => {$("#modal-trailer").modal('show');});
 }
 
 function listerFilms(){

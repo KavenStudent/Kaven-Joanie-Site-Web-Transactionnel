@@ -248,7 +248,7 @@ if (isset($_GET['msg'])) {
 							<div class="modal-body">
 								<!-- Form creer film-->
 
-								<form class="formMembre" id="formMembre" enctype="multipart/form-data" action="serveur/enregistrerFilm.php" method="POST">
+								<form class="formFilm" id="formFilm" enctype="multipart/form-data" action="serveur/enregistrerFilm.php" method="POST">
 									<div class="myInput">
 										<label for="titre" class="form-label">Titre</label>
 										<input type="text" class="form-control" id="titre" name="titre" required>
@@ -445,6 +445,25 @@ if (isset($_GET['msg'])) {
 				</div>
 				<!-- Fin modal creer film-->
 
+				<!-- modal bande annonce -->
+				<div class="modal fade" id="modal-trailer" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Bande Annonce</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="ratio ratio-16x9">
+									<iframe id="trailer" src="" title="YouTube video" allowfullscreen></iframe>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Fin modal bande annonce -->
+
 				<?php
 				require_once("BD/connexion.inc.php");
 				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
@@ -478,7 +497,7 @@ if (isset($_GET['msg'])) {
 						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
 						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
 						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
+						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherIndexTrailer(' . $ligne->idFilm . ')">Bande Annonce</a>';
 						$rep .= '</div>';
 						$rep .= '</div>';
 

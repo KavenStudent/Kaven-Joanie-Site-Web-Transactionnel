@@ -90,7 +90,7 @@ if (isset($_GET['id'])) {
 							<a class="nav-link" aria-current="page" href="javascript:listerHistorique();">Historique d'achat</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
+							<a class="nav-link" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="../index.php">Deconnexion</a>
@@ -218,6 +218,25 @@ if (isset($_GET['id'])) {
 				</div>
 				<!-- Fin modal devenir membre-->
 
+				<!-- modal bande annonce -->
+				<div class="modal fade" id="modal-trailer" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Bande Annonce</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="ratio ratio-16x9">
+									<iframe id="trailer" src="" title="YouTube video" allowfullscreen></iframe>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Fin modal bande annonce -->
+
 				<?php
 				require_once("../BD/connexion.inc.php");
 				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
@@ -249,7 +268,7 @@ if (isset($_GET['id'])) {
 						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
 						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
 						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
+						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ')">Bande Annonce</a>';
 						$rep .= '</div>';
 						$rep .= '</div>';
 
