@@ -84,7 +84,7 @@ if (isset($_GET['id'])) {
                             <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Profil</a>
                         </li>
                         <li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="javascript:listerHistorique();">Historique d'achat</a>
+							<a class="nav-link" aria-current="page" href="javascript:listerHistorique();">Historique d'achat</a>
 						</li>
                         <li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
@@ -217,12 +217,13 @@ if (isset($_GET['id'])) {
 
 
                 <!-- tableau historique -->
-                <h1>Historique Location</h1>
+                <h1>Location en cours</h1>
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">Titre</th>
                             <th scope="col">Date d'achat</th>
+                            <th scope="col">Nombre jours locations</th>
                             <th scope="col">Pochette</th>
                         </tr>
                     </thead>
@@ -230,16 +231,18 @@ if (isset($_GET['id'])) {
                     <tbody>
 
                         <?php
-                        $requette = "SELECT h.idMembre, f.idFilm, f.titre, h.dateAchat, f.image FROM historiquelocation h  INNER JOIN films f ON h.idFilm = f.idFilm WHERE h.idMembre = $idM ORDER by h.dateAchat DESC";
+                        // SELECT * FROM location l INNER JOIN films f ON l.idFilm = f.idFilm WHERE l.idMembre = 3 ORDER by l.dateAchat DESC 
+                        $requette = "SELECT f.titre ,l.dateAchat, l.dureeLocation, f.image FROM location l INNER JOIN films f ON l.idFilm = f.idFilm WHERE l.idMembre = $idM ORDER by l.dateAchat DESC ";
                         try {
-                            $listHistorique = mysqli_query($connexion, $requette);
+                            $listLocation = mysqli_query($connexion, $requette);
 
                             $rep = "";
 
-                            while ($ligne = mysqli_fetch_object($listHistorique)) {
+                            while ($ligne = mysqli_fetch_object($listLocation)) {
                                 $rep .= "<tr>";
                                 $rep .= "<td>" . ($ligne->titre) . "</td>";
                                 $rep .= "<td>" . ($ligne->dateAchat) . "</td>";
+                                $rep .= "<td>" . ($ligne->dureeLocation) . "</td>";
 
                                 $rep .= "<td>";
                                 if (substr($ligne->image, 0, 4) === "http") {
@@ -252,7 +255,7 @@ if (isset($_GET['id'])) {
                             }
 
 
-                            mysqli_free_result($listHistorique);
+                            mysqli_free_result($listLocation);
                         } catch (Exception $e) {
                             echo "Probleme pour lister";
                         } finally {
@@ -285,6 +288,12 @@ if (isset($_GET['id'])) {
 		<form id="formHistorique" action="membreHistorique.php" methode="post">
 			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
 			<input id="msg" name="msg" type="hidden" value="Bienvenu dans votre historique de location">
+		</form>
+        
+        <!-- Location en cours -->
+        <form id="formLocation" action="membreLocation.php" methode="post">
+			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
+			<input id="msg" name="msg" type="hidden" value="Bienvenu dans vos location en cours">
 		</form>
 
         <script src="../public/util/js/jquery-1.11.1.min.js"></script>
