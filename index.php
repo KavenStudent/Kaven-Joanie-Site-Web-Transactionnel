@@ -44,7 +44,6 @@ if (isset($_GET['msg'])) {
 
 			<div class="container-fluid">
 
-				<!-- logo a mettre -->
 				<div class="company">
 					<img id="monLogo" class="navbar-brand" src="public/images/icon-logo-film.png" alt="" class="logo">
 					<h3> Kajo movie </h3>
@@ -497,7 +496,7 @@ if (isset($_GET['msg'])) {
 						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
 						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
 						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherIndexTrailer(' . $ligne->idFilm . ')">Bande Annonce</a>';
+						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'serveur/fiche.php\')">Bande Annonce</a>';
 						$rep .= '</div>';
 						$rep .= '</div>';
 

@@ -43,7 +43,6 @@ if (isset($_GET['msg'])) {
 
 			<div class="container-fluid">
 
-				<!-- logo a mettre -->
 				<div class="company">
 					<img id="monLogo" class="navbar-brand" src="../public/images/icon-logo-film.png" alt="" class="logo">
 					<h3> Kajo movie </h3>
@@ -129,7 +128,7 @@ if (isset($_GET['msg'])) {
 							$rep .= '<td><img id="icon-film" class="image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film"></td>';
 						}
 
-						$rep .= '<td> <a class="btn btn-primary myButton" onclick="populerModal(' . $ligne->idFilm . ')"><i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i></a> </td>';
+						$rep .= '<td> <a class="btn btn-primary myButton" onclick="populerModal(' . $ligne->idFilm . ',\'../serveur/fiche.php\')"><i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i></a> </td>';
 						$rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Film" onclick="envoyerIdFilm(' . $ligne->idFilm . ')"><i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i></a> </td>	</tr>';
 					}
 

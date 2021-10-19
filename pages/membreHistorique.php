@@ -66,7 +66,6 @@ if (isset($_GET['id'])) {
 
             <div class="container-fluid">
 
-                <!-- logo a mettre -->
                 <div class="company">
                     <img id="monLogo" class="navbar-brand" src="../public/images/icon-logo-film.png" alt="" class="logo">
                     <h3> Kajo movie </h3>

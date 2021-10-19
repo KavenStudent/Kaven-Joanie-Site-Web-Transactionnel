@@ -130,9 +130,9 @@ function retourAccueilM(){
   document.getElementById('formAccueilM').submit();
 }
 
-async function obtenirInfo(id) {
-
-  const response = await fetch('../serveur/fiche.php', {
+async function obtenirInfo(id, path) {
+ 
+  const response = await fetch(path, {
     method: 'POST', 
     mode: 'cors', 
     headers: {
@@ -145,8 +145,8 @@ async function obtenirInfo(id) {
 
 }
 
-function populerModal(id){
-  obtenirInfo(id).then(data => {
+function populerModal(id, path){
+  obtenirInfo(id, path).then(data => {
     document.getElementById('id-modifier').value = data.idFilm;
     document.getElementById('titre-modifier').value = data.titre;
     document.getElementById('annee-modifier').value = data.annee;
@@ -161,32 +161,8 @@ function populerModal(id){
   
 }
 
-function afficherTrailer(id){
-  obtenirInfo(id)
-  .then(data => {
-    document.getElementById('trailer').src = data.bandeAnnonce;
-  })
-  .finally(() => {$("#modal-trailer").modal('show');});
-}
-
-async function indexTrailer(id) {
-
-  const response = await fetch('./serveur/fiche.php', {
-    method: 'POST', 
-    mode: 'cors', 
-    headers: {
-      'Content-Type': 'application/json'
-    },
-
-    body: JSON.stringify({ "idFilm": id }) 
-  })
-  return response.json();
- 
-
-}
-
-function afficherIndexTrailer(id){
-  indexTrailer(id)
+function afficherTrailer(id, path){
+  obtenirInfo(id, path)
   .then(data => {
     document.getElementById('trailer').src = data.bandeAnnonce;
   })
