@@ -164,7 +164,14 @@ function populerModal(id, path){
 function afficherTrailer(id, path){
   obtenirInfo(id, path)
   .then(data => {
+    let contenu = `<h4> ${data.titre} </h4>
+    <p><strong>Durée: </strong> ${data.duree} minutes</p>
+    <p><strong>Réalisateur: </strong>${data.realisateurs} </p>
+    <p><strong>Acteurs: </strong>${data.acteurs} </p>
+    <p><strong>Description: </strong>${data.description} </p>`;
+
     document.getElementById('trailer').src = data.bandeAnnonce;
+    document.getElementById('info-film').innerHTML = contenu;
   })
   .finally(() => {$("#modal-trailer").modal('show');});
 }

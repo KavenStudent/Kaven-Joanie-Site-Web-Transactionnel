@@ -105,3 +105,7 @@ html{
     border: 0;
     color:black !important;
 }
+
+#info-film {
+    margin-top: 15px;
+}
