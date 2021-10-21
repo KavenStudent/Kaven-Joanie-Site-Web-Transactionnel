@@ -86,8 +86,8 @@ if (isset($_GET['id'])) {
                             <a class="nav-link active" aria-current="page" href="javascript:listerHistorique();">Historique d'achat</a>
                         </li>
                         <li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
-						</li>
+                            <a class="nav-link" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="../index.php">Deconnexion</a>
                         </li>
@@ -288,6 +288,12 @@ if (isset($_GET['id'])) {
         <form id="formHistorique" action="membreHistorique.php" methode="post">
             <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
             <input id="msg" name="msg" type="hidden" value="Bienvenu dans votre historique de location">
+        </form>
+
+        <!-- Location en cours -->
+        <form id="formLocation" action="membreLocation.php" methode="post">
+            <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
+            <input id="msg" name="msg" type="hidden" value="Bienvenu dans vos location en cours">
         </form>
 
         <script src="../public/util/js/jquery-1.11.1.min.js"></script>

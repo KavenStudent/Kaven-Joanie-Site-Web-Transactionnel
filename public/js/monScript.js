@@ -190,5 +190,5 @@ function AccueilAdmin(){
 }
 
 function listerLocation(){
-  
+  document.getElementById('formLocation').submit();
 }

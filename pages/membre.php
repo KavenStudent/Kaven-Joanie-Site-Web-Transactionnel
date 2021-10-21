@@ -310,6 +310,12 @@ if (isset($_GET['id'])) {
 			<input id="msg" name="msg" type="hidden" value="Bienvenu dans votre historique de location">
 		</form>
 
+		<!-- Location en cours -->
+        <form id="formLocation" action="membreLocation.php" methode="post">
+            <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
+            <input id="msg" name="msg" type="hidden" value="Bienvenu dans vos location en cours">
+        </form>
+
 		<script src="../public/util/js/jquery-1.11.1.min.js"></script>
 		<script src="../public/util/js/plugins.js"></script>
 		<script src="../public/util/js/app.js"></script>
