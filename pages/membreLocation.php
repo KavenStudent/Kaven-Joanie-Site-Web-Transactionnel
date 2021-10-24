@@ -25,6 +25,10 @@ if (isset($_GET['id'])) {
     $id = "-1";
     $msg = " ";
 }
+
+// met a jour si le film est toujour en location
+require_once("../serveur/locationAJour.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -84,11 +88,11 @@ if (isset($_GET['id'])) {
                             <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Profil</a>
                         </li>
                         <li class="nav-item">
-							<a class="nav-link" aria-current="page" href="javascript:listerHistorique();">Historique d'achat</a>
-						</li>
+                            <a class="nav-link" aria-current="page" href="javascript:listerHistorique();">Historique d'achat</a>
+                        </li>
                         <li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
-						</li>
+                            <a class="nav-link active" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="../index.php">Deconnexion</a>
                         </li>
@@ -223,7 +227,8 @@ if (isset($_GET['id'])) {
                         <tr>
                             <th scope="col">Titre</th>
                             <th scope="col">Date d'achat</th>
-                            <th scope="col">Nombre jours locations</th>
+                            <th scope="col">Date de fin</th>
+                            <th scope="col">Nombre jours restant locations</th>
                             <th scope="col">Pochette</th>
                         </tr>
                     </thead>
@@ -231,19 +236,24 @@ if (isset($_GET['id'])) {
                     <tbody>
 
                         <?php
-                        // SELECT * FROM location l INNER JOIN films f ON l.idFilm = f.idFilm WHERE l.idMembre = 3 ORDER by l.dateAchat DESC 
-                        $requette = "SELECT f.titre ,l.dateAchat, l.dureeLocation, f.image FROM location l INNER JOIN films f ON l.idFilm = f.idFilm WHERE l.idMembre = $idM ORDER by l.dateAchat DESC ";
+
+                        //load tous les films en cours de location
+                        $requette = "SELECT f.idFilm, f.titre ,l.dateAchat, l.dureeLocation, f.image FROM location l INNER JOIN films f ON l.idFilm = f.idFilm WHERE l.idMembre = $idM ORDER by l.dateAchat DESC ";
                         try {
                             $listLocation = mysqli_query($connexion, $requette);
-
                             $rep = "";
 
                             while ($ligne = mysqli_fetch_object($listLocation)) {
+
+                                $dateAujourd = date("Y-m-d");
+                                $dateDatetime =  $ligne->dateAchat;
+                                $dateDeFin = date("Y-m-d", strtotime($dateDatetime . "+ $ligne->dureeLocation days"));
+
                                 $rep .= "<tr>";
                                 $rep .= "<td>" . ($ligne->titre) . "</td>";
                                 $rep .= "<td>" . ($ligne->dateAchat) . "</td>";
-                                $rep .= "<td>" . ($ligne->dureeLocation) . "</td>";
-
+                                $rep .= "<td>" . date("Y-m-d", strtotime($dateDatetime . "+ $ligne->dureeLocation days")) . "</td>";
+                                $rep .= "<td>" . NbJours($dateAujourd, $dateDeFin) . "</td>";
                                 $rep .= "<td>";
                                 if (substr($ligne->image, 0, 4) === "http") {
                                     $rep .= '<img class="petit-image-film" src="' . ($ligne->image) . '" alt="image-film">';
@@ -262,7 +272,7 @@ if (isset($_GET['id'])) {
                             echo $rep;
                             unset($rep);
                         }
-                            mysqli_close($connexion);
+                        mysqli_close($connexion);
                         ?>
                     </tbody>
                 </table>
@@ -280,21 +290,21 @@ if (isset($_GET['id'])) {
 
         <!-- accueil membre -->
         <form id="formAccueilM" action="membre.php" methode="post">
-			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-			<input id="msg" name="msg" type="hidden" value="Bienvenu dans l\'accueil">
-		</form>
+            <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
+            <input id="msg" name="msg" type="hidden" value="Bienvenu dans l\'accueil">
+        </form>
 
         <!-- historique d'achat -->
-		<form id="formHistorique" action="membreHistorique.php" methode="post">
-			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-			<input id="msg" name="msg" type="hidden" value="Bienvenu dans votre historique de location">
-		</form>
-        
+        <form id="formHistorique" action="membreHistorique.php" methode="post">
+            <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
+            <input id="msg" name="msg" type="hidden" value="Bienvenu dans votre historique de location">
+        </form>
+
         <!-- Location en cours -->
         <form id="formLocation" action="membreLocation.php" methode="post">
-			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-			<input id="msg" name="msg" type="hidden" value="Bienvenu dans vos location en cours">
-		</form>
+            <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
+            <input id="msg" name="msg" type="hidden" value="Bienvenu dans vos location en cours">
+        </form>
 
         <script src="../public/util/js/jquery-1.11.1.min.js"></script>
         <script src="../public/util/js/plugins.js"></script>
