@@ -72,10 +72,37 @@ if (isset($_GET['msg'])) {
 							<a class="nav-link" href="serveur/inserer.php">Inserer</a>
 						</li> -->
 					</ul>
-					<form class="d-flex">
+
+					<div class="d-flex  nav-droite">
+						<select class="form-select" onChange="lister('categ',this.options[this.selectedIndex].value)">
+							<option value="dr">Choisir ...</option>
+							<option value="Comedy">Comédie</option>
+							<option value="Fantasy">Fantaisie</option>
+							<option value="Drama">Drama</option>
+							<option value="Music">Music</option>
+							<option value="Adventure">Adventure</option>
+							<option value="History">Historique</option>
+							<option value="Thriller">Music</option>
+							<option value="Animation">Music</option>
+							<option value="Music">Music</option>
+						</select>
+					</div>			
+				
+					<div class="d-flex nav-droite">
+						<input class="form-control me-2" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
+						<button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
+					</div>
+				
+				
+					<div class="d-flex nav-droite">
+						<input class="form-control me-2" type="search" id="rcres" placeholder="Réalisateur" aria-label="Recherche">
+						<button class="btn btn-outline-success" onClick="lister('res',document.getElementById('rcres').value)">Recherche</button>
+					</div>
+
+					<!-- <form class="d-flex">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form>
+					</form> -->
 				</div>
 			</div>
 		</nav>
