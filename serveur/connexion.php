@@ -1,4 +1,5 @@
 <?php
+  session_start();
   require_once("../BD/connexion.inc.php");
   $email = $_POST['email'];
   $password = $_POST['password'];
@@ -14,13 +15,16 @@
     $id = ($ligne->idMembre);
     if($ligne->statut){ // regarde si le compte est valide
 
+     
+
       if ($ligne->role === 'M'){// regarde le role
+        $_SESSION['membre'] = $id;
         header("Location:../pages/membre.php?id=$id&msg=Bienvenue");
         mysqli_close($connexion);
         exit;
 
       } else{
-
+        $_SESSION['admin'] = $id;
         header("Location:../pages/admin.php?msg=Admin+connecté");
         mysqli_close($connexion);
         exit;

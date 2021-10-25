@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+	header("Location:../pages/erreurConnexion.php");
+}
 if (isset($_GET['msg'])) {
 	$msg = $_GET['msg'];
 } else {
@@ -69,7 +73,7 @@ if (isset($_GET['msg'])) {
 							<a class="nav-link" href="javascript:listerMembres();" onclick="">Lister Membres</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="../index.php">Déconnexion</a>
+							<a class="nav-link" aria-current="page" href="javascript:deconnexion()">Deconnexion</a>
 						</li>
 					</ul>
 					<form class="d-flex">
@@ -379,7 +383,7 @@ if (isset($_GET['msg'])) {
 								<iframe id="trailer" src="" title="YouTube video" allowfullscreen></iframe>
 							</div>
 							<div id="info-film">
-							
+
 							</div>
 						</div>
 
@@ -389,13 +393,18 @@ if (isset($_GET['msg'])) {
 			<!-- Fin modal bande annonce -->
 
 			<!--lister films  -->
-			<form id="formListerFilms" action="listerFilms.php" method="post"></form>
+			<form id="formListerFilms" action="listerFilms.php" method="post">
+
+			</form>
 
 			<!--lister membres  -->
 			<form id="formListerMembres" action="listerMembres.php" method="post"></form>
 
 			<!--Accueil admin  -->
 			<form id="formAccueilAdmin" action="admin.php" method="post"></form>
+
+			<!--deconnexion -->
+			<form id="deconnexion" action="../serveur/deconnexion.php" method="post"></form>
 		</main>
 
 		<footer class="site-footer">

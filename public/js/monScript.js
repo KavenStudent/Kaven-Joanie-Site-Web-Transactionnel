@@ -192,3 +192,7 @@ function AccueilAdmin(){
 function listerLocation(){
   document.getElementById('formLocation').submit();
 }
+
+function deconnexion(){
+  document.getElementById('deconnexion').submit();
+}
