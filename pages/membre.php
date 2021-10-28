@@ -1,10 +1,15 @@
 <?php
 session_start();
+require_once("../BD/connexion.inc.php");
 if (!isset($_SESSION['membre'])) {
 	header("Location:../pages/erreurConnexion.php");
 }
-require_once("../BD/connexion.inc.php");
+
 if (isset($_GET['id'])) {
+	if($_SESSION['membre'] != $_GET['id']){
+		header("Location:../pages/erreurConnexion.php");
+	}
+
 	$id = $_GET['id'];
 	$msg = $_GET['msg'];
 
