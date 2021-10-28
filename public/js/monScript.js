@@ -200,6 +200,7 @@ function lister(par, valeurPar){
 		document.getElementById('valeurPar').value=valeurPar;
 	}
 	document.getElementById('formLister').submit();
+}
 
 function deconnexion(){
   document.getElementById('deconnexion').submit();
