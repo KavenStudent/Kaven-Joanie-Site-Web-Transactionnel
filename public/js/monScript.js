@@ -1,6 +1,11 @@
 var jsonUrl = './public/util/bdfilms.json';
 var visibleConfirmer = false;
 var visibleMotdePasse = false;
+var panier = null;
+
+if (localStorage.getItem("panier") == undefined) {
+  localStorage.setItem("panier", '[]');//panier vide
+}
 
 let valider = (id) => {
   let myForm = document.getElementById(id);
@@ -31,31 +36,31 @@ function montrerPassword(id) {
   }
 }
 
-function montrerConfirmerPass(){
-   
-  if(visibleConfirmer === true){
+function montrerConfirmerPass() {
+
+  if (visibleConfirmer === true) {
     $("#confirmerPasse").css("display", "none");
     visibleConfirmer = false;
   }
-  else{
+  else {
     $("#confirmerPasse").css("display", "block");
     visibleConfirmer = true;
   }
 }
 
-  function montrerPassword2(){
+function montrerPassword2() {
 
-    if(visibleMotdePasse === true){
-      $("#password").prop("type", "password");
-      $("#confirmPassword").prop("type", "password");
-      visibleMotdePasse = false;
-    }
-    else{
-      $("#password").prop("type", "text");
-      $("#confirmPassword").prop("type", "text");
-      visibleMotdePasse = true;
-    }
+  if (visibleMotdePasse === true) {
+    $("#password").prop("type", "password");
+    $("#confirmPassword").prop("type", "password");
+    visibleMotdePasse = false;
   }
+  else {
+    $("#password").prop("type", "text");
+    $("#confirmPassword").prop("type", "text");
+    visibleMotdePasse = true;
+  }
+}
 
 function listerFilms() {
   $.getJSON(jsonUrl, function (json) {
@@ -122,30 +127,30 @@ $(document).ready(function () {
 });
 
 
-function listerHistorique(){
+function listerHistorique() {
   document.getElementById('formHistorique').submit();
 }
 
-function retourAccueilM(){
+function retourAccueilM() {
   document.getElementById('formAccueilM').submit();
 }
 
 async function obtenirInfo(id, path) {
- 
+
   const response = await fetch(path, {
-    method: 'POST', 
-    mode: 'cors', 
+    method: 'POST',
+    mode: 'cors',
     headers: {
       'Content-Type': 'application/json'
     },
 
-    body: JSON.stringify({ "idFilm": id }) 
+    body: JSON.stringify({ "idFilm": id })
   });
   return response.json();
 
 }
 
-function populerModal(id, path){
+function populerModal(id, path) {
   obtenirInfo(id, path).then(data => {
     document.getElementById('id-modifier').value = data.idFilm;
     document.getElementById('titre-modifier').value = data.titre;
@@ -156,43 +161,179 @@ function populerModal(id, path){
     document.getElementById('description-modifier').value = data.description;
     document.getElementById('prix-modifier').value = data.prix;
     document.getElementById('bandeAnnonce-modifier').value = data.bandeAnnonce;
-    
-  }).finally(() => {$("#modal-modifier-film").modal('show');});
-  
+
+  }).finally(() => { $("#modal-modifier-film").modal('show'); });
+
 }
 
-function afficherTrailer(id, path){
+function afficherTrailer(id, path) {
   obtenirInfo(id, path)
-  .then(data => {
-    let contenu = `<h4> ${data.titre} </h4>
+    .then(data => {
+      let contenu = `<h4> ${data.titre} </h4>
     <p><strong>Durée: </strong> ${data.duree} minutes</p>
     <p><strong>Réalisateur: </strong>${data.realisateurs} </p>
     <p><strong>Acteurs: </strong>${data.acteurs} </p>
     <p><strong>Description: </strong>${data.description} </p>`;
 
-    document.getElementById('trailer').src = data.bandeAnnonce;
-    document.getElementById('info-film').innerHTML = contenu;
-  })
-  .finally(() => {$("#modal-trailer").modal('show');});
+      document.getElementById('trailer').src = data.bandeAnnonce;
+      document.getElementById('info-film').innerHTML = contenu;
+    })
+    .finally(() => { $("#modal-trailer").modal('show'); });
 }
 
-function listerFilms(){
+function listerFilms() {
   document.getElementById('formListerFilms').submit();
 }
 
-function listerMembres(){
+function listerMembres() {
   document.getElementById('formListerMembres').submit();
 }
 
-function AccueilAdmin(){
+function AccueilAdmin() {
   document.getElementById('formAccueilAdmin').submit();
 
 }
 
-function listerLocation(){
+function listerLocation() {
   document.getElementById('formLocation').submit();
 }
 
-function deconnexion(){
+function deconnexion() {
   document.getElementById('deconnexion').submit();
 }
+
+function ajout(id) {
+  document.getElementById('idLocation').value = id;
+  $("#modal-location").modal('show');
+}
+
+function envoyerAuPanier() {
+  let jour = Math.trunc(document.getElementById('jour').value);
+  idLocation = document.getElementById('idLocation').value;
+
+  if (jour < 1) {
+    jour = 1;
+  }
+  ajoutPanier(idLocation, jour);
+}
+
+function ajoutPanier(id, jours) {
+  path = "../serveur/fiche.php";
+  let existe = false;
+  let duree = jours;
+
+  obtenirInfo(id, path).then(data => {
+    let prixTotal = data.prix * duree;
+    let film = { "idFilm": data.idFilm, "titre": data.titre, "dureeLocation": duree, "image": data.image, "prix": prixTotal.toFixed(2) };
+    
+    panier = JSON.parse(localStorage.getItem("panier"));
+
+    for (let i = 0; i < panier.length; i++){
+
+      if(panier[i].idFilm == data.idFilm){
+        existe = true;
+
+        duree = panier[i].dureeLocation + jours;
+        prixTotal = data.prix * duree;
+
+        film = { "idFilm": data.idFilm, "titre": data.titre, "dureeLocation": duree, "image": data.image, "prix": prixTotal.toFixed(2) };
+        panier[i] = film;
+      }
+    }
+
+    if(!existe){
+      panier.push(film);
+    }
+    localStorage.setItem("panier", JSON.stringify(panier));
+    
+  }).finally(() => {
+    $("#modal-location").modal('hide');
+    afficherPanier();
+    document.getElementById('jour').value = 1;
+    let bsOffcanvas = new bootstrap.Offcanvas(document.getElementById("offcanvasRight"));
+    bsOffcanvas.show();
+  });
+
+
+}
+
+function afficherPanier() {
+  var lePanier = `<table class="table table-sm"">
+  <thead>
+    <tr>
+      <th scope="col">Image</th>
+      <th scope="col">Titre</th>
+      <th scope="col">Durée (jours)</th>
+      <th scope="col">Prix</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>`;
+
+  panier = JSON.parse(localStorage.getItem("panier"));
+  let total = 0;
+  let nbItems = panier.length;
+
+  for (var unFilm of panier) {
+    if (unFilm !== null) {
+      lePanier += `
+      
+        <tr>
+          <td><img id="icon-film" class="image-film" src="${unFilm.image}" alt="image-film"></td>
+          <td>${unFilm.titre}</td>
+          <td>${unFilm.dureeLocation}</td>
+          <td>${unFilm.prix}$</td>
+          <td><i class="material-icons btn-retirer-Film" onclick="retirerFilm(${unFilm.idFilm})"">&#xE872;</i></td>
+        </tr>
+     `;
+
+      total += parseFloat(unFilm.prix);
+
+    }
+
+  }
+
+  lePanier += ` </tbody>
+  </table>`;
+
+  if (nbItems != 0) {
+    ``
+    document.getElementById("total").innerHTML = `
+    <button type="button" class="btn btn-primary" onclick="viderPanier()">Vider</button>
+    <button type="button" class="btn btn-primary" onclick="payerPanier()">Payer</button>
+     ${nbItems} item(s) Total : ${total.toFixed(2)}$`;
+
+  }
+
+  document.getElementById("panier").innerHTML = lePanier;
+}
+
+function retirerFilm(idFilm) {
+
+  panier = panier.filter(item => item.idFilm !== idFilm)
+  localStorage.setItem("panier", JSON.stringify(panier));
+
+  afficherPanier();
+}
+
+function payerPanier() {
+  let total = 0;
+
+  panier.forEach(unFilm => {
+    total += parseFloat(unFilm.prix);
+  });
+
+  alert(`Montant payé : ${total.toFixed(2)}$`);
+
+  viderPanier();
+}
+
+function viderPanier() {
+  localStorage.setItem("panier", '[]');
+  afficherPanier();
+  document.getElementById("total").innerHTML = '';
+}
+
+$(document).ready(function () {
+  afficherPanier();
+});

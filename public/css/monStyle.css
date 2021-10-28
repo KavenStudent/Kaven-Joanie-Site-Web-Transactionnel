@@ -109,3 +109,12 @@ html{
 #info-film {
     margin-top: 15px;
 }
+
+i {
+    pointer-events: none;
+}
+
+.btn-retirer-Film {
+    pointer-events: auto;
+    cursor: pointer;
+}
