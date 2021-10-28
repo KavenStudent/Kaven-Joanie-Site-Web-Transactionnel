@@ -180,3 +180,11 @@ function AccueilAdmin(){
 function listerLocation(){
   document.getElementById('formLocation').submit();
 }
+
+function lister(par, valeurPar){
+	if (par!==""){
+		document.getElementById('par').value=par;
+		document.getElementById('valeurPar').value=valeurPar;
+	}
+	document.getElementById('formLister').submit();
+}

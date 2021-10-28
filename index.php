@@ -82,18 +82,28 @@ if (isset($_GET['msg'])) {
 							<option value="Music">Music</option>
 							<option value="Adventure">Adventure</option>
 							<option value="History">Historique</option>
-							<option value="Thriller">Music</option>
-							<option value="Animation">Music</option>
-							<option value="Music">Music</option>
+							<option value="Thriller">Suspense</option>
+							<option value="Animation">Animation</option>
+							<option value="Familly">Famille</option>
+							<option value="Biography">Biographie</option>
+							<option value="Action">Action</option>
+							<option value="Film-Noir">Film-Noir</option>
+							<option value="Romance">Romance</option>
+							<option value="Sci-Fi">Sci-Fi</option>
+							<option value="War">Guerre</option>
+							<option value="Western">Western</option>
+							<option value="Horror">Horreur</option>
+							<option value="Musical">Musical</option>
+							<option value="Sport">Sport</option>
 						</select>
-					</div>			
-				
+					</div>
+
 					<div class="d-flex nav-droite">
 						<input class="form-control me-2" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
 						<button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
 					</div>
-				
-				
+
+
 					<div class="d-flex nav-droite">
 						<input class="form-control me-2" type="search" id="rcres" placeholder="Réalisateur" aria-label="Recherche">
 						<button class="btn btn-outline-success" onClick="lister('res',document.getElementById('rcres').value)">Recherche</button>
@@ -474,9 +484,39 @@ if (isset($_GET['msg'])) {
 
 				<?php
 				require_once("BD/connexion.inc.php");
-				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-				try {
+
+				if( isset($_POST['par']) )
+				{
+					$par = $_POST['par'];
+					$valeurPar = strtolower(trim($_POST['valeurPar']));
+					switch ($par) {
+						case "tout":
+							$requette = "SELECT * FROM films WHERE 1=?";
+							$valeurPar = 1;
+							break;
+						case "res":
+							$requette = "SELECT * FROM films WHERE LOWER(res) LIKE CONCAT('%', ?, '%')";
+							break;
+						case "categ":
+							$requette = "SELECT * FROM films WHERE categ=?";
+							break;
+						case "titre":
+							$requette = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%')";
+							break;
+					}
+	
+					$stmt = $connexion->prepare($requette);
+					$stmt->bind_param("s", $valeurPar);
+					$stmt->execute();
+					$listeFilms = $stmt->get_result();
+				}
+				else{
+					$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
 					$listeFilms = mysqli_query($connexion, $requette);
+				}
+
+				try {
+					
 					$rep = "<div class='page' id='liste-film'>";
 					$i = 0;
 
@@ -536,7 +576,10 @@ if (isset($_GET['msg'])) {
 		</footer>
 
 
-
+		<form id="formLister" action="index.php" method="POST">
+			<input type="hidden" id="par" name="par" value="tout">
+			<input type="hidden" id="valeurPar" name="valeurPar" value="">
+		</form>
 
 
 		<script src="public/util/js/jquery-1.11.1.min.js"></script>
