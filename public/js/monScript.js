@@ -122,9 +122,17 @@ $(document).ready(function () {
 });
 
 
-async function obtenirInfo(id) {
+function listerHistorique(){
+  document.getElementById('formHistorique').submit();
+}
 
-  const response = await fetch('../serveur/fiche.php', {
+function retourAccueilM(){
+  document.getElementById('formAccueilM').submit();
+}
+
+async function obtenirInfo(id, path) {
+ 
+  const response = await fetch(path, {
     method: 'POST', 
     mode: 'cors', 
     headers: {
@@ -135,22 +143,10 @@ async function obtenirInfo(id) {
   });
   return response.json();
 
-
-  alert(JSON.stringify(response));
-
 }
 
-function listerHistorique(){
-  document.getElementById('formHistorique').submit();
-}
-
-function retourAccueilM(){
-  document.getElementById('formAccueilM').submit();
-}
-
-function populerModal(id){
-  obtenirInfo(id).then(data => {
-    console.log(data);
+function populerModal(id, path){
+  obtenirInfo(id, path).then(data => {
     document.getElementById('id-modifier').value = data.idFilm;
     document.getElementById('titre-modifier').value = data.titre;
     document.getElementById('annee-modifier').value = data.annee;
@@ -159,9 +155,25 @@ function populerModal(id){
     document.getElementById('acteur-modifier').value = data.acteurs;
     document.getElementById('description-modifier').value = data.description;
     document.getElementById('prix-modifier').value = data.prix;
-   
+    document.getElementById('bandeAnnonce-modifier').value = data.bandeAnnonce;
+    
   }).finally(() => {$("#modal-modifier-film").modal('show');});
   
+}
+
+function afficherTrailer(id, path){
+  obtenirInfo(id, path)
+  .then(data => {
+    let contenu = `<h4> ${data.titre} </h4>
+    <p><strong>Durée: </strong> ${data.duree} minutes</p>
+    <p><strong>Réalisateur: </strong>${data.realisateurs} </p>
+    <p><strong>Acteurs: </strong>${data.acteurs} </p>
+    <p><strong>Description: </strong>${data.description} </p>`;
+
+    document.getElementById('trailer').src = data.bandeAnnonce;
+    document.getElementById('info-film').innerHTML = contenu;
+  })
+  .finally(() => {$("#modal-trailer").modal('show');});
 }
 
 function listerFilms(){
@@ -181,10 +193,15 @@ function listerLocation(){
   document.getElementById('formLocation').submit();
 }
 
+ 
 function lister(par, valeurPar){
 	if (par!==""){
 		document.getElementById('par').value=par;
 		document.getElementById('valeurPar').value=valeurPar;
 	}
 	document.getElementById('formLister').submit();
+
+function deconnexion(){
+  document.getElementById('deconnexion').submit();
+
 }

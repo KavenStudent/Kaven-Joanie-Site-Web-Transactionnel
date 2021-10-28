@@ -43,7 +43,6 @@ if (isset($_GET['msg'])) {
 
 			<div class="container-fluid">
 
-				<!-- logo a mettre -->
 				<div class="company">
 					<img id="monLogo" class="navbar-brand" src="../public/images/icon-logo-film.png" alt="" class="logo">
 					<h3> Kajo movie </h3>
@@ -129,8 +128,8 @@ if (isset($_GET['msg'])) {
 							$rep .= '<td><img id="icon-film" class="image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film"></td>';
 						}
 
-						$rep .= '<td> <a class="btn btn-primary myButton" onclick="populerModal(' . $ligne->idFilm . ')"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> </td>';
-						$rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Film" onclick="envoyerIdFilm(' . $ligne->idFilm . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> </td>	</tr>';
+						$rep .= '<td> <a class="btn btn-primary myButton" onclick="populerModal(' . $ligne->idFilm . ',\'../serveur/fiche.php\')"><i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i></a> </td>';
+						$rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Film" onclick="envoyerIdFilm(' . $ligne->idFilm . ')"><i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i></a> </td>	</tr>';
 					}
 
 					$rep .= '</tbody> </table> </div> </div> </div>'; //fin 
@@ -344,7 +343,11 @@ if (isset($_GET['msg'])) {
 									<input type="file" class="form-control" id="image" name="image">
 
 								</div>
+								<div class="myInput">
+									<label for="bandeAnnonce" class="form-label">Bande Annonce</label>
+									<input type="text" class="form-control" id="bandeAnnonce" name="bandeAnnonce">
 
+								</div>
 
 								<div class="modal-footer">
 									<button type="submit" id="submit-Film" class="btn btn-primary">Enregistrer Film</button>
@@ -584,7 +587,11 @@ if (isset($_GET['msg'])) {
 									<input type="file" class="form-control" id="image" name="image">
 
 								</div>
+								<div class="myInput">
+									<label for="bandeAnnonce" class="form-label">Bande Annonce</label>
+									<input type="text" class="form-control" id="bandeAnnonce-modifier" name="bandeAnnonce">
 
+								</div>
 
 								<div class="modal-footer">
 									<button type="submit" id="submit-Film" class="btn btn-primary">Modifier Film</button>

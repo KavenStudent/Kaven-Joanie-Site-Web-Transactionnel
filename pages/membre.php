@@ -1,11 +1,18 @@
 <?php
+session_start();
 require_once("../BD/connexion.inc.php");
+if (!isset($_SESSION['membre'])) {
+	header("Location:../pages/erreurConnexion.php");
+}
+
 if (isset($_GET['id'])) {
+	if($_SESSION['membre'] != $_GET['id']){
+		header("Location:../pages/erreurConnexion.php");
+	}
+
 	$id = $_GET['id'];
 	$msg = $_GET['msg'];
-	//echo "ID = ".$id."  MSG = ".$msg;
 
-	//$requete="SELECT * FROM membres WHERE idMembre = ?";
 	$requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.motDePasse, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE m.idMembre = ?";
 	$stmt = $connexion->prepare($requete);
 	$stmt->bind_param("i", $id);
@@ -66,7 +73,6 @@ if (isset($_GET['id'])) {
 
 			<div class="container-fluid">
 
-				<!-- logo a mettre -->
 				<div class="company">
 					<img id="monLogo" class="navbar-brand" src="../public/images/icon-logo-film.png" alt="" class="logo">
 					<h3> Kajo movie </h3>
@@ -93,7 +99,7 @@ if (isset($_GET['id'])) {
 							<a class="nav-link" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="../index.php">Deconnexion</a>
+							<a class="nav-link" aria-current="page" href="javascript:deconnexion()">Deconnexion</a>
 						</li>
 					</ul>
 					<form class="d-flex">
@@ -218,6 +224,28 @@ if (isset($_GET['id'])) {
 				</div>
 				<!-- Fin modal devenir membre-->
 
+				<!-- modal bande annonce -->
+				<div class="modal fade" id="modal-trailer" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Informations</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="ratio ratio-16x9">
+									<iframe id="trailer" src="" title="YouTube video" allowfullscreen></iframe>
+								</div>
+								<div id="info-film">
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Fin modal bande annonce -->
+
 				<?php
 				require_once("../BD/connexion.inc.php");
 				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
@@ -249,7 +277,7 @@ if (isset($_GET['id'])) {
 						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
 						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
 						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
+						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'../serveur/fiche.php\')">Plus d\'info</a>';
 						$rep .= '</div>';
 						$rep .= '</div>';
 
@@ -292,10 +320,13 @@ if (isset($_GET['id'])) {
 		</form>
 
 		<!-- Location en cours -->
-        <form id="formLocation" action="membreLocation.php" methode="post">
-            <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-            <input id="msg" name="msg" type="hidden" value="Bienvenu dans vos location en cours">
-        </form>
+		<form id="formLocation" action="membreLocation.php" methode="post">
+			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
+			<input id="msg" name="msg" type="hidden" value="Bienvenu dans vos location en cours">
+		</form>
+
+		<!--deconnexion -->
+		<form id="deconnexion" action="../serveur/deconnexion.php" method="post"></form>
 
 		<script src="../public/util/js/jquery-1.11.1.min.js"></script>
 		<script src="../public/util/js/plugins.js"></script>

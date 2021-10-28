@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+	header("Location:../pages/erreurConnexion.php");
+}
 if (isset($_GET['msg'])) {
 	$msg = $_GET['msg'];
 } else {
@@ -43,7 +47,6 @@ if (isset($_GET['msg'])) {
 
 			<div class="container-fluid">
 
-				<!-- logo a mettre -->
 				<div class="company">
 					<img id="monLogo" class="navbar-brand" src="../public/images/icon-logo-film.png" alt="" class="logo">
 					<h3> Kajo movie </h3>
@@ -70,7 +73,7 @@ if (isset($_GET['msg'])) {
 							<a class="nav-link" href="javascript:listerMembres();" onclick="">Lister Membres</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="../index.php">Déconnexion</a>
+							<a class="nav-link" aria-current="page" href="javascript:deconnexion()">Deconnexion</a>
 						</li>
 					</ul>
 					<form class="d-flex">
@@ -132,7 +135,7 @@ if (isset($_GET['msg'])) {
 						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
 						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
 						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<a href="#" class="btn btn-primary">Plus d info </a>';
+						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'../serveur/fiche.php\')">Plus d\'info</a>';
 						$rep .= '</div>';
 						$rep .= '</div>';
 
@@ -348,7 +351,11 @@ if (isset($_GET['msg'])) {
 									<input type="file" class="form-control" id="image" name="image">
 
 								</div>
+								<div class="myInput">
+									<label for="bandeAnnonce" class="form-label">Bande Annonce</label>
+									<input type="text" class="form-control" id="bandeAnnonce" name="bandeAnnonce">
 
+								</div>
 
 								<div class="modal-footer">
 									<button type="submit" id="submit-Film" class="btn btn-primary">Enregistrer Film</button>
@@ -363,14 +370,41 @@ if (isset($_GET['msg'])) {
 			</div>
 			<!-- Fin modal creer film-->
 
+			<!-- modal bande annonce -->
+			<div class="modal fade" id="modal-trailer" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Informations</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="ratio ratio-16x9">
+								<iframe id="trailer" src="" title="YouTube video" allowfullscreen></iframe>
+							</div>
+							<div id="info-film">
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- Fin modal bande annonce -->
+
 			<!--lister films  -->
-			<form id="formListerFilms" action="listerFilms.php" method="post"></form>
+			<form id="formListerFilms" action="listerFilms.php" method="post">
+
+			</form>
 
 			<!--lister membres  -->
 			<form id="formListerMembres" action="listerMembres.php" method="post"></form>
 
 			<!--Accueil admin  -->
 			<form id="formAccueilAdmin" action="admin.php" method="post"></form>
+
+			<!--deconnexion -->
+			<form id="deconnexion" action="../serveur/deconnexion.php" method="post"></form>
 		</main>
 
 		<footer class="site-footer">

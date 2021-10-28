@@ -9,6 +9,7 @@
     $description = $_POST['description'];
     $genres = $_POST['genres'];
     $prix = $_POST['prix'];
+	$bandeAnnonce = $_POST['bandeAnnonce'];
     $dossier = "../imageFilm/";
     $nomImage =sha1($titre.time());
 
@@ -49,9 +50,9 @@
 	}
 
     // update du film
-    $requette="UPDATE films SET titre=?,annee=?,duree=?,realisateurs=?,acteurs=?,description=?,image=?,prix=? WHERE idFilm=?";
+    $requette="UPDATE films SET titre=?,annee=?,duree=?,realisateurs=?,acteurs=?,description=?,image=?,bandeAnnonce=?,prix=? WHERE idFilm=?";
 	$stmt = $connexion->prepare($requette);
-    $stmt->bind_param("siisssssi",  $titre,$annee,$duree,$realisateur,$acteur,$description,$image,$prix,$idFilm);
+    $stmt->bind_param("siissssssi",  $titre,$annee,$duree,$realisateur,$acteur,$description,$image,$bandeAnnonce,$prix,$idFilm);
 	$stmt->execute();
 
     // delete les genres du film

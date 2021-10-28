@@ -43,7 +43,6 @@ if (isset($_GET['msg'])) {
 
             <div class="container-fluid">
 
-                <!-- logo a mettre -->
                 <div class="company">
                     <img id="monLogo" class="navbar-brand" src="../public/images/icon-logo-film.png" alt="" class="logo">
                     <h3> Kajo movie </h3>
@@ -124,8 +123,8 @@ if (isset($_GET['msg'])) {
                         $rep .= '<td>' . ($ligne->statut) . '</td>';
                         $rep .= '<td>' . ($ligne->role) . '</td>';
 
-                        $rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Activer-Membre" onclick="envoyerIdMembreActive(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xe876;</i></a> </td>';
-                        $rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Membre" onclick="envoyerIdMembre(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> </td>	</tr>';
+                        $rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Activer-Membre" onclick="envoyerIdMembreActive(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Activer">&#xe876;</i></a> </td>';
+                        $rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Membre" onclick="envoyerIdMembre(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Désactiver">&#xE872;</i></a> </td>	</tr>';
                         
                       
                     }
@@ -341,7 +340,11 @@ if (isset($_GET['msg'])) {
                                     <input type="file" class="form-control" id="image" name="image">
 
                                 </div>
+                                <div class="myInput">
+									<label for="bandeAnnonce" class="form-label">Bande Annonce</label>
+									<input type="text" class="form-control" id="bandeAnnonce" name="bandeAnnonce">
 
+								</div>
 
                                 <div class="modal-footer">
                                     <button type="submit" id="submit-Film" class="btn btn-primary">Enregistrer Film</button>

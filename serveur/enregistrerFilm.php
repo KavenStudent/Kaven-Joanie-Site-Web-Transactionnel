@@ -8,6 +8,7 @@
     $description = $_POST['description'];
     $genres = $_POST['genres'];
     $prix = $_POST['prix'];
+    $bandeAnnonce = $_POST['bandeAnnonce'];
     $dossier = "../imageFilm/";
     $nomImage =sha1($titre.time());
     $image = "default.png";
@@ -24,9 +25,9 @@
 	}
 
     // enregistrer film dans la bd
-    $requete="INSERT INTO films values(0,?,?,?,?,?,?,?,?)";
+    $requete="INSERT INTO films values(0,?,?,?,?,?,?,?,?,?)";
     $stmt = $connexion->prepare($requete);
-    $stmt->bind_param("siisssss",  $titre,$annee,$duree,$realisateur,$acteur,$description,$image,$prix);
+    $stmt->bind_param("siissssss",  $titre,$annee,$duree,$realisateur,$acteur,$description,$image,$bandeAnnonce,$prix);
     $stmt->execute();
 
     $id = $connexion->insert_id;
