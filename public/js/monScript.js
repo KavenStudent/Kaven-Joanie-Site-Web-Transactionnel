@@ -198,6 +198,7 @@ function listerLocation() {
   document.getElementById('formLocation').submit();
 }
 
+
 function deconnexion() {
   document.getElementById('deconnexion').submit();
 }
@@ -337,3 +338,18 @@ function viderPanier() {
 $(document).ready(function () {
   afficherPanier();
 });
+
+ 
+function lister(par, valeurPar){
+	if (par!==""){
+		document.getElementById('par').value=par;
+		document.getElementById('valeurPar').value=valeurPar;
+	}
+	document.getElementById('formLister').submit();
+}
+
+function deconnexion(){
+  document.getElementById('deconnexion').submit();
+
+}
+
