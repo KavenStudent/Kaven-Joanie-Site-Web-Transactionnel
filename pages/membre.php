@@ -6,7 +6,7 @@ if (!isset($_SESSION['membre'])) {
 }
 
 if (isset($_GET['id'])) {
-	if($_SESSION['membre'] != $_GET['id']){
+	if ($_SESSION['membre'] != $_GET['id']) {
 		header("Location:../pages/erreurConnexion.php");
 	}
 
@@ -52,6 +52,7 @@ if (isset($_GET['id'])) {
 
 	<!-- Loading third party fonts -->
 	<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="../public/util/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 	<!-- Loading main css file -->
@@ -101,6 +102,8 @@ if (isset($_GET['id'])) {
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="javascript:deconnexion()">Deconnexion</a>
 						</li>
+						<a class="btn btn-primary myButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"> <i class="material-icons">&#xe8cc;</i></a>
+
 					</ul>
 					<form class="d-flex">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -246,6 +249,26 @@ if (isset($_GET['id'])) {
 				</div>
 				<!-- Fin modal bande annonce -->
 
+				<!-- modal location -->
+				<div class="modal fade" id="modal-location" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Choisissez le nombre de jour</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<input type="number" id="jour" value="1" min="1">
+								<input type="hidden" id="idLocation">
+								<button type="button" class="btn btn-primary" onclick="envoyerAuPanier()">Ajouter au panier</button>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Fin modal location-->
+
 				<?php
 				require_once("../BD/connexion.inc.php");
 				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
@@ -278,6 +301,7 @@ if (isset($_GET['id'])) {
 						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
 						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
 						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'../serveur/fiche.php\')">Plus d\'info</a>';
+						$rep .= '<a href="#" class="btn btn-primary" onclick="ajout(' . $ligne->idFilm . ')">Ajouter</a>';
 						$rep .= '</div>';
 						$rep .= '</div>';
 
@@ -328,6 +352,25 @@ if (isset($_GET['id'])) {
 		<!--deconnexion -->
 		<form id="deconnexion" action="../serveur/deconnexion.php" method="post"></form>
 
+		<!-- canvas panier -->
+		<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+			<div class="offcanvas-header">
+				<h3 id="offcanvasRightLabel">Contenu de votre panier</h3>
+				<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+
+			<div class="offcanvas-body">
+
+				<div id="panier">
+
+				</div>
+
+				<div id="total">
+
+				</div>
+			</div>
+		</div>
+		
 		<script src="../public/util/js/jquery-1.11.1.min.js"></script>
 		<script src="../public/util/js/plugins.js"></script>
 		<script src="../public/util/js/app.js"></script>
