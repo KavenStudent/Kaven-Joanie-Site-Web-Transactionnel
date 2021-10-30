@@ -513,17 +513,17 @@ if (isset($_GET['msg'])) {
 					$valeurPar = strtolower(trim($_POST['valeurPar']));
 					switch ($par) {
 						case "tout":
-							$requette = "SELECT * FROM films WHERE 1=?";
+							$requette = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
 							$valeurPar = 1;
 							break;
 						case "res":
-							$requette = "SELECT * FROM films WHERE LOWER(res) LIKE CONCAT('%', ?, '%')";
+							$requette = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
 							break;
 						case "categ":
-							$requette = "SELECT * FROM films WHERE categ=?";
+							$requette = "SELECT * FROM films f INNER JOIN filmgenre fg ON f.idFilm = fg.idFilm INNER JOIN genre g ON g.idGenre = fg.idGenre WHERE g.nomGenre = ? ORDER BY annee DESC";
 							break;
 						case "titre":
-							$requette = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%')";
+							$requette = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
 							break;
 					}
 	
