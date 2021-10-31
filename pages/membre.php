@@ -319,6 +319,9 @@ if (isset($_GET['id'])) {
 				mysqli_close($connexion);
 				?>
 
+				<ul id="pagin">
+
+				</ul>
 			</div> <!-- .container -->
 		</main>
 
@@ -370,7 +373,7 @@ if (isset($_GET['id'])) {
 				</div>
 			</div>
 		</div>
-		
+
 		<script src="../public/util/js/jquery-1.11.1.min.js"></script>
 		<script src="../public/util/js/plugins.js"></script>
 		<script src="../public/util/js/app.js"></script>

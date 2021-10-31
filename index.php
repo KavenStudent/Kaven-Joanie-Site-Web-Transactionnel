@@ -18,6 +18,7 @@ if (isset($_GET['msg'])) {
 
 	<!-- Jquery -->
 	<script src="public/util/js/jquery-3.6.0.min.js"></script>
+
 	<!-- bootstrap -->
 	<script src="public/util/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="public/util/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
@@ -38,7 +39,7 @@ if (isset($_GET['msg'])) {
 
 
 <body onLoad="initialiser(<?php echo "'" . $msg . "'" ?>);">
-
+	
 	<div id=" site-content">
 		<!-- nav bar -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -495,8 +496,8 @@ if (isset($_GET['msg'])) {
 									<iframe id="trailer" src="" title="YouTube video" allowfullscreen></iframe>
 								</div>
 								<div id="info-film">
-							
-							</div>
+
+								</div>
 							</div>
 
 						</div>
@@ -507,8 +508,7 @@ if (isset($_GET['msg'])) {
 				<?php
 				require_once("BD/connexion.inc.php");
 
-				if( isset($_POST['par']) )
-				{
+				if (isset($_POST['par'])) {
 					$par = $_POST['par'];
 					$valeurPar = strtolower(trim($_POST['valeurPar']));
 					switch ($par) {
@@ -526,25 +526,22 @@ if (isset($_GET['msg'])) {
 							$requette = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
 							break;
 					}
-	
+
 					$stmt = $connexion->prepare($requette);
 					$stmt->bind_param("s", $valeurPar);
 					$stmt->execute();
 					$listeFilms = $stmt->get_result();
-				}
-				else{
+				} else {
 					$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
 					$listeFilms = mysqli_query($connexion, $requette);
 				}
 
 				try {
-					
+
 					$rep = "<div class='page' id='liste-film'>";
 					$i = 0;
 
 					$rep .= ' <div class="row">';
-
-					$test = 'httpasdasd';
 
 					while ($ligne = mysqli_fetch_object($listeFilms)) {
 						if ($i % 4 == 0) {
@@ -573,7 +570,7 @@ if (isset($_GET['msg'])) {
 
 						$i++;
 					}
-					$rep .= "</div>"; //fermer le dernier row
+					$rep .= "</div>"; //fermer le dernier row				
 					$rep .= "</div>"; //fermer le container
 					mysqli_free_result($listeFilms);
 				} catch (Exception $e) {
@@ -584,7 +581,10 @@ if (isset($_GET['msg'])) {
 				}
 				mysqli_close($connexion);
 				?>
+				
+				<ul id="pagin"> 
 
+				</ul>
 			</div> <!-- .container -->
 		</main>
 

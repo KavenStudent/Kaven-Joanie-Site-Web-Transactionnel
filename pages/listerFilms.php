@@ -114,7 +114,7 @@ if (isset($_GET['msg'])) {
 
 					while ($ligne = mysqli_fetch_object($listeFilms)) {
 						// table
-						$rep .= '<tr><td>' . ($ligne->idFilm) . '</td>';
+						$rep .= '<tr class="uneLigne"><td>' . ($ligne->idFilm) . '</td>';
 						$rep .= '<td>' . ($ligne->titre) . '</td>';
 						$rep .= '<td>' . ($ligne->annee) . '</td>';
 						$rep .= '<td>' . ($ligne->duree) . '</td>';
@@ -145,6 +145,9 @@ if (isset($_GET['msg'])) {
 
 				?>
 
+				<ul id="pagin">
+
+				</ul>
 			</div> <!-- .container -->
 
 			<!-- modal creer film-->

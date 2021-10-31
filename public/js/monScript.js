@@ -226,12 +226,12 @@ function ajoutPanier(id, jours) {
   obtenirInfo(id, path).then(data => {
     let prixTotal = data.prix * duree;
     let film = { "idFilm": data.idFilm, "titre": data.titre, "dureeLocation": duree, "image": data.image, "prix": prixTotal.toFixed(2) };
-    
+
     panier = JSON.parse(localStorage.getItem("panier"));
 
-    for (let i = 0; i < panier.length; i++){
+    for (let i = 0; i < panier.length; i++) {
 
-      if(panier[i].idFilm == data.idFilm){
+      if (panier[i].idFilm == data.idFilm) {
         existe = true;
 
         duree = panier[i].dureeLocation + jours;
@@ -242,11 +242,11 @@ function ajoutPanier(id, jours) {
       }
     }
 
-    if(!existe){
+    if (!existe) {
       panier.push(film);
     }
     localStorage.setItem("panier", JSON.stringify(panier));
-    
+
   }).finally(() => {
     $("#modal-location").modal('hide');
     afficherPanier();
@@ -306,7 +306,10 @@ function afficherPanier() {
 
   }
 
-  document.getElementById("panier").innerHTML = lePanier;
+  if(document.getElementById("panier") != null) {
+    document.getElementById("panier").innerHTML = lePanier;
+  }
+ 
 }
 
 function retirerFilm(idFilm) {
@@ -337,19 +340,76 @@ function viderPanier() {
 
 $(document).ready(function () {
   afficherPanier();
+  pagination();
+  paginationTable();
 });
 
- 
-function lister(par, valeurPar){
-	if (par!==""){
-		document.getElementById('par').value=par;
-		document.getElementById('valeurPar').value=valeurPar;
-	}
-	document.getElementById('formLister').submit();
+
+function lister(par, valeurPar) {
+  if (par !== "") {
+    document.getElementById('par').value = par;
+    document.getElementById('valeurPar').value = valeurPar;
+  }
+  document.getElementById('formLister').submit();
 }
 
-function deconnexion(){
+function deconnexion() {
   document.getElementById('deconnexion').submit();
 
 }
 
+function pagination() {
+  pageSize = 5;
+
+  var pageCount = $(".row").length / pageSize;
+
+  for (var i = 0; i < pageCount; i++) {
+
+    $("#pagin").append('<li><a href="#">' + (i + 1) + '</a></li> ');
+  }
+
+  $("#pagin li").first().find("a").addClass("current")
+  showPage = function (page) {
+    
+    $(".row").hide();
+    $(".row").each(function (n) {
+      if (n >= pageSize * (page - 1) && n < pageSize * page)
+        $(this).show();
+    });
+  }
+  showPage(1);
+
+  $("#pagin li a").click(function () {
+    $("#pagin li a").removeClass("current");
+    $(this).addClass("current");
+    showPage(parseInt($(this).text()))
+  });
+}
+
+function paginationTable() {
+  nbLigne = 20;
+
+  var pageCount = $(".uneLigne").length / nbLigne;
+
+  for (var i = 0; i < pageCount; i++) {
+
+    $("#pagin").append('<li><a href="#">' + (i + 1) + '</a></li> ');
+  }
+
+  $("#pagin li").first().find("a").addClass("current")
+  showPage = function (page) {
+    
+    $(".uneLigne").hide();
+    $(".uneLigne").each(function (n) {
+      if (n >= nbLigne * (page - 1) && n < nbLigne * page)
+        $(this).show();
+    });
+  }
+  showPage(1);
+
+  $("#pagin li a").click(function () {
+    $("#pagin li a").removeClass("current");
+    $(this).addClass("current");
+    showPage(parseInt($(this).text()))
+  });
+}

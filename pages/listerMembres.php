@@ -69,8 +69,8 @@ if (isset($_GET['msg'])) {
                             <a class="nav-link active" aria-current="page" href="javascript:listerMembres();" onclick="">Lister Membres</a>
                         </li>
                         <li class="nav-item">
-							<a class="nav-link" href="../index.php">Déconnexion</a>
-						</li>
+                            <a class="nav-link" href="../index.php">Déconnexion</a>
+                        </li>
                     </ul>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -114,7 +114,7 @@ if (isset($_GET['msg'])) {
 
                     while ($ligne = mysqli_fetch_object($listeMembres)) {
                         // table
-                        $rep .= '<tr><td>' . ($ligne->idMembre) . '</td>';
+                        $rep .= '<tr class="uneLigne"><td>' . ($ligne->idMembre) . '</td>';
                         $rep .= '<td>' . ($ligne->prenom) . '</td>';
                         $rep .= '<td>' . ($ligne->nom) . '</td>';
                         $rep .= '<td>' . ($ligne->courriel) . '</td>';
@@ -125,8 +125,6 @@ if (isset($_GET['msg'])) {
 
                         $rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Activer-Membre" onclick="envoyerIdMembreActive(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Activer">&#xe876;</i></a> </td>';
                         $rep .= '<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Membre" onclick="envoyerIdMembre(' . $ligne->idMembre . ')"><i class="material-icons" data-toggle="tooltip" title="Désactiver">&#xE872;</i></a> </td>	</tr>';
-                        
-                      
                     }
 
                     $rep .= '</tbody> </table> </div> </div> </div>'; //fin 
@@ -141,7 +139,10 @@ if (isset($_GET['msg'])) {
                 mysqli_close($connexion);
 
                 ?>
+                
+                <ul id="pagin">
 
+                </ul>
             </div> <!-- .container -->
 
             <!-- modal creer film-->
@@ -341,10 +342,10 @@ if (isset($_GET['msg'])) {
 
                                 </div>
                                 <div class="myInput">
-									<label for="bandeAnnonce" class="form-label">Bande Annonce</label>
-									<input type="text" class="form-control" id="bandeAnnonce" name="bandeAnnonce">
+                                    <label for="bandeAnnonce" class="form-label">Bande Annonce</label>
+                                    <input type="text" class="form-control" id="bandeAnnonce" name="bandeAnnonce">
 
-								</div>
+                                </div>
 
                                 <div class="modal-footer">
                                     <button type="submit" id="submit-Film" class="btn btn-primary">Enregistrer Film</button>

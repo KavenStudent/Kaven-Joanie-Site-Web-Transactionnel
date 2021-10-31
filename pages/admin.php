@@ -153,6 +153,9 @@ if (isset($_GET['msg'])) {
 				mysqli_close($connexion);
 				?>
 
+				<ul id="pagin">
+
+				</ul>
 			</div> <!-- .container -->
 
 			<!-- modal creer film-->

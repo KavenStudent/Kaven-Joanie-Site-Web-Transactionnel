@@ -118,3 +118,19 @@ i {
     pointer-events: auto;
     cursor: pointer;
 }
+
+.current {
+    color: black;
+}
+
+#pagin{
+    margin-top: 15px;
+}
+#pagin li {
+display: inline-block;
+}
+
+#pagin a {
+    display: inline-block;
+}
+      
