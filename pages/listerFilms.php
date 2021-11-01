@@ -72,10 +72,20 @@ if (isset($_GET['msg'])) {
 							<a class="nav-link" href="../index.php">Déconnexion</a>
 						</li>
 					</ul>
-					<form class="d-flex">
+					<!-- <form class="d-flex">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form>
+					</form> -->
+					<div class="d-flex nav-droite">
+						<input class="form-control me-2" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
+						<button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
+					</div>
+
+
+					<div class="d-flex nav-droite">
+						<input class="form-control me-2" type="number" id="rcres" placeholder="Année" aria-label="Recherche">
+						<button class="btn btn-outline-success" onClick="lister('annee',document.getElementById('rcres').value)">Recherche</button>
+					</div>
 				</div>
 			</div>
 		</nav>
@@ -102,10 +112,36 @@ if (isset($_GET['msg'])) {
 				<?php
 				require_once("../BD/connexion.inc.php");
 
-				$requette = "SELECT * FROM films ORDER BY `films`.`idFilm` ASC";
+				// $requette = "SELECT * FROM films ORDER BY `films`.`idFilm` ASC";
+
+				if (isset($_POST['par'])) {
+					$par = $_POST['par'];
+					$valeurPar = strtolower(trim($_POST['valeurPar']));
+					switch ($par) {
+						case "tout":
+							$requette = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
+							$valeurPar = 1;
+							break;
+						case "annee":
+							$requette = "SELECT * FROM films WHERE annee=? ORDER BY titre";
+							break;
+						
+						case "titre":
+							$requette = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+							break;
+					}
+
+					$stmt = $connexion->prepare($requette);
+					$stmt->bind_param("s", $valeurPar);
+					$stmt->execute();
+					$listeFilms = $stmt->get_result();
+				} else {
+					$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
+					$listeFilms = mysqli_query($connexion, $requette);
+				}
 
 				try {
-					$listeFilms = mysqli_query($connexion, $requette);
+					// $listeFilms = mysqli_query($connexion, $requette);
 					$rep = "<div class='page' id='liste-film'>";
 
 					$rep .= '<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">';
@@ -632,6 +668,10 @@ if (isset($_GET['msg'])) {
 		<script src="../public/util/js/plugins.js"></script>
 		<script src="../public/util/js/app.js"></script>
 
+		<form id="formLister" action="listerFilms.php?msg=" method="POST">
+			<input type="hidden" id="par" name="par" value="tout">
+			<input type="hidden" id="valeurPar" name="valeurPar" value="">
+		</form>
 </body>
 
 </html>
