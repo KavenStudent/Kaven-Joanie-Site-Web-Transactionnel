@@ -124,7 +124,7 @@ i {
 }
 
 #pagin{
-    margin-top: 15px;
+    margin-top: 20px;
 }
 #pagin li {
 display: inline-block;
@@ -133,4 +133,7 @@ display: inline-block;
 #pagin a {
     display: inline-block;
 }
-      
+
+#btnAJout {
+    margin-left: 10px;
+}

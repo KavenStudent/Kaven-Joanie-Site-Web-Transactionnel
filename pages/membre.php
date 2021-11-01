@@ -301,7 +301,7 @@ if (isset($_GET['id'])) {
 						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
 						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
 						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'../serveur/fiche.php\')">Plus d\'info</a>';
-						$rep .= '<a href="#" class="btn btn-primary" onclick="ajout(' . $ligne->idFilm . ')">Ajouter</a>';
+						$rep .= '<a href="#" id="btnAJout" class="btn btn-primary" onclick="ajout(' . $ligne->idFilm . ')">Ajouter</a>';
 						$rep .= '</div>';
 						$rep .= '</div>';
 
