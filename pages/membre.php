@@ -67,7 +67,8 @@ if (isset($_GET['id'])) {
 
 
 <body onLoad="initialiser(<?php echo "'" . $msg . "'" ?>);">
-
+	<input type="hidden" id="myMemberid" value="<?php echo $id;?>">
+	
 	<div id=" site-content">
 		<!-- nav bar -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">

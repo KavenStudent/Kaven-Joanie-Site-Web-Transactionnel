@@ -299,25 +299,41 @@ function afficherPanier() {
   </table>`;
 
   if (nbItems != 0) {
-    
+
     document.getElementById("total").innerHTML = `
     <button type="button" class="btn btn-primary" onclick="viderPanier()">Vider</button>
     <button type="button" id="btnPayer" class="btn btn-primary" onclick="payerPanier()">Payer</button>
      ${nbItems} item(s) Total : ${total.toFixed(2)}$`;
-/* <button type="button" class="btn btn-primary" onclick="payerPanier()">Payer</button> */
+
   }
 
   document.getElementById("panier").innerHTML = lePanier;
   // $("#btnPayer").css('display', 'inline');
 
-  
+
 }
 
 function retirerFilm(idFilm) {
 
   panier = panier.filter(item => item.idFilm !== idFilm)
   localStorage.setItem("panier", JSON.stringify(panier));
+  let total = 0;
 
+  if (panier.length == 0) {
+    $('#total').empty();
+  }
+  
+  if (panier.length > 0) {
+    panier.forEach(unFilm => {
+      total += parseFloat(unFilm.prix);
+    });
+
+    document.getElementById("total").innerHTML = `
+    <button type="button" class="btn btn-primary" onclick="viderPanier()">Vider</button>
+    <button type="button" id="btnPayer" class="btn btn-primary" onclick="payerPanier()">Payer</button>
+     ${panier.length} item(s) Total : ${total.toFixed(2)}$`;
+
+  }
   afficherPanier();
 }
 
@@ -329,9 +345,9 @@ function payerPanier() {
   });
 
   $("#btnPayer").css('display', 'none');
-  
+
   paypal.Buttons({
-    createOrder: function(data, actions) {
+    createOrder: function (data, actions) {
       // This function sets up the details of the transaction, including the amount and line item details.
       return actions.order.create({
         purchase_units: [{
@@ -341,18 +357,18 @@ function payerPanier() {
         }]
       });
     },
-    onApprove: function(data, actions) {
+    onApprove: function (data, actions) {
       // This function captures the funds from the transaction.
-      return actions.order.capture().then(function(details) {
+      return actions.order.capture().then(function (details) {
         // This function shows a transaction success message to your buyer.
         alert('Transaction completed by ' + details.payer.name.given_name + total);
         viderPanier();
       });
     }
   }).render('#paypal-button-container');
-  
-  
- 
+
+
+
 }
 
 function viderPanier() {
@@ -366,11 +382,11 @@ $(document).ready(function () {
 
   pagination();
 
-  if(window.location.pathname == '/Kaven-Joanie-TP/pages/listerFilms.php'|| window.location.pathname == '/Kaven-Joanie-TP/pages/listerMembres.php'){
+  if (window.location.pathname == '/Kaven-Joanie-TP/pages/listerFilms.php' || window.location.pathname == '/Kaven-Joanie-TP/pages/listerMembres.php') {
     paginationTable();
   }
-  
-  if(window.location.pathname == '/Kaven-Joanie-TP/pages/membre.php'){
+
+  if (window.location.pathname == '/Kaven-Joanie-TP/pages/membre.php') {
     afficherPanier();
   }
 });
@@ -401,7 +417,7 @@ function pagination() {
 
   $("#pagin li").first().find("a").addClass("current")
   showPage = function (page) {
-    
+
     $(".row").hide();
     $(".row").each(function (n) {
       if (n >= pageSize * (page - 1) && n < pageSize * page)
@@ -429,7 +445,7 @@ function paginationTable() {
 
   $("#pagin li").first().find("a").addClass("current")
   showPage = function (page) {
-    
+
     $(".uneLigne").hide();
     $(".uneLigne").each(function (n) {
       if (n >= nbLigne * (page - 1) && n < nbLigne * page)
