@@ -298,12 +298,12 @@ function afficherPanier() {
   </table>`;
 
   if (nbItems != 0) {
-    ``
+    
     document.getElementById("total").innerHTML = `
     <button type="button" class="btn btn-primary" onclick="viderPanier()">Vider</button>
-    <button type="button" class="btn btn-primary" onclick="payerPanier()">Payer</button>
+    
      ${nbItems} item(s) Total : ${total.toFixed(2)}$`;
-
+{/* <button type="button" class="btn btn-primary" onclick="payerPanier()">Payer</button> */}
   }
 
   document.getElementById("panier").innerHTML = lePanier;
@@ -326,9 +326,29 @@ function payerPanier() {
     total += parseFloat(unFilm.prix);
   });
 
-  alert(`Montant payé : ${total.toFixed(2)}$`);
+  // alert(`Montant payé : ${total.toFixed(2)}$`);
 
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: total
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        alert('Transaction completed by ' + details.payer.name.given_name);
+      });
+    }
+  }).render('#paypal-button-container');
   viderPanier();
+  
 }
 
 function viderPanier() {
@@ -419,3 +439,36 @@ function paginationTable() {
     showPage(parseInt($(this).text()))
   });
 }
+
+// paypal.Buttons({
+//   createOrder: function(data, actions) {
+//     // This function sets up the details of the transaction, including the amount and line item details.
+//     return actions.order.create({
+//       purchase_units: [{
+//         amount: {
+//           value: '0.01'
+//         }
+//       }]
+//     });
+//   }
+// }).render('#paypal-button-container');
+
+// paypal.Buttons({
+//   createOrder: function(data, actions) {
+//     // This function sets up the details of the transaction, including the amount and line item details.
+//     return actions.order.create({
+//       purchase_units: [{
+//         amount: {
+//           value: '0.01'
+//         }
+//       }]
+//     });
+//   },
+//   onApprove: function(data, actions) {
+//     // This function captures the funds from the transaction.
+//     return actions.order.capture().then(function(details) {
+//       // This function shows a transaction success message to your buyer.
+//       alert('Transaction completed by ' + details.payer.name.given_name);
+//     });
+//   }
+// }).render('#paypal-button-container');
