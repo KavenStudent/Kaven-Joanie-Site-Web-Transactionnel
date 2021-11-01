@@ -104,12 +104,47 @@ if (isset($_GET['id'])) {
 							<a class="nav-link" aria-current="page" href="javascript:deconnexion()">Deconnexion</a>
 						</li>
 						<a class="btn btn-primary myButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"> <i class="material-icons">&#xe8cc;</i></a>
-
 					</ul>
-					<form class="d-flex">
+					
+					<div class="d-flex  nav-droite">
+						<select class="form-select" onChange="lister('categ',this.options[this.selectedIndex].value)">
+							<option value="dr">Choisir ...</option>
+							<option value="Comedy">Comédie</option>
+							<option value="Fantasy">Fantaisie</option>
+							<option value="Drama">Drama</option>
+							<option value="Music">Music</option>
+							<option value="Adventure">Adventure</option>
+							<option value="History">Historique</option>
+							<option value="Thriller">Suspense</option>
+							<option value="Animation">Animation</option>
+							<option value="Familly">Famille</option>
+							<option value="Biography">Biographie</option>
+							<option value="Action">Action</option>
+							<option value="Film-Noir">Film-Noir</option>
+							<option value="Romance">Romance</option>
+							<option value="Sci-Fi">Sci-Fi</option>
+							<option value="War">Guerre</option>
+							<option value="Western">Western</option>
+							<option value="Horror">Horreur</option>
+							<option value="Musical">Musical</option>
+							<option value="Sport">Sport</option>
+						</select>
+					</div>
+
+					<div class="d-flex nav-droite">
+						<input class="form-control me-2" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
+						<button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
+					</div>
+
+
+					<div class="d-flex nav-droite">
+						<input class="form-control me-2" type="search" id="rcres" placeholder="Réalisateur" aria-label="Recherche">
+						<button class="btn btn-outline-success" onClick="lister('res',document.getElementById('rcres').value)">Recherche</button>
+					</div>
+					<!-- <form class="d-flex">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form>
+					</form> -->
 				</div>
 			</div>
 		</nav>
@@ -272,9 +307,37 @@ if (isset($_GET['id'])) {
 
 				<?php
 				require_once("../BD/connexion.inc.php");
-				$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-				try {
+
+				if (isset($_POST['par'])) {
+					$par = $_POST['par'];
+					$valeurPar = strtolower(trim($_POST['valeurPar']));
+					switch ($par) {
+						case "tout":
+							$requette = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
+							$valeurPar = 1;
+							break;
+						case "res":
+							$requette = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+							break;
+						case "categ":
+							$requette = "SELECT * FROM films f INNER JOIN filmgenre fg ON f.idFilm = fg.idFilm INNER JOIN genre g ON g.idGenre = fg.idGenre WHERE g.nomGenre = ? ORDER BY annee DESC";
+							break;
+						case "titre":
+							$requette = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+							break;
+					}
+
+					$stmt = $connexion->prepare($requette);
+					$stmt->bind_param("s", $valeurPar);
+					$stmt->execute();
+					$listeFilms = $stmt->get_result();
+				} else {
+					$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
 					$listeFilms = mysqli_query($connexion, $requette);
+				}
+
+				try {
+
 					$rep = "<div class='page' id='liste-film'>";
 					$i = 0;
 
@@ -308,7 +371,7 @@ if (isset($_GET['id'])) {
 
 						$i++;
 					}
-					$rep .= "</div>"; //fermer le dernier row
+					$rep .= "</div>"; //fermer le dernier row				
 					$rep .= "</div>"; //fermer le container
 					mysqli_free_result($listeFilms);
 				} catch (Exception $e) {
@@ -389,5 +452,10 @@ if (isset($_GET['id'])) {
 		</script>
 
 </body>
+
+<form id="formLister" action="membre.php?id=<?php echo $idM?>&msg=" method="POST">
+	<input type="hidden" id="par" name="par" value="tout">
+	<input type="hidden" id="valeurPar" name="valeurPar" value="">
+</form>
 
 </html>
