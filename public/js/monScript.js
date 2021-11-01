@@ -306,9 +306,8 @@ function afficherPanier() {
 
   }
 
-  if(document.getElementById("panier") != null) {
-    document.getElementById("panier").innerHTML = lePanier;
-  }
+  document.getElementById("panier").innerHTML = lePanier;
+
  
 }
 
@@ -339,9 +338,16 @@ function viderPanier() {
 }
 
 $(document).ready(function () {
-  afficherPanier();
+
   pagination();
-  paginationTable();
+
+  if(window.location.pathname == '/Kaven-Joanie-TP/pages/listerFilms.php'|| window.location.pathname == '/Kaven-Joanie-TP/pages/listerMembres.php'){
+    paginationTable();
+  }
+  
+  if(window.location.pathname == '/Kaven-Joanie-TP/pages/membre.php'){
+    afficherPanier();
+  }
 });
 
 
