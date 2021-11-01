@@ -384,7 +384,7 @@ if (isset($_GET['id'])) {
 		<script src="https://www.paypal.com/sdk/js?client-id=AUtFTyAh5PZIv_bsuyJSvoZeMeTRYktsp7CHcRsYlOPBFlu7sMBqfiCY01bD0JBK0jtqMn-zXx-XeBfA&currency=CAD">
 		</script>
 		<script>
-			paypal.Buttons().render('#paypal-button-container');
+			// paypal.Buttons().render('#paypal-button-container');
 		</script>
 
 </body>

@@ -259,6 +259,7 @@ function ajoutPanier(id, jours) {
 }
 
 function afficherPanier() {
+  $('#paypal-button-container').empty();
   var lePanier = `<table class="table table-sm"">
   <thead>
     <tr>
@@ -301,14 +302,15 @@ function afficherPanier() {
     
     document.getElementById("total").innerHTML = `
     <button type="button" class="btn btn-primary" onclick="viderPanier()">Vider</button>
-    
+    <button type="button" id="btnPayer" class="btn btn-primary" onclick="payerPanier()">Payer</button>
      ${nbItems} item(s) Total : ${total.toFixed(2)}$`;
-{/* <button type="button" class="btn btn-primary" onclick="payerPanier()">Payer</button> */}
+/* <button type="button" class="btn btn-primary" onclick="payerPanier()">Payer</button> */
   }
 
   document.getElementById("panier").innerHTML = lePanier;
+  // $("#btnPayer").css('display', 'inline');
 
- 
+  
 }
 
 function retirerFilm(idFilm) {
@@ -326,8 +328,8 @@ function payerPanier() {
     total += parseFloat(unFilm.prix);
   });
 
-  // alert(`Montant payé : ${total.toFixed(2)}$`);
-
+  $("#btnPayer").css('display', 'none');
+  
   paypal.Buttons({
     createOrder: function(data, actions) {
       // This function sets up the details of the transaction, including the amount and line item details.
@@ -343,18 +345,21 @@ function payerPanier() {
       // This function captures the funds from the transaction.
       return actions.order.capture().then(function(details) {
         // This function shows a transaction success message to your buyer.
-        alert('Transaction completed by ' + details.payer.name.given_name);
+        alert('Transaction completed by ' + details.payer.name.given_name + total);
+        viderPanier();
       });
     }
   }).render('#paypal-button-container');
-  viderPanier();
   
+  
+ 
 }
 
 function viderPanier() {
   localStorage.setItem("panier", '[]');
   afficherPanier();
   document.getElementById("total").innerHTML = '';
+  $('#paypal-button-container').empty();
 }
 
 $(document).ready(function () {
@@ -439,36 +444,3 @@ function paginationTable() {
     showPage(parseInt($(this).text()))
   });
 }
-
-// paypal.Buttons({
-//   createOrder: function(data, actions) {
-//     // This function sets up the details of the transaction, including the amount and line item details.
-//     return actions.order.create({
-//       purchase_units: [{
-//         amount: {
-//           value: '0.01'
-//         }
-//       }]
-//     });
-//   }
-// }).render('#paypal-button-container');
-
-// paypal.Buttons({
-//   createOrder: function(data, actions) {
-//     // This function sets up the details of the transaction, including the amount and line item details.
-//     return actions.order.create({
-//       purchase_units: [{
-//         amount: {
-//           value: '0.01'
-//         }
-//       }]
-//     });
-//   },
-//   onApprove: function(data, actions) {
-//     // This function captures the funds from the transaction.
-//     return actions.order.capture().then(function(details) {
-//       // This function shows a transaction success message to your buyer.
-//       alert('Transaction completed by ' + details.payer.name.given_name);
-//     });
-//   }
-// }).render('#paypal-button-container');
