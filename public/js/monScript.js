@@ -225,7 +225,8 @@ function ajoutPanier(id, jours) {
 
   obtenirInfo(id, path).then(data => {
     let prixTotal = data.prix * duree;
-    let film = { "idFilm": data.idFilm, "titre": data.titre, "dureeLocation": duree, "image": data.image, "prix": prixTotal.toFixed(2) };
+    let idMembre = document.getElementById('idMembre').value;
+    let film = { "idFilm": data.idFilm, "titre": data.titre, "dureeLocation": duree, "image": data.image, "prix": prixTotal.toFixed(2), "idMembre": idMembre };
 
     panier = JSON.parse(localStorage.getItem("panier"));
 
@@ -237,7 +238,7 @@ function ajoutPanier(id, jours) {
         duree = panier[i].dureeLocation + jours;
         prixTotal = data.prix * duree;
 
-        film = { "idFilm": data.idFilm, "titre": data.titre, "dureeLocation": duree, "image": data.image, "prix": prixTotal.toFixed(2) };
+        film = { "idFilm": data.idFilm, "titre": data.titre, "dureeLocation": duree, "image": data.image, "prix": prixTotal.toFixed(2), "idMembre": idMembre };
         panier[i] = film;
       }
     }
@@ -322,7 +323,7 @@ function retirerFilm(idFilm) {
   if (panier.length == 0) {
     $('#total').empty();
   }
-  
+
   if (panier.length > 0) {
     panier.forEach(unFilm => {
       total += parseFloat(unFilm.prix);
@@ -345,6 +346,7 @@ function payerPanier() {
   });
 
   $("#btnPayer").css('display', 'none');
+  id = document.getElementById("myMemberid").value;
 
   paypal.Buttons({
     createOrder: function (data, actions) {
@@ -358,16 +360,32 @@ function payerPanier() {
       });
     },
     onApprove: function (data, actions) {
+
+
       // This function captures the funds from the transaction.
       return actions.order.capture().then(function (details) {
-        // This function shows a transaction success message to your buyer.
-        alert('Transaction completed by ' + details.payer.name.given_name + total);
+
+
+        $.ajax({
+          type: "POST",
+          url: "../serveur/locationFilm.php",
+          data: JSON.stringify(panier),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data) {
+            alert('Transaction completed by ' + details.payer.name.given_name + ' ' + total);
+
+          },
+          error: function (errMsg) {
+            alert(errMsg);
+          }
+        });
+
         viderPanier();
+
       });
     }
   }).render('#paypal-button-container');
-
-
 
 }
 
