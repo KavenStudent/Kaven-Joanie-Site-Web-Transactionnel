@@ -113,7 +113,7 @@ if (isset($_GET['msg'])) {
 
 		<!-- TOAST -->
 		<div class="toast-container position-absolute top-15 start-50 translate-middle-x">
-			<div id="toast" class="toast  align-items-center text-white bg-secondary border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+			<div id="toast" class="toast  align-items-center text-white bg-secondary border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="10000">
 				<div class="toast-header">
 					<img src="public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
 					<strong class="me-auto">Messages</strong>

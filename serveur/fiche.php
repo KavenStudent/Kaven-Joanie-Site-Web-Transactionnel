@@ -10,10 +10,24 @@ $stmt = $connexion->prepare($requete);
 $stmt->bind_param("i", $idFilm);
 $stmt->execute();
 $result = $stmt->get_result();
-$ligne = $result->fetch_object();
-   
+$unFilm = $result->fetch_object();
+
+$requete= "SELECT nomgenre as genre FROM `genre` INNER JOIN filmgenre on genre.idGenre = filmgenre.idGenre where filmgenre.idFilm = ?";
+$stmt = $connexion->prepare($requete);
+$stmt->bind_param("i", $idFilm);
+$stmt->execute();
+$result = $stmt->get_result();
+$genre = $result->fetch_object();
+
+while ($genre != null){
+    $lesGenres[] =  $genre;
+    $genre = $result->fetch_object();
+}
+
 mysqli_close($connexion);
 
-echo json_encode($ligne);
+$tab = [$unFilm, $lesGenres];
+
+echo json_encode($tab);
 
 ?>
