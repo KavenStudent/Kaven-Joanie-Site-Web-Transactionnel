@@ -131,13 +131,13 @@ if (isset($_GET['id'])) {
 					</div>
 
 					<div class="d-flex nav-droite">
-						<input class="form-control me-2" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
+						<input class="inputSearch" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
 						<button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
 					</div>
 
 
 					<div class="d-flex nav-droite">
-						<input class="form-control me-2" type="search" id="rcres" placeholder="Réalisateur" aria-label="Recherche">
+						<input class="inputSearch" type="search" id="rcres" placeholder="Réalisateur" aria-label="Recherche">
 						<button class="btn btn-outline-success" onClick="lister('res',document.getElementById('rcres').value)">Recherche</button>
 					</div>
 					<!-- <form class="d-flex">
