@@ -145,6 +145,7 @@ display: inline-block;
 
 .toast-container{
     z-index: 10000;
+}
 
 .inputSearch{
     width: 100px;
