@@ -8,7 +8,6 @@ $stmt = $connexion->prepare($requete);
 
 $date =  date("Y-m-d");
 
-
 foreach ($data as $film) {
 
     $idFilm = $film['idFilm'];
