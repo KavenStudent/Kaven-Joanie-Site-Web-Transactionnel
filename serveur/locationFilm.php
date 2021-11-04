@@ -16,4 +16,3 @@ foreach($data as $film){
     $stmt->bind_param("iisi",  $idFilm, $idMembre, $date, $dureeLocation);
     $stmt->execute();
 }
-

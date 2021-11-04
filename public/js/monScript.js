@@ -183,15 +183,30 @@ async function obtenirInfo(id, path) {
 // popule et montre le modal modifier film (admin modifier film)
 function populerModal(id, path) {
   obtenirInfo(id, path).then(data => {
-    document.getElementById('id-modifier').value = data.idFilm;
-    document.getElementById('titre-modifier').value = data.titre;
-    document.getElementById('annee-modifier').value = data.annee;
-    document.getElementById('duree-modifier').value = data.duree;
-    document.getElementById('realisateur-modifier').value = data.realisateurs;
-    document.getElementById('acteur-modifier').value = data.acteurs;
-    document.getElementById('description-modifier').value = data.description;
-    document.getElementById('prix-modifier').value = data.prix;
-    document.getElementById('bandeAnnonce-modifier').value = data.bandeAnnonce;
+    let genres = data[1];
+
+    document.getElementById('id-modifier').value = data[0].idFilm;
+    document.getElementById('titre-modifier').value = data[0].titre;
+    document.getElementById('annee-modifier').value = data[0].annee;
+    document.getElementById('duree-modifier').value = data[0].duree;
+    document.getElementById('realisateur-modifier').value = data[0].realisateurs;
+    document.getElementById('acteur-modifier').value = data[0].acteurs;
+    document.getElementById('description-modifier').value = data[0].description;
+    document.getElementById('prix-modifier').value = data[0].prix;
+    document.getElementById('bandeAnnonce-modifier').value = data[0].bandeAnnonce;
+
+    // parcours les checkbox des genres
+    $('input[type=checkbox]').each(function () {
+
+      genres.forEach(ligne => {
+        // si le value du checkbox est dans genres on le coche
+        if (ligne.genre === $(this).val()) {
+          $(this).prop('checked', true);
+        }
+        
+      });
+
+    });
 
   }).finally(() => { $("#modal-modifier-film").modal('show'); });
 
@@ -201,13 +216,21 @@ function populerModal(id, path) {
 function afficherTrailer(id, path) {
   obtenirInfo(id, path)
     .then(data => {
-      let contenu = `<h4> ${data.titre} </h4>
-    <p><strong>Durée: </strong> ${data.duree} minutes</p>
-    <p><strong>Réalisateur: </strong>${data.realisateurs} </p>
-    <p><strong>Acteurs: </strong>${data.acteurs} </p>
-    <p><strong>Description: </strong>${data.description} </p>`;
+      let contenu = `<h4> ${data[0].titre} </h4>
+      <p><strong>Genres: </strong>`;
 
-      document.getElementById('trailer').src = data.bandeAnnonce;
+      for (i = 0; i < data[1].length; i++) {
+        contenu += data[1][i].genre + " ";
+      };
+
+      contenu += `</p><p><strong>Durée: </strong> ${data[0].duree} minutes</p>
+      <p><strong>Réalisateur: </strong>${data[0].realisateurs} </p>
+      <p><strong>Acteurs: </strong>${data[0].acteurs} </p>
+      <p><strong>Description: </strong>${data[0].description} </p>`;
+
+
+
+      document.getElementById('trailer').src = data[0].bandeAnnonce;
       document.getElementById('info-film').innerHTML = contenu;
     })
     .finally(() => { $("#modal-trailer").modal('show'); });
@@ -240,22 +263,22 @@ function ajoutPanier(id, jours) {
   let duree = jours;
 
   obtenirInfo(id, path).then(data => {
-    let prixTotal = data.prix * duree;
+    let prixTotal = data[0].prix * duree;
     let idMembre = document.getElementById('idMembre').value;
-    let film = { "idFilm": data.idFilm, "titre": data.titre, "dureeLocation": duree, "image": data.image, "prix": prixTotal.toFixed(2), "idMembre": idMembre };
+    let film = { "idFilm": data[0].idFilm, "titre": data[0].titre, "dureeLocation": duree, "image": data[0].image, "prix": prixTotal.toFixed(2), "idMembre": idMembre };
 
     panier = JSON.parse(localStorage.getItem("panier"));
 
     // regarde si le film est deja dans le panier de
     for (let i = 0; i < panier.length; i++) {
 
-      if (panier[i].idFilm == data.idFilm) { // si existe augmente la duree de la location
+      if (panier[i].idFilm == data[0].idFilm) { // si existe augmente la duree de la location
         existe = true;
 
         duree = panier[i].dureeLocation + jours;
-        prixTotal = data.prix * duree;
+        prixTotal = data[0].prix * duree;
 
-        film = { "idFilm": data.idFilm, "titre": data.titre, "dureeLocation": duree, "image": data.image, "prix": prixTotal.toFixed(2), "idMembre": idMembre };
+        film = { "idFilm": data[0].idFilm, "titre": data[0].titre, "dureeLocation": duree, "image": data[0].image, "prix": prixTotal.toFixed(2), "idMembre": idMembre };
         panier[i] = film;
       }
     }
@@ -271,7 +294,7 @@ function ajoutPanier(id, jours) {
     $("#modal-location").modal('hide');
     afficherPanier();
     document.getElementById('jour').value = 1; // remet le input du nombre de jour à 1
-    let bsOffcanvas = new bootstrap.Offcanvas(document.getElementById("offcanvasRight")); 
+    let bsOffcanvas = new bootstrap.Offcanvas(document.getElementById("offcanvasRight"));
     bsOffcanvas.show(); // affiche le canvas du panier
   });
 }
@@ -318,7 +341,7 @@ function afficherPanier() {
   </table>`;
 
   // si le panier est vide n'on affiche pas ca 
-  if (nbItems != 0) { 
+  if (nbItems != 0) {
 
     document.getElementById("total").innerHTML = `
     <div id="container-total-panier">

@@ -88,7 +88,7 @@ if (isset($_GET['msg'])) {
 
 		<!-- TOAST -->
 		<div class="toast-container position-absolute top-15 start-50 translate-middle-x">
-			<div id="toast" class="toast  align-items-center text-white bg-secondary border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+			<div id="toast" class="toast  align-items-center text-white bg-secondary border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="10000">
 				<div class="toast-header">
 					<img src="../public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
 					<strong class="me-auto">Messages</strong>
@@ -114,15 +114,15 @@ if (isset($_GET['msg'])) {
 					$valeurPar = strtolower(trim($_POST['valeurPar']));
 					switch ($par) {
 						case "tout":
-							$requette = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
+							$requette = "SELECT * FROM films WHERE 1=? ORDER BY idFilm";
 							$valeurPar = 1;
 							break;
 						case "annee":
-							$requette = "SELECT * FROM films WHERE annee=? ORDER BY titre";
+							$requette = "SELECT * FROM films WHERE annee=? ORDER BY idFilm";
 							break;
 						
 						case "titre":
-							$requette = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+							$requette = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY idFilm";
 							break;
 					}
 
@@ -131,7 +131,7 @@ if (isset($_GET['msg'])) {
 					$stmt->execute();
 					$listeFilms = $stmt->get_result();
 				} else {
-					$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
+					$requette = "SELECT * FROM films ORDER BY idFilm";
 					$listeFilms = mysqli_query($connexion, $requette);
 				}
 
