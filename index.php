@@ -14,8 +14,6 @@ if (isset($_GET['msg'])) {
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
 
-	<title>Movie Review</title>
-
 	<!-- Jquery -->
 	<script src="public/util/js/jquery-3.6.0.min.js"></script>
 
@@ -39,7 +37,7 @@ if (isset($_GET['msg'])) {
 
 
 <body onLoad="initialiser(<?php echo "'" . $msg . "'" ?>);">
-	
+
 	<div id=" site-content">
 		<!-- nav bar -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -50,7 +48,7 @@ if (isset($_GET['msg'])) {
 					<img id="monLogo" class="navbar-brand" src="public/images/icon-logo-film.png" alt="" class="logo">
 					<h3> Kajo movie </h3>
 				</div>
-				<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+		
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -69,9 +67,7 @@ if (isset($_GET['msg'])) {
 						<li class="nav-item">
 							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-creer-film">Enregistrer Film</a>
 						</li>
-						<!-- <li class="nav-item">
-							<a class="nav-link" href="serveur/inserer.php">Inserer</a>
-						</li> -->
+			
 					</ul>
 
 					<div class="d-flex  nav-droite">
@@ -110,32 +106,28 @@ if (isset($_GET['msg'])) {
 						<button class="btn btn-outline-success" onClick="lister('res',document.getElementById('rcres').value)">Recherche</button>
 					</div>
 
-					<!-- <form class="d-flex">
-						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form> -->
 				</div>
 			</div>
 		</nav>
 		<!-- fin nav bar -->
 
+		<!-- TOAST -->
+		<div class="toast-container position-absolute top-15 start-50 translate-middle-x">
+			<div id="toast" class="toast  align-items-center text-white bg-danger  border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="toast-header">
+					<img src="public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
+					<strong class="me-auto">Messages</strong>
+					<small class="text-muted"></small>
+					<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div id="textToast" class="toast-body">
+				</div>
+			</div>
+		</div>
+
 		<main class="main-content">
 
 			<div class="container">
-
-				<!-- TOAST -->
-				<div class="toast-container posToast">
-					<div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
-						<div class="toast-header">
-							<img src="public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
-							<strong class="me-auto">Messages</strong>
-							<small class="text-muted"></small>
-							<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-						</div>
-						<div id="textToast" class="toast-body">
-						</div>
-					</div>
-				</div>
 
 				<!-- modal devenir membre-->
 				<div class="modal fade" id="modal-Membre" tabindex="-1">
@@ -581,22 +573,12 @@ if (isset($_GET['msg'])) {
 				}
 				mysqli_close($connexion);
 				?>
-				
-				<ul id="pagin"> 
+
+				<ul id="pagin">
 
 				</ul>
 			</div> <!-- .container -->
 		</main>
-
-		<footer class="site-footer">
-			<div class="container">
-
-
-				<div class="colophon">Copyright 2014 Company name, Designed by Themezy. All rights reserved</div>
-			</div> <!-- .container -->
-
-		</footer>
-
 
 		<form id="formLister" action="index.php" method="POST">
 			<input type="hidden" id="par" name="par" value="tout">

@@ -3,10 +3,12 @@ var visibleConfirmer = false;
 var visibleMotdePasse = false;
 var panier = null;
 
+// initialise le panier s'il n'existe pas 
 if (localStorage.getItem("panier") == undefined) {
   localStorage.setItem("panier", '[]');//panier vide
 }
 
+// valide le form devenir membre
 let valider = (id) => {
   let myForm = document.getElementById(id);
   let password = myForm.password.value;
@@ -27,6 +29,7 @@ let valider = (id) => {
   return true;
 }
 
+// montre le password dans l'input password dans devenir membre et connexion
 function montrerPassword(id) {
   var x = document.getElementById(id);
   if (x.type === "password") {
@@ -36,6 +39,7 @@ function montrerPassword(id) {
   }
 }
 
+// montre la confirmation du password dans devenir membre 
 function montrerConfirmerPass() {
 
   if (visibleConfirmer === true) {
@@ -48,6 +52,7 @@ function montrerConfirmerPass() {
   }
 }
 
+// affiche les 2 passwords dans modal modifier profil membre
 function montrerPassword2() {
 
   if (visibleMotdePasse === true) {
@@ -62,13 +67,14 @@ function montrerPassword2() {
   }
 }
 
+//liste les films a partir d'un json
 function listerFilms() {
   $.getJSON(jsonUrl, function (json) {
     let contenu = `<div class="row">`;
     let compteur = 0;
     let compteur_row = 0;
 
-    for (let i = 0; i < 12; i++) { // 012340123401234
+    for (let i = 0; i < 12; i++) {
 
       contenu += `<div class="card">
       <a href="#"><img class="image-film" src="${json.movies[i].posterUrl}" alt="image film"></a>
@@ -96,6 +102,7 @@ function listerFilms() {
   });
 }
 
+// initialise les toast
 let initialiser = (message) => {
   let textToast = document.getElementById("textToast");
   let toastElList = [].slice.call(document.querySelectorAll('.toast'))
@@ -110,23 +117,24 @@ let initialiser = (message) => {
   }
 }
 
+// envoie l'id du film a supprimer (admin.php)
 function envoyerIdFilm(id) {
   document.getElementById('id-film-delete').value = id;
 }
 
+// envoie l'id du membre pour le desactiver (admin.php)
 function envoyerIdMembre(id) {
   document.getElementById('id-membre-delete').value = id;
 }
 
+// envoie l'id du membre pour le reactiver (admin.php)
 function envoyerIdMembreActive(id) {
   document.getElementById('id-membre-activer').value = id;
 }
 
-$(document).ready(function () {
-  $(".toast-container").css("display", "none");
-});
 
 
+// Méthodes submit pour aller à une autre page
 function listerHistorique() {
   document.getElementById('formHistorique').submit();
 }
@@ -134,53 +142,6 @@ function listerHistorique() {
 function retourAccueilM() {
   document.getElementById('formAccueilM').submit();
 }
-
-async function obtenirInfo(id, path) {
-
-  const response = await fetch(path, {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-
-    body: JSON.stringify({ "idFilm": id })
-  });
-  return response.json();
-
-}
-
-function populerModal(id, path) {
-  obtenirInfo(id, path).then(data => {
-    document.getElementById('id-modifier').value = data.idFilm;
-    document.getElementById('titre-modifier').value = data.titre;
-    document.getElementById('annee-modifier').value = data.annee;
-    document.getElementById('duree-modifier').value = data.duree;
-    document.getElementById('realisateur-modifier').value = data.realisateurs;
-    document.getElementById('acteur-modifier').value = data.acteurs;
-    document.getElementById('description-modifier').value = data.description;
-    document.getElementById('prix-modifier').value = data.prix;
-    document.getElementById('bandeAnnonce-modifier').value = data.bandeAnnonce;
-
-  }).finally(() => { $("#modal-modifier-film").modal('show'); });
-
-}
-
-function afficherTrailer(id, path) {
-  obtenirInfo(id, path)
-    .then(data => {
-      let contenu = `<h4> ${data.titre} </h4>
-    <p><strong>Durée: </strong> ${data.duree} minutes</p>
-    <p><strong>Réalisateur: </strong>${data.realisateurs} </p>
-    <p><strong>Acteurs: </strong>${data.acteurs} </p>
-    <p><strong>Description: </strong>${data.description} </p>`;
-
-      document.getElementById('trailer').src = data.bandeAnnonce;
-      document.getElementById('info-film').innerHTML = contenu;
-    })
-    .finally(() => { $("#modal-trailer").modal('show'); });
-}
-
 function listerFilms() {
   document.getElementById('formListerFilms').submit();
 }
@@ -203,21 +164,76 @@ function deconnexion() {
   document.getElementById('deconnexion').submit();
 }
 
+// obtient les info d'un film en json
+async function obtenirInfo(id, path) {
+
+  const response = await fetch(path, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+
+    body: JSON.stringify({ "idFilm": id })
+  });
+  return response.json();
+
+}
+
+// popule et montre le modal modifier film (admin modifier film)
+function populerModal(id, path) {
+  obtenirInfo(id, path).then(data => {
+    document.getElementById('id-modifier').value = data.idFilm;
+    document.getElementById('titre-modifier').value = data.titre;
+    document.getElementById('annee-modifier').value = data.annee;
+    document.getElementById('duree-modifier').value = data.duree;
+    document.getElementById('realisateur-modifier').value = data.realisateurs;
+    document.getElementById('acteur-modifier').value = data.acteurs;
+    document.getElementById('description-modifier').value = data.description;
+    document.getElementById('prix-modifier').value = data.prix;
+    document.getElementById('bandeAnnonce-modifier').value = data.bandeAnnonce;
+
+  }).finally(() => { $("#modal-modifier-film").modal('show'); });
+
+}
+
+// popule et montre le modal quand on clique 'plus d'info' dans les cards des films
+function afficherTrailer(id, path) {
+  obtenirInfo(id, path)
+    .then(data => {
+      let contenu = `<h4> ${data.titre} </h4>
+    <p><strong>Durée: </strong> ${data.duree} minutes</p>
+    <p><strong>Réalisateur: </strong>${data.realisateurs} </p>
+    <p><strong>Acteurs: </strong>${data.acteurs} </p>
+    <p><strong>Description: </strong>${data.description} </p>`;
+
+      document.getElementById('trailer').src = data.bandeAnnonce;
+      document.getElementById('info-film').innerHTML = contenu;
+    })
+    .finally(() => { $("#modal-trailer").modal('show'); });
+}
+
+
+
+// Methodes du panier
+// envoie l'id d'un film à ajouter au panier
 function ajout(id) {
   document.getElementById('idLocation').value = id;
   $("#modal-location").modal('show');
 }
 
+// envoie le film dans le panier
 function envoyerAuPanier() {
   let jour = Math.trunc(document.getElementById('jour').value);
   idLocation = document.getElementById('idLocation').value;
 
-  if (jour < 1) {
+  if (jour < 1) { // si le jour est negatif met le jour a 1
     jour = 1;
   }
   ajoutPanier(idLocation, jour);
 }
 
+// appelé par envoyerAuPanier ajoute l'item au panier
 function ajoutPanier(id, jours) {
   path = "../serveur/fiche.php";
   let existe = false;
@@ -230,9 +246,10 @@ function ajoutPanier(id, jours) {
 
     panier = JSON.parse(localStorage.getItem("panier"));
 
+    // regarde si le film est deja dans le panier de
     for (let i = 0; i < panier.length; i++) {
 
-      if (panier[i].idFilm == data.idFilm) {
+      if (panier[i].idFilm == data.idFilm) { // si existe augmente la duree de la location
         existe = true;
 
         duree = panier[i].dureeLocation + jours;
@@ -243,22 +260,23 @@ function ajoutPanier(id, jours) {
       }
     }
 
+    // si le film n'existe pas on ajoute le film au panier
     if (!existe) {
       panier.push(film);
     }
+
     localStorage.setItem("panier", JSON.stringify(panier));
 
   }).finally(() => {
     $("#modal-location").modal('hide');
     afficherPanier();
-    document.getElementById('jour').value = 1;
-    let bsOffcanvas = new bootstrap.Offcanvas(document.getElementById("offcanvasRight"));
-    bsOffcanvas.show();
+    document.getElementById('jour').value = 1; // remet le input du nombre de jour à 1
+    let bsOffcanvas = new bootstrap.Offcanvas(document.getElementById("offcanvasRight")); 
+    bsOffcanvas.show(); // affiche le canvas du panier
   });
-
-
 }
 
+// affiche les items du panier 
 function afficherPanier() {
   $('#paypal-button-container').empty();
   var lePanier = `<table class="table table-sm"">
@@ -299,21 +317,23 @@ function afficherPanier() {
   lePanier += ` </tbody>
   </table>`;
 
-  if (nbItems != 0) {
+  // si le panier est vide n'on affiche pas ca 
+  if (nbItems != 0) { 
 
     document.getElementById("total").innerHTML = `
-    <button type="button" class="btn btn-primary" onclick="viderPanier()">Vider</button>
+    <div id="container-total-panier">
+    <button type="button" id="btnVider" class="btn btn-primary" onclick="viderPanier()">Vider</button>
     <button type="button" id="btnPayer" class="btn btn-primary" onclick="payerPanier()">Payer</button>
-     ${nbItems} item(s) Total : ${total.toFixed(2)}$`;
+     ${nbItems} item(s) Total : ${total.toFixed(2)}$
+     </div>`;
 
   }
 
   document.getElementById("panier").innerHTML = lePanier;
-  // $("#btnPayer").css('display', 'inline');
-
 
 }
 
+// retire un film du panier
 function retirerFilm(idFilm) {
 
   panier = panier.filter(item => item.idFilm !== idFilm)
@@ -338,6 +358,7 @@ function retirerFilm(idFilm) {
   afficherPanier();
 }
 
+// paie le panier 
 function payerPanier() {
   let total = 0;
 
@@ -388,7 +409,7 @@ function payerPanier() {
   }).render('#paypal-button-container');
 
 }
-
+// vide le panier 
 function viderPanier() {
   localStorage.setItem("panier", '[]');
   afficherPanier();
@@ -396,20 +417,7 @@ function viderPanier() {
   $('#paypal-button-container').empty();
 }
 
-$(document).ready(function () {
-
-  pagination();
-
-  if (window.location.pathname == '/Kaven-Joanie-TP/pages/listerFilms.php' || window.location.pathname == '/Kaven-Joanie-TP/pages/listerMembres.php') {
-    paginationTable();
-  }
-
-  if (window.location.pathname == '/Kaven-Joanie-TP/pages/membre.php') {
-    afficherPanier();
-  }
-});
-
-
+// submit les criteres de recherche
 function lister(par, valeurPar) {
   if (par !== "") {
     document.getElementById('par').value = par;
@@ -418,11 +426,7 @@ function lister(par, valeurPar) {
   document.getElementById('formLister').submit();
 }
 
-function deconnexion() {
-  document.getElementById('deconnexion').submit();
-
-}
-
+// pagination des cards des films
 function pagination() {
   pageSize = 5;
 
@@ -451,6 +455,7 @@ function pagination() {
   });
 }
 
+// pagination des table lister membre et lister film
 function paginationTable() {
   nbLigne = 20;
 
@@ -478,3 +483,17 @@ function paginationTable() {
     showPage(parseInt($(this).text()))
   });
 }
+
+// ready
+$(document).ready(function () {
+  $(".toast-container").css("display", "none");
+  pagination();
+
+  if (window.location.pathname == '/Kaven-Joanie-TP/pages/listerFilms.php' || window.location.pathname == '/Kaven-Joanie-TP/pages/listerMembres.php') {
+    paginationTable();
+  }
+
+  if (window.location.pathname == '/Kaven-Joanie-TP/pages/membre.php') {
+    afficherPanier();
+  }
+});
