@@ -92,10 +92,10 @@ if (isset($_GET['id'])) {
                             <a class="nav-link" aria-current="page" href="../index.php">Deconnexion</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    <!-- <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                    </form> -->
                 </div>
             </div>
         </nav>

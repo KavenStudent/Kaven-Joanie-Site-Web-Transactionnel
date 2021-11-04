@@ -77,13 +77,13 @@ if (isset($_GET['msg'])) {
 						<button class="btn btn-outline-success" type="submit">Search</button>
 					</form> -->
 					<div class="d-flex nav-droite">
-						<input class="form-control me-2" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
+						<input class="inputSearch" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
 						<button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
 					</div>
 
 
 					<div class="d-flex nav-droite">
-						<input class="form-control me-2" type="number" id="rcres" placeholder="Année" aria-label="Recherche">
+						<input class="inputSearch" type="number" id="rcres" placeholder="Année" aria-label="Recherche">
 						<button class="btn btn-outline-success" onClick="lister('annee',document.getElementById('rcres').value)">Recherche</button>
 					</div>
 				</div>

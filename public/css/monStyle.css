@@ -137,3 +137,10 @@ display: inline-block;
 #btnAJout {
     margin-left: 10px;
 }
+.inputSearch{
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border-color: white;
+}
