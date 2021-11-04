@@ -102,7 +102,10 @@ if (isset($_GET['id'])) {
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="javascript:deconnexion()">Deconnexion</a>
 						</li>
+						<li class="nav-item">
 						<a class="btn btn-primary myButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"> <i class="material-icons">&#xe8cc;</i></a>
+						</li>
+						
 					</ul>
 					
 					<div class="d-flex  nav-droite">
