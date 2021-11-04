@@ -13,8 +13,6 @@ if (isset($_GET['msg'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
 
-    <title>Movie Review</title>
-
     <!-- Jquery -->
     <script src="../public/util/js/jquery-3.6.0.min.js"></script>
     <!-- bootstrap -->
@@ -47,7 +45,7 @@ if (isset($_GET['msg'])) {
                     <img id="monLogo" class="navbar-brand" src="../public/images/icon-logo-film.png" alt="" class="logo">
                     <h3> Kajo movie </h3>
                 </div>
-                <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+   
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -81,23 +79,23 @@ if (isset($_GET['msg'])) {
         </nav>
         <!-- fin nav bar -->
 
+        <!-- TOAST -->
+        <div class="toast-container position-absolute top-15 start-50 translate-middle-x">
+            <div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="../public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
+                    <strong class="me-auto">Messages</strong>
+                    <small class="text-muted"></small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div id="textToast" class="toast-body">
+                </div>
+            </div>
+        </div>
+
         <main class="main-content">
 
             <div class="container">
-
-                <!-- TOAST -->
-                <div class="toast-container posToast">
-                    <div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-header">
-                            <img src="../public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
-                            <strong class="me-auto">Messages</strong>
-                            <small class="text-muted"></small>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                        <div id="textToast" class="toast-body">
-                        </div>
-                    </div>
-                </div>
 
                 <?php
                 require_once("../BD/connexion.inc.php");
@@ -139,7 +137,7 @@ if (isset($_GET['msg'])) {
                 mysqli_close($connexion);
 
                 ?>
-                
+
                 <ul id="pagin">
 
                 </ul>
@@ -421,15 +419,6 @@ if (isset($_GET['msg'])) {
             <!--Accueil admin  -->
             <form id="formAccueilAdmin" action="admin.php" method="post"></form>
         </main>
-
-        <footer class="site-footer">
-            <div class="container">
-
-
-                <div class="colophon">Copyright 2014 Company name, Designed by Themezy. All rights reserved</div>
-            </div> <!-- .container -->
-
-        </footer>
 
         <script src="../public/util/js/jquery-1.11.1.min.js"></script>
         <script src="../public/util/js/plugins.js"></script>

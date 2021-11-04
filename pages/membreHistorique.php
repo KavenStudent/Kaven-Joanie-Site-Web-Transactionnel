@@ -3,9 +3,7 @@ require_once("../BD/connexion.inc.php");
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $msg = $_GET['msg'];
-    //echo "ID = ".$id."  MSG = ".$msg;
 
-    //$requete="SELECT * FROM membres WHERE idMembre = ?";
     $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.motDePasse, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE m.idMembre = ?";
     $stmt = $connexion->prepare($requete);
     $stmt->bind_param("i", $id);
@@ -34,8 +32,6 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
-
-    <title>Movie Review</title>
 
     <!-- Jquery -->
     <script src="../public/util/js/jquery-3.6.0.min.js"></script>
@@ -70,7 +66,7 @@ if (isset($_GET['id'])) {
                     <img id="monLogo" class="navbar-brand" src="../public/images/icon-logo-film.png" alt="" class="logo">
                     <h3> Kajo movie </h3>
                 </div>
-                <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+            
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -89,7 +85,7 @@ if (isset($_GET['id'])) {
                             <a class="nav-link" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../index.php">Deconnexion</a>
+                            <a class="nav-link" aria-current="page" href="../index.php">Déconnexion</a>
                         </li>
                     </ul>
                     <form class="d-flex">
@@ -101,23 +97,24 @@ if (isset($_GET['id'])) {
         </nav>
         <!-- fin nav bar -->
 
+        <!-- TOAST -->
+        <div class="toast-container position-absolute top-15 start-50 translate-middle-x">
+            <div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="../public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
+                    <strong class="me-auto">Messages</strong>
+                    <small class="text-muted"></small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div id="textToast" class="toast-body">
+                </div>
+            </div>
+        </div>
+
         <main class="main-content">
 
             <div class="container">
 
-                <!-- TOAST -->
-                <div class="toast-container posToast">
-                    <div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-header">
-                            <img src="../public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
-                            <strong class="me-auto">Messages</strong>
-                            <small class="text-muted"></small>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                        <div id="textToast" class="toast-body">
-                        </div>
-                    </div>
-                </div>
 
                 <!-- modal devenir membre-->
                 <div class="modal fade" id="modal-Membre" tabindex="-1">
@@ -262,21 +259,9 @@ if (isset($_GET['id'])) {
                         ?>
                     </tbody>
                 </table>
-                <!-- <div class="ratio ratio-16x9">
-                    <iframe src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" title="YouTube video" allowfullscreen></iframe>
-                </div> -->
-                <!-- <iframe src="https://www.youtube.com/embed/dcUOO4Itgmw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+
             </div> <!-- .container -->
         </main>
-
-        <footer class="site-footer">
-            <div class="container">
-
-
-                <div class="colophon">Copyright 2014 Company name, Designed by Themezy. All rights reserved</div>
-            </div> <!-- .container -->
-
-        </footer>
 
         <!-- accueil membre -->
         <form id="formAccueilM" action="membre.php" methode="post">

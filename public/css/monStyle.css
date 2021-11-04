@@ -137,3 +137,11 @@ display: inline-block;
 #btnAJout {
     margin-left: 10px;
 }
+
+#container-total-panier{
+    margin-bottom: 10px;
+}
+
+.toast-container{
+    z-index: 10000;
+}
