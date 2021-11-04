@@ -70,10 +70,12 @@ if (isset($_GET['msg'])) {
                             <a class="nav-link" href="../index.php">Déconnexion</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+
+                    <div class="d-flex nav-droite">
+						<input class="form-control me-2" type="search" id="rcres" aria-label="Recherche">
+						<button class="btn btn-outline-success" onClick="lister('membre',document.getElementById('rcres').value)">Recherche</button>
+					</div>
+
                 </div>
             </div>
         </nav>
@@ -99,11 +101,29 @@ if (isset($_GET['msg'])) {
 
                 <?php
                 require_once("../BD/connexion.inc.php");
-
-                $requette = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
-
+                if (isset($_POST['par'])) {
+                    $par=$_POST['par'];
+                    $valeurPar=strtolower(trim($_POST['valeurPar']));
+                    switch($par){
+                        case "membre" :
+                            $requette="SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE LOWER(nom) LIKE CONCAT('%', ?, '%') OR LOWER(prenom) LIKE CONCAT('%', ?, '%')";
+                        break;
+                        case "toutM" :
+                            $requette = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE 1=? OR 1=?";
+                            break;
+                    }
+            
+                    
+                    $stmt = $connexion->prepare($requette);
+                    $stmt->bind_param("ss", $valeurPar,$valeurPar);
+                    $stmt->execute();
+                    $listeMembres = $stmt->get_result();
+                }else {
+					$requette = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
+					$listeMembres = mysqli_query($connexion, $requette);
+				}
                 try {
-                    $listeMembres = mysqli_query($connexion, $requette);
+                    //$listeMembres = mysqli_query($connexion, $requette);
                     $rep = "<div class='page' id='liste-membre'>";
 
                     $rep .= '<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">';
@@ -425,5 +445,10 @@ if (isset($_GET['msg'])) {
         <script src="../public/util/js/app.js"></script>
 
 </body>
+
+<form id="formLister" action="listerMembres.php?msg=" method="POST">
+	<input type="hidden" id="par" name="par" value="toutM">
+	<input type="hidden" id="valeurPar" name="valeurPar" value="">
+</form>
 
 </html>

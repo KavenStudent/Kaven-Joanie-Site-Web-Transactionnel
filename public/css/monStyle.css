@@ -138,10 +138,18 @@ display: inline-block;
     margin-left: 10px;
 }
 
+
 #container-total-panier{
     margin-bottom: 10px;
 }
 
 .toast-container{
     z-index: 10000;
+
+.inputSearch{
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border-color: white;
 }
