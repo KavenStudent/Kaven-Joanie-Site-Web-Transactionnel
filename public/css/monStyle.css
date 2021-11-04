@@ -32,7 +32,9 @@
     max-height: 547.2px;
     color: rgb(0, 0, 0);
     background-color: black;
+    transition: transform .2s;
 }
+
 .card-body{
     width:16.5rem;
     height: 152px;
@@ -40,7 +42,13 @@
     text-align: center;
     margin-bottom: 5px;
     border-style: solid;
+    
 }
+.card:hover {
+    -ms-transform: scale(1.05); /* IE 9 */
+    -webkit-transform: scale(1.05); /* Safari 3-8 */
+    transform: scale(1.05); 
+  }
 .page{
     align-items: center;
 }
@@ -57,8 +65,9 @@
     max-width: 260px;
     height: 390px;
     max-height: 390px;
+    
 }
-
+ 
 .company{
     border-style: solid;
     padding: 5px 5px 5px 5px;
@@ -133,14 +142,22 @@ i {
 }
 
 #pagin{
-    margin-top: 20px;
+margin-top: 50px;
+text-align: center; 
 }
 #pagin li {
 display: inline-block;
+border-style: solid;
+padding: 5px 5px 5px 5px;
+margin: 0px 0px 0px 0px;
+color: rgb(0, 0, 0);
+text-align: center;
 }
 
 #pagin a {
     display: inline-block;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
 }
 
 #btnAJout {
@@ -153,12 +170,20 @@ display: inline-block;
     border-radius: 5px;
     border-color: white;
 }
+.nav-droite{
+margin-top: 5px;
+}
 
-/* li{
+li{
     cursor: pointer;
-    border-style: solid;
-    padding: 2px 2px 2px 2px;
-    margin: 5px 5px 5px 5px;
+    padding: 12px 2px 12px 2px;
+    margin: 2px 0px 0px 0px;
     border-radius: 5px;
     text-align: center;
-} */
+    font-size: 16px;
+    font-size: large;
+}
+.modal{
+    color: black;
+}
+

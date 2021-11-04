@@ -25,6 +25,8 @@ if (isset($_GET['id'])) {
     $id = "-1";
     $msg = " ";
 }
+// met a jour si le film est toujour en location
+require_once("../serveur/locationAJour.php");
 ?>
 
 <!DOCTYPE html>
