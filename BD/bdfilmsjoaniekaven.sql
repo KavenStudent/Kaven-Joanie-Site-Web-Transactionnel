@@ -703,11 +703,11 @@ INSERT INTO `membres` (`idMembre`, `prenom`, `nom`, `courriel`, `sexe`, `dateDeN
 -- --------------------------------------------------------
 
 --
--- Structure de la table `paiment`
+-- Structure de la table `paiement`
 --
 
-CREATE TABLE `paiment` (
-  `idPaiment` int(11) NOT NULL,
+CREATE TABLE `paiement` (
+  `idPaiement` int(11) NOT NULL,
   `idMembre` int(11) NOT NULL,
   `idFilm` int(11) NOT NULL,
   `datePaiment` date NOT NULL,
@@ -764,10 +764,10 @@ ALTER TABLE `membres`
   ADD PRIMARY KEY (`idMembre`);
 
 --
--- Index pour la table `paiment`
+-- Index pour la table `paiement`
 --
-ALTER TABLE `paiment`
-  ADD PRIMARY KEY (`idPaiment`),
+ALTER TABLE `paiement`
+  ADD PRIMARY KEY (`idPaiement`),
   ADD KEY `idMembre` (`idMembre`),
   ADD KEY `idFilm` (`idFilm`);
 
@@ -796,10 +796,10 @@ ALTER TABLE `genre`
 ALTER TABLE `membres`
   MODIFY `idMembre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT pour la table `paiment`
+-- AUTO_INCREMENT pour la table `paiement`
 --
-ALTER TABLE `paiment`
-  MODIFY `idPaiment` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `paiement`
+  MODIFY `idPaiement` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Contraintes pour les tables déchargées
 --
@@ -819,9 +819,9 @@ ALTER TABLE `location`
   ADD CONSTRAINT `FkIdMembre` FOREIGN KEY (`idMembre`) REFERENCES `membres` (`idMembre`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `paiment`
+-- Contraintes pour la table `paiement`
 --
-ALTER TABLE `paiment`
+ALTER TABLE `paiement`
   ADD CONSTRAINT `FkIdFilmP` FOREIGN KEY (`idFilm`) REFERENCES `films` (`idFilm`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FkIdMembreP` FOREIGN KEY (`idMembre`) REFERENCES `membres` (`idMembre`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;

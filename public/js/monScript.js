@@ -417,11 +417,14 @@ function payerPanier() {
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function (data) {
+            console.log(details.payer.name.given_name);
+            console.log(total);
             alert('Transaction completed by ' + details.payer.name.given_name + ' ' + total);
-
+            alert('allo');
           },
           error: function (errMsg) {
             alert(errMsg);
+            alert('erreur');
           }
         });
 
