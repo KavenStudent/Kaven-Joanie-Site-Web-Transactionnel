@@ -70,10 +70,7 @@ if (isset($_GET['msg'])) {
 							<a class="nav-link" href="../index.php">Déconnexion</a>
 						</li>
 					</ul>
-					<!-- <form class="d-flex">
-						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form> -->
+				
 					<div class="d-flex nav-droite">
 						<input class="inputSearch" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
 						<button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
@@ -91,7 +88,7 @@ if (isset($_GET['msg'])) {
 
 		<!-- TOAST -->
 		<div class="toast-container position-absolute top-15 start-50 translate-middle-x">
-			<div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+			<div id="toast" class="toast  align-items-center text-white bg-secondary border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
 				<div class="toast-header">
 					<img src="../public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
 					<strong class="me-auto">Messages</strong>

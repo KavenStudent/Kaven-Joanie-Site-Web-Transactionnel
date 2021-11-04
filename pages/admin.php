@@ -109,10 +109,7 @@ if (isset($_GET['msg'])) {
 						<input class="inputSearch" type="search" id="rcres" placeholder="Réalisateur" aria-label="Recherche">
 						<button class="btn btn-outline-success" onClick="lister('res',document.getElementById('rcres').value)">Recherche</button>
 					</div>
-					<!-- <form class="d-flex">
-						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form> -->
+		
 				</div>
 			</div>
 		</nav>
@@ -120,7 +117,7 @@ if (isset($_GET['msg'])) {
 
 		<!-- TOAST -->
 		<div class="toast-container position-absolute top-15 start-50 translate-middle-x">
-			<div id="toast" class="toast  align-items-center text-white bg-danger border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+			<div id="toast" class="toast  align-items-center text-white bg-secondary border-0" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
 				<div class="toast-header">
 					<img src="../public/images/message.png" width=24 height=24 class="rounded me-2" alt="message">
 					<strong class="me-auto">Messages</strong>
