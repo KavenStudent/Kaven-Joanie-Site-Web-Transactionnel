@@ -403,34 +403,19 @@ function payerPanier() {
         }]
       });
     },
-    onApprove: function (data, actions) {
-
-
-      // This function captures the funds from the transaction.
-      return actions.order.capture().then(function (details) {
-
-
-        $.ajax({
-          type: "POST",
-          url: "../serveur/locationFilm.php",
-          data: JSON.stringify(panier),
-          contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function (data) {
-            console.log(details.payer.name.given_name);
-            console.log(total);
-            alert('Transaction completed by ' + details.payer.name.given_name + ' ' + total);
-            alert('allo');
-          },
-          error: function (errMsg) {
-            alert(errMsg);
-            alert('erreur');
-          }
-        });
-
+    onApprove: function () {
+        fetch('../serveur/locationFilm.php', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(panier)
+      }).then(function() {
         viderPanier();
-
-      });
+        alert('Transaction de '+ total + '$ complété');
+      
+      })
     }
   }).render('#paypal-button-container');
 
