@@ -123,12 +123,12 @@ if (isset($_GET['msg'])) {
 					$listeMembres = mysqli_query($connexion, $requette);
 				}
                 try {
-                    //$listeMembres = mysqli_query($connexion, $requette);
+                 
                     $rep = "<div class='page' id='liste-membre'>";
 
                     $rep .= '<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">';
                     $rep .= '<thead> <tr> <th>ID</th> <th>Prénom</th> <th>Nom</th> <th>Courriel</th> <th>Sexe</th>';
-                    $rep .= '<th>Date de naissance</th> <th>Statut</th> <th>Rôle</th> <th>Actions</th> </tr> </thead> <tbody>';
+                    $rep .= '<th>Date de naissance</th> <th>Statut</th> <th>Rôle</th> <th>Actions</th> <th></th> </tr> </thead> <tbody>';
 
                     while ($ligne = mysqli_fetch_object($listeMembres)) {
                         // table
