@@ -39,7 +39,9 @@ try {
         }
     }
     mysqli_free_result($listLocation);
+    mysqli_close($connexion);
 } catch (Exception $e) {
+    mysqli_close($connexion);
     echo "Probleme pour lister";
 }
 

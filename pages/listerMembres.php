@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+	header("Location:../pages/erreurConnexion.php");
+}
+
 if (isset($_GET['msg'])) {
     $msg = $_GET['msg'];
 } else {
@@ -72,7 +77,7 @@ if (isset($_GET['msg'])) {
                     </ul>
 
                     <div class="d-flex nav-droite">
-						<input class="form-control me-2" type="search" id="rcres" aria-label="Recherche">
+						<input class="form-control me-2" type="search" id="rcres" placeholder="Nom/Prénom" aria-label="Recherche">
 						<button class="btn btn-outline-success" onClick="lister('membre',document.getElementById('rcres').value)">Recherche</button>
 					</div>
 

@@ -1,6 +1,6 @@
 <?php
     require_once("../BD/connexion.inc.php");
-    
+
     $prenom = $_POST['prenom'];
     $nom = $_POST['nom'];
     $email = $_POST['email'];
@@ -17,7 +17,7 @@
 
     if($ligne = $result->fetch_object()){ //si courriel existe deja afficher une erreur
         mysqli_close($connexion);
-        header("Location:../index.php?id=$id&msg=Le+courriel+$email+est+déjà+utilisé.+Choisissez+un+autre+courriel.");
+        header("Location:../index.php?msg=Le+courriel+$email+est+déjà+utilisé.+Choisissez+un+autre+courriel.");
     }
 
       // enregistrer info du membre
@@ -31,6 +31,10 @@
       $stmt = $connexion->prepare($requete);
       $stmt->bind_param("ss", $email, $password);
       $stmt->execute();
-  
+      
+      $id = $connexion->insert_id;
+      session_start();
+      $_SESSION['membre'] = $id;
       header("Location:../pages/membre.php?id=$id&msg=Bienvenue");
+      mysqli_close($connexion);
 ?>

@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+	header("Location:../pages/erreurConnexion.php");
+}
+
 if (isset($_GET['msg'])) {
 	$msg = $_GET['msg'];
 } else {
@@ -107,8 +112,6 @@ if (isset($_GET['msg'])) {
 				<?php
 				require_once("../BD/connexion.inc.php");
 
-				// $requette = "SELECT * FROM films ORDER BY `films`.`idFilm` ASC";
-
 				if (isset($_POST['par'])) {
 					$par = $_POST['par'];
 					$valeurPar = strtolower(trim($_POST['valeurPar']));
@@ -136,7 +139,7 @@ if (isset($_GET['msg'])) {
 				}
 
 				try {
-					// $listeFilms = mysqli_query($connexion, $requette);
+					
 					$rep = "<div class='page' id='liste-film'>";
 
 					$rep .= '<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">';
@@ -154,9 +157,9 @@ if (isset($_GET['msg'])) {
 						$rep .= '<td>' . ($ligne->prix) . '$</td>';
 
 						if (substr($ligne->image, 0, 4) === "http") {
-							$rep .= '<td><img id="icon-film" class="image-film" src="' . ($ligne->image) . '" alt="image-film"></td>';
+							$rep .= '<td><img class="icon-film" src="' . ($ligne->image) . '" alt="image-film"></td>';
 						} else {
-							$rep .= '<td><img id="icon-film" class="image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film"></td>';
+							$rep .= '<td><img class="icon-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film"></td>';
 						}
 
 						$rep .= '<td> <a class="btn btn-primary myButton" onclick="populerModal(' . $ligne->idFilm . ',\'../serveur/fiche.php\')"><i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i></a> </td>';

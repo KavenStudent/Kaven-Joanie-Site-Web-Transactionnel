@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['admin'])) {
 	header("Location:../pages/erreurConnexion.php");
 }
+
 if (isset($_GET['msg'])) {
 	$msg = $_GET['msg'];
 } else {

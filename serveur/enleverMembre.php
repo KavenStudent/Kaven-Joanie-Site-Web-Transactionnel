@@ -4,7 +4,7 @@ require_once("../BD/connexion.inc.php");
 $idMembre = $_POST['idMembre'];
 $statut = 0;
 
-if($idMembre == 1){
+if($idMembre == 1){// si admin
     header("Location:../pages/listerMembres.php?msg=Impossible+de+modifier+l\'administrateur");
     mysqli_close($connexion);
     exit;

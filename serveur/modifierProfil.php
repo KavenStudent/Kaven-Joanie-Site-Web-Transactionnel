@@ -33,5 +33,5 @@ $requete = "SELECT * FROM membres WHERE courriel=? and idMembre NOT IN ($idMembr
 	$stmt->execute();
 
 	mysqli_close($connexion);
-	header("Location:../pages/membre.php?id=$idMembre&msg=profil+à+jour!");
+	header("Location:../pages/membre.php?id=$idMembre&msg=Profil+à+jour!");
 ?>

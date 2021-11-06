@@ -48,18 +48,18 @@ if (isset($_GET['msg'])) {
 					<img id="monLogo" class="navbar-brand" src="public/images/icon-logo-film.png" alt="" class="logo">
 					<h3> Kajo movie </h3>
 				</div>
-		
+
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">Accueil</a>
+							<a class="nav-link active" aria-current="page" href="javascript:retourAccueil()">Accueil</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Devenir
-								membre</a>
+						<li class=" nav-item">
+								<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Devenir
+									membre</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Connexion">Connexion</a>
@@ -67,7 +67,7 @@ if (isset($_GET['msg'])) {
 						<li class="nav-item">
 							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-creer-film">Enregistrer Film</a>
 						</li>
-			
+
 					</ul>
 
 					<div class="d-flex  nav-droite">
@@ -579,6 +579,10 @@ if (isset($_GET['msg'])) {
 				</ul>
 			</div> <!-- .container -->
 		</main>
+
+		<!-- accueil membre -->
+		<form id="formAccueil" action="index.php" methode="post">		
+		</form>
 
 		<form id="formLister" action="index.php" method="POST">
 			<input type="hidden" id="par" name="par" value="tout">

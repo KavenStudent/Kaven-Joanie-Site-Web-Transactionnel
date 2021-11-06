@@ -6,6 +6,7 @@ if (!isset($_SESSION['membre'])) {
 }
 
 if (isset($_GET['id'])) {
+	// si la session id est different du id en get
 	if ($_SESSION['membre'] != $_GET['id']) {
 		header("Location:../pages/erreurConnexion.php");
 	}
@@ -390,19 +391,19 @@ if (isset($_GET['id'])) {
 		<!-- accueil membre -->
 		<form id="formAccueilM" action="membre.php" methode="post">
 			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-			<input id="msg" name="msg" type="hidden" value="Bienvenu dans l\'accueil">
+			<input id="msg" name="msg" type="hidden" value="Bienvenue">
 		</form>
 
 		<!-- historique d'achat -->
 		<form id="formHistorique" action="membreHistorique.php" methode="post">
 			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-			<input id="msg" name="msg" type="hidden" value="Bienvenu dans votre historique de location">
+			<input id="msg" name="msg" type="hidden" value="Bienvenue dans votre historique de location">
 		</form>
 
 		<!-- Location en cours -->
 		<form id="formLocation" action="membreLocation.php" methode="post">
 			<input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-			<input id="msg" name="msg" type="hidden" value="Bienvenu dans vos location en cours">
+			<input id="msg" name="msg" type="hidden" value="Bienvenue dans vos location en cours">
 		</form>
 
 		<!--deconnexion -->

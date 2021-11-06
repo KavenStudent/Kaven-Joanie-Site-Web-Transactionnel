@@ -139,6 +139,10 @@ function listerHistorique() {
   document.getElementById('formHistorique').submit();
 }
 
+function retourAccueil() {
+  document.getElementById('formAccueil').submit();
+}
+
 function retourAccueilM() {
   document.getElementById('formAccueilM').submit();
 }
@@ -323,7 +327,7 @@ function afficherPanier() {
       lePanier += `
       
         <tr>
-          <td><img id="icon-film" class="image-film" src="${unFilm.image}" alt="image-film"></td>
+          <td><img class="icon-film" src="${unFilm.image}" alt="image-film"></td>
           <td>${unFilm.titre}</td>
           <td>${unFilm.dureeLocation}</td>
           <td>${unFilm.prix}$</td>
