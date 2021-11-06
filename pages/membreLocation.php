@@ -1,5 +1,6 @@
 <?php
 require_once("../BD/connexion.inc.php");
+
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $msg = $_GET['msg'];
@@ -221,7 +222,7 @@ require_once("../serveur/locationAJour.php");
                             <th scope="col">Date d'achat</th>
                             <th scope="col">Date de fin</th>
                             <th scope="col">Nombre jours restant locations</th>
-                            <th scope="col">Pochette</th>
+                            <th scope="col">Image</th>
                         </tr>
                     </thead>
 
@@ -248,9 +249,9 @@ require_once("../serveur/locationAJour.php");
                                 $rep .= "<td>" . NbJours($dateAujourd, $dateDeFin) . "</td>";
                                 $rep .= "<td>";
                                 if (substr($ligne->image, 0, 4) === "http") {
-                                    $rep .= '<img class="petit-image-film" src="' . ($ligne->image) . '" alt="image-film">';
+                                    $rep .= '<img class="icon-film" src="' . ($ligne->image) . '" alt="image-film">';
                                 } else {
-                                    $rep .= '<img class="petit-image-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film">';
+                                    $rep .= '<img class="icon-film" src="../imageFilm/' . ($ligne->image) . '" alt="image film">';
                                 }
                                 $rep .= "</td>";
                                 $rep .= "</tr>";
@@ -274,19 +275,19 @@ require_once("../serveur/locationAJour.php");
         <!-- accueil membre -->
         <form id="formAccueilM" action="membre.php" methode="post">
             <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-            <input id="msg" name="msg" type="hidden" value="Bienvenu dans l\'accueil">
+            <input id="msg" name="msg" type="hidden" value="Bienvenue">
         </form>
 
         <!-- historique d'achat -->
         <form id="formHistorique" action="membreHistorique.php" methode="post">
             <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-            <input id="msg" name="msg" type="hidden" value="Bienvenu dans votre historique de location">
+            <input id="msg" name="msg" type="hidden" value="Bienvenue dans votre historique de location">
         </form>
 
         <!-- Location en cours -->
         <form id="formLocation" action="membreLocation.php" methode="post">
             <input id="id" name="id" type="hidden" value="<?php echo $idM ?>">
-            <input id="msg" name="msg" type="hidden" value="Bienvenu dans vos location en cours">
+            <input id="msg" name="msg" type="hidden" value="Bienvenue dans vos location en cours">
         </form>
 
         <script src="../public/util/js/jquery-1.11.1.min.js"></script>
