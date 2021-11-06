@@ -8,6 +8,7 @@ $stmt = $connexion->prepare($requete);
 
 $date =  date("Y-m-d");
 
+// parcours les item achetes et les insere dans location
 foreach ($data as $film) {
 
     $idFilm = $film['idFilm'];
@@ -22,6 +23,7 @@ foreach ($data as $film) {
 $requete="INSERT INTO paiement values(0,?,?,?,?)";
 $stmt = $connexion->prepare($requete);
 
+// parcours les item achetes et les insere dans paiement
 foreach($data as $film){
 
     $idMembre = $film['idMembre'];

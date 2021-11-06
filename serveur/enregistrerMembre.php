@@ -32,6 +32,7 @@
       $stmt->bind_param("ss", $email, $password);
       $stmt->execute();
       
+      // si reussi connexion du nouveau membre
       $id = $connexion->insert_id;
       session_start();
       $_SESSION['membre'] = $id;

@@ -54,12 +54,13 @@ if (isset($_GET['msg'])) {
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="javascript:retourAccueil()">Accueil</a>
 						</li>
 						<li class=" nav-item">
-								<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Devenir
-									membre</a>
+							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Devenir
+								membre</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Connexion">Connexion</a>
@@ -580,9 +581,10 @@ if (isset($_GET['msg'])) {
 			</div> <!-- .container -->
 		</main>
 
-		<!-- accueil membre -->
-		<form id="formAccueil" action="index.php" methode="post">		
+		<!-- retour accueil index -->
+		<form id="formAccueil" action="index.php" methode="post">
 		</form>
+
 
 		<form id="formLister" action="index.php" method="POST">
 			<input type="hidden" id="par" name="par" value="tout">

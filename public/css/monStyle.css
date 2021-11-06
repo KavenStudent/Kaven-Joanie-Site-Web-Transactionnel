@@ -1,33 +1,36 @@
 #form-Enreg {
     display: none;
 }
-#monLogo{
+
+#monLogo {
     max-width: 3rem;
 }
-.myInput{
-    margin:10px 15px 5px 15px ;
+
+.myInput {
+    margin: 10px 15px 5px 15px;
 }
 
-.ligne{
-    width:100%;
-    text-align:left;
-    margin-left:0;
+.ligne {
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
 }
 
-#msg-password-erreur{
+#msg-password-erreur {
     color: red;
     display: none;
 }
 
-#msg-confirm-password-erreur{
+#msg-confirm-password-erreur {
     color: red;
     display: none;
 }
-.card{
+
+.card {
     align-items: center;
     padding: 5px;
-    width:17rem;
-    margin:auto;
+    width: 17rem;
+    margin: auto;
     height: 547.2px;
     max-height: 547.2px;
     color: rgb(0, 0, 0);
@@ -35,40 +38,46 @@
     transition: transform .2s;
 }
 
-.card-body{
-    width:16.5rem;
+.card-body {
+    width: 16.5rem;
     height: 152px;
     background-color: white;
     text-align: center;
     margin-bottom: 5px;
     border-style: solid;
-    
+
 }
+
 .card:hover {
-    -ms-transform: scale(1.05); /* IE 9 */
-    -webkit-transform: scale(1.05); /* Safari 3-8 */
-    transform: scale(1.05); 
-  }
-.page{
+    -ms-transform: scale(1.05);
+    /* IE 9 */
+    -webkit-transform: scale(1.05);
+    /* Safari 3-8 */
+    transform: scale(1.05);
+}
+
+.page {
     align-items: center;
 }
-.row{
+
+.row {
     margin-top: 10px;
 }
-.montrerPassword{
+
+.montrerPassword {
     margin-top: 15px;
     margin-bottom: 15px;
 }
 
-.image-film{
+.image-film {
     width: 260px;
     max-width: 260px;
     height: 390px;
     max-height: 390px;
-    
+
 }
- 
-.company{
+
+.company {
     border-style: solid;
     padding: 5px 5px 5px 5px;
     border-radius: 10%;
@@ -76,18 +85,20 @@
     margin-right: 30px;
     color: black;
 }
-.company h3{
+
+.company h3 {
     display: inline;
 }
-.main-content{
+
+.main-content {
     margin-top: 15px;
 }
 
-.genres-container{ 
-    border:2px solid #ccc; 
-    width:300px; 
-    height: 100px; 
-    overflow-y: scroll; 
+.genres-container {
+    border: 2px solid #ccc;
+    width: 300px;
+    height: 100px;
+    overflow-y: scroll;
 }
 
 #formModifier {
@@ -95,30 +106,32 @@
     margin-right: 10px;
 }
 
-.icon-film{
+.icon-film {
     width: 50px;
     height: 50px;
 }
 
-#confirmerPasse{
+#confirmerPasse {
     display: none;
 }
 
-.scroll-historique{
-    border:2px solid #ccc; 
+.scroll-historique {
+    border: 2px solid #ccc;
     height: 10px;
-    overflow-y: scroll; 
+    overflow-y: scroll;
 }
-html{
+
+html {
     background-color: #131a20;
 }
-.myButton{
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
+
+.myButton {
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
     background-color: transparent !important;
     border: 0;
-    color:black !important;
+    color: black !important;
 }
 
 #info-film {
@@ -138,17 +151,18 @@ i {
     color: black;
 }
 
-#pagin{
-margin-top: 50px;
-text-align: center; 
+#pagin {
+    margin-top: 50px;
+    text-align: center;
 }
+
 #pagin li {
-display: inline-block;
-border-style: solid;
-padding: 5px 5px 5px 5px;
-margin: 0px 0px 0px 0px;
-color: rgb(0, 0, 0);
-text-align: center;
+    display: inline-block;
+    border-style: solid;
+    padding: 5px 5px 5px 5px;
+    margin: 0px 0px 0px 0px;
+    color: rgb(0, 0, 0);
+    text-align: center;
 }
 
 #pagin a {
@@ -161,27 +175,27 @@ text-align: center;
     margin-left: 10px;
 }
 
-
-#container-total-panier{
+#container-total-panier {
     margin-bottom: 10px;
 }
 
-.toast-container{
+.toast-container {
     z-index: 10000;
 }
 
-.inputSearch{
+.inputSearch {
     width: 100px;
     margin-left: 10px;
     margin-right: 10px;
     border-radius: 5px;
     border-color: white;
 }
-.nav-droite{
-margin-top: 5px;
+
+.nav-droite {
+    margin-top: 5px;
 }
 
-li{
+li {
     cursor: pointer;
     padding: 12px 2px 12px 2px;
     margin: 2px 0px 0px 0px;
@@ -190,7 +204,7 @@ li{
     font-size: 16px;
     font-size: large;
 }
-.modal{
+
+.modal {
     color: black;
 }
-

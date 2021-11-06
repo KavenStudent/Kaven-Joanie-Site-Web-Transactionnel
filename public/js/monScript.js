@@ -5,7 +5,7 @@ var panier = null;
 
 // initialise le panier s'il n'existe pas 
 if (localStorage.getItem("panier") == undefined) {
-  localStorage.setItem("panier", '[]');//panier vide
+  localStorage.setItem("panier", '[]'); //panier vide
 }
 
 // valide le form devenir membre
@@ -45,8 +45,7 @@ function montrerConfirmerPass() {
   if (visibleConfirmer === true) {
     $("#confirmerPasse").css("display", "none");
     visibleConfirmer = false;
-  }
-  else {
+  } else {
     $("#confirmerPasse").css("display", "block");
     visibleConfirmer = true;
   }
@@ -59,8 +58,7 @@ function montrerPassword2() {
     $("#password").prop("type", "password");
     $("#confirmPassword").prop("type", "password");
     visibleMotdePasse = false;
-  }
-  else {
+  } else {
     $("#password").prop("type", "text");
     $("#confirmPassword").prop("type", "text");
     visibleMotdePasse = true;
@@ -146,6 +144,7 @@ function retourAccueil() {
 function retourAccueilM() {
   document.getElementById('formAccueilM').submit();
 }
+
 function listerFilms() {
   document.getElementById('formListerFilms').submit();
 }
@@ -178,7 +177,9 @@ async function obtenirInfo(id, path) {
       'Content-Type': 'application/json'
     },
 
-    body: JSON.stringify({ "idFilm": id })
+    body: JSON.stringify({
+      "idFilm": id
+    })
   });
   return response.json();
 
@@ -207,12 +208,14 @@ function populerModal(id, path) {
         if (ligne.genre === $(this).val()) {
           $(this).prop('checked', true);
         }
-        
+
       });
 
     });
 
-  }).finally(() => { $("#modal-modifier-film").modal('show'); });
+  }).finally(() => {
+    $("#modal-modifier-film").modal('show');
+  });
 
 }
 
@@ -237,7 +240,9 @@ function afficherTrailer(id, path) {
       document.getElementById('trailer').src = data[0].bandeAnnonce;
       document.getElementById('info-film').innerHTML = contenu;
     })
-    .finally(() => { $("#modal-trailer").modal('show'); });
+    .finally(() => {
+      $("#modal-trailer").modal('show');
+    });
 }
 
 
@@ -269,7 +274,14 @@ function ajoutPanier(id, jours) {
   obtenirInfo(id, path).then(data => {
     let prixTotal = data[0].prix * duree;
     let idMembre = document.getElementById('idMembre').value;
-    let film = { "idFilm": data[0].idFilm, "titre": data[0].titre, "dureeLocation": duree, "image": data[0].image, "prix": prixTotal.toFixed(2), "idMembre": idMembre };
+    let film = {
+      "idFilm": data[0].idFilm,
+      "titre": data[0].titre,
+      "dureeLocation": duree,
+      "image": data[0].image,
+      "prix": prixTotal.toFixed(2),
+      "idMembre": idMembre
+    };
 
     panier = JSON.parse(localStorage.getItem("panier"));
 
@@ -282,7 +294,15 @@ function ajoutPanier(id, jours) {
         duree = panier[i].dureeLocation + jours;
         prixTotal = data[0].prix * duree;
 
-        film = { "idFilm": data[0].idFilm, "titre": data[0].titre, "dureeLocation": duree, "image": data[0].image, "prix": prixTotal.toFixed(2), "idMembre": idMembre };
+        film = {
+          "idFilm": data[0].idFilm,
+          "titre": data[0].titre,
+          "dureeLocation": duree,
+          "image": data[0].image,
+          "prix": prixTotal.toFixed(2),
+          "idMembre": idMembre
+        };
+        
         panier[i] = film;
       }
     }
@@ -408,17 +428,17 @@ function payerPanier() {
       });
     },
     onApprove: function () {
-        fetch('../serveur/locationFilm.php', {
+      fetch('../serveur/locationFilm.php', {
         method: 'POST',
         mode: 'cors',
         headers: {
           'content-type': 'application/json'
         },
         body: JSON.stringify(panier)
-      }).then(function() {
+      }).then(function () {
         viderPanier();
-        alert('Transaction de '+ total + '$ complété');
-      
+        alert('Transaction de ' + total + '$ complété');
+
       })
     }
   }).render('#paypal-button-container');

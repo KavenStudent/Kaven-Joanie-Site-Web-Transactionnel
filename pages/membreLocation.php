@@ -1,7 +1,16 @@
 <?php
+session_start();
 require_once("../BD/connexion.inc.php");
+if (!isset($_SESSION['membre'])) {
+	header("Location:../pages/erreurConnexion.php");
+}
 
 if (isset($_GET['id'])) {
+     // si la session id est different du id en get
+	if ($_SESSION['membre'] != $_GET['id']) {
+		header("Location:../pages/erreurConnexion.php");
+	}
+
     $id = $_GET['id'];
     $msg = $_GET['msg'];
 
