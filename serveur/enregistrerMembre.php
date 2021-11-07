@@ -8,6 +8,7 @@
     $sexe = $_POST['sexe'];
     $dateNaissance = $_POST['dateNaissance'];
 
+try {
     // regarde si le courriel n'est pas utilisé
     $requete = "SELECT * FROM membres WHERE courriel=?";
     $stmt = $connexion->prepare($requete);
@@ -37,5 +38,11 @@
       session_start();
       $_SESSION['membre'] = $id;
       header("Location:../pages/membre.php?id=$id&msg=Bienvenue");
-      mysqli_close($connexion);
+      
+} catch (Exception $e) {
+    echo "Problème avec la base de donnée";
+} finally {
+    mysqli_close($connexion);
+}
+    
 ?>

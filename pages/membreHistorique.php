@@ -263,8 +263,9 @@ require_once("../serveur/locationAJour.php");
                         } finally {
                             echo $rep;
                             unset($rep);
+                            mysqli_close($connexion);
                         }
-                        mysqli_close($connexion);
+                     
                         ?>
                     </tbody>
                 </table>
