@@ -2,7 +2,8 @@
 	require_once("../BD/connexion.inc.php");
 	$str = file_get_contents('../public/util/bdfilms.json');
     $json = json_decode($str, true);
-
+// php utilitaire pour inserer json dans la db
+try {
     foreach ($json['genres'] as $genre) {
         $requete="INSERT INTO genre values(0,?)";
         $stmt = $connexion->prepare($requete);
@@ -33,8 +34,13 @@
      
     }
 
+} catch (Exception $e) {
+    echo "Problème avec la base de donnée";
+} finally {
     mysqli_close($connexion);
+}
 
 ?>
+
 <br><br>
 <a href="../films.html">Retour à la page d'accueil</a>

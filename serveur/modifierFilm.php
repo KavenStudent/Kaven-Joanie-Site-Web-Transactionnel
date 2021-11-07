@@ -20,6 +20,7 @@
 	$result = $stmt->get_result();
 	$ligne = $result->fetch_object();
 
+try {
 	$image=$ligne->image;
     //image
     if($_FILES['image']['tmp_name']!==""){
@@ -78,6 +79,11 @@
         $stmt->execute();
     }
 
-	mysqli_close($connexion);
 	header("Location:../pages/listerFilms.php?msg=Le+film+$idFilm+a+été+modifié");
+} catch (Exception $e) {
+    echo "Problème avec la base de donnée";
+} finally {
+    mysqli_close($connexion);
+}
+
 ?>

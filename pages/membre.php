@@ -378,8 +378,9 @@ if (isset($_GET['id'])) {
 				} finally {
 					echo $rep;
 					unset($rep);
+					mysqli_close($connexion);
 				}
-				mysqli_close($connexion);
+			
 				?>
 
 				<ul id="pagin">

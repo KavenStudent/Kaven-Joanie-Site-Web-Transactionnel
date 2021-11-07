@@ -10,7 +10,9 @@ $dateNaissance = $_POST['dateNaissance'];
 
 define("MSG_EXISTE_DEJA", "<h2>Le courriel : ".$email." est déjà utilisé. Choisissez un autre courriel.</h2>");
 
-$requete = "SELECT * FROM membres WHERE courriel=? and idMembre NOT IN ($idMembre);";
+try {
+	
+	$requete = "SELECT * FROM membres WHERE courriel=? and idMembre NOT IN ($idMembre);";
     $stmt = $connexion->prepare($requete);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -32,6 +34,12 @@ $requete = "SELECT * FROM membres WHERE courriel=? and idMembre NOT IN ($idMembr
 	$stmt->bind_param("ssi",$email,$password,$idMembre);
 	$stmt->execute();
 
-	mysqli_close($connexion);
-	header("Location:../pages/membre.php?id=$idMembre&msg=Profil+à+jour!");
+	header("Location:../pages/membre.php?id=$idMembre&msg=Profil+à+jour");
+
+} catch (Exception $e) {
+    echo "Problème avec la base de donnée";
+} finally {
+    mysqli_close($connexion);
+}
+
 ?>

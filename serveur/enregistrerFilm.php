@@ -13,6 +13,7 @@
     $nomImage =sha1($titre.time());
     $image = "default.png";
 
+try {
     if($_FILES['image']['tmp_name']!==""){
 
 		$tmp = $_FILES['image']['tmp_name'];
@@ -47,6 +48,11 @@
         $stmt->execute();
     }
 
-    mysqli_close($connexion);
     header("Location:../pages/admin.php?msg=Le+film+$id+a+été+enregistré");
+} catch (Exception $e) {
+    echo "Problème avec la base de donnée";
+} finally {
+    mysqli_close($connexion);
+}
+
 ?>

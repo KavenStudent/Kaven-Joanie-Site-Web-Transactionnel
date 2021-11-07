@@ -8,30 +8,37 @@ $stmt = $connexion->prepare($requete);
 
 $date =  date("Y-m-d");
 
-// parcours les item achetes et les insere dans location
-foreach ($data as $film) {
+try {
+    // parcours les item achetes et les insere dans location
+    foreach ($data as $film) {
 
-    $idFilm = $film['idFilm'];
-    $dureeLocation = $film['dureeLocation'];
-    $idMembre = $film['idMembre'];
+        $idFilm = $film['idFilm'];
+        $dureeLocation = $film['dureeLocation'];
+        $idMembre = $film['idMembre'];
 
-    $stmt->bind_param("iisi",  $idFilm, $idMembre, $date, $dureeLocation);
-    $stmt->execute();
+        $stmt->bind_param("iisi",  $idFilm, $idMembre, $date, $dureeLocation);
+        $stmt->execute();
 
+    }
+
+    $requete="INSERT INTO paiement values(0,?,?,?,?)";
+    $stmt = $connexion->prepare($requete);
+
+    // parcours les item achetes et les insere dans paiement
+    foreach($data as $film){
+
+        $idMembre = $film['idMembre'];
+        $idFilm = $film['idFilm'];
+        $prixFilm = $film['prix'];
+
+        $stmt->bind_param("iiss",  $idMembre , $idFilm,  $date, $prixFilm);
+        $stmt->execute();
+    }
+
+} catch (Exception $e) {
+    echo "Problème avec la base de donnée";
+} finally {
+    mysqli_close($connexion);
 }
 
-$requete="INSERT INTO paiement values(0,?,?,?,?)";
-$stmt = $connexion->prepare($requete);
-
-// parcours les item achetes et les insere dans paiement
-foreach($data as $film){
-
-    $idMembre = $film['idMembre'];
-    $idFilm = $film['idFilm'];
-    $prixFilm = $film['prix'];
-
-    $stmt->bind_param("iiss",  $idMembre , $idFilm,  $date, $prixFilm);
-    $stmt->execute();
-}
-
-mysqli_close($connexion);
+?>

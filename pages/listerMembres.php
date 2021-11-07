@@ -158,9 +158,9 @@ if (isset($_GET['msg'])) {
                 } finally {
                     echo $rep;
                     unset($rep);
+                    mysqli_close($connexion);
                 }
-                mysqli_close($connexion);
-
+             
                 ?>
 
                 <ul id="pagin">
