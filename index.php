@@ -65,10 +65,7 @@ if (isset($_GET['msg'])) {
 						<li class="nav-item">
 							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Connexion">Connexion</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-creer-film">Enregistrer Film</a>
-						</li>
-
+						
 					</ul>
 
 					<div class="d-flex  nav-droite">
