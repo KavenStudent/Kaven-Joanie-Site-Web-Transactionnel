@@ -144,7 +144,7 @@ if (isset($_GET['msg'])) {
 
 					$rep .= '<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">';
 					$rep .= '<thead> <tr> <th>ID</th> <th>Titre</th> <th>Année</th> <th>Durée</th> <th>Réalisateur</th>';
-					$rep .= '<th>Acteurs</th> <th>Prix</th> <th>Image</th> <th>Actions</th> </tr> </thead> <tbody>';
+					$rep .= '<th>Acteurs</th> <th>Prix</th> <th>Image</th> <th>Actions</th> <th></th> </tr> </thead> <tbody>';
 
 					while ($ligne = mysqli_fetch_object($listeFilms)) {
 						// table
