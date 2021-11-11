@@ -19,8 +19,7 @@ try {
 		$tmp = $_FILES['image']['tmp_name'];
 		$fichier= $_FILES['image']['name'];
 		$extension=strrchr($fichier,'.');
-		$test = @move_uploaded_file($tmp,$dossier.$nomImage.$extension);
-
+		
 		@unlink($tmp); 
 		$image=$nomImage.$extension;
 	}

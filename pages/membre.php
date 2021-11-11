@@ -88,7 +88,7 @@ if (isset($_GET['id'])) {
 							<a class="nav-link active" aria-current="page" href="javascript:retourAccueilM()">Accueil</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Profil</a>
+							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-profil-Membre">Profil</a>
 						</li>
 	
 						<li class="nav-item">
@@ -168,7 +168,7 @@ if (isset($_GET['id'])) {
 
 
 				<!-- modal devenir membre-->
-				<div class="modal fade" id="modal-Membre" tabindex="-1">
+				<div class="modal fade" id="modal-profil-Membre" tabindex="-1">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -178,7 +178,7 @@ if (isset($_GET['id'])) {
 							<div class="modal-body">
 
 
-								<!-- Form devenir membre-->
+								<!-- Form changer profil membre-->
 
 								<form class="formMembre" id="ProfilMembre" action="../serveur/modifierProfil.php" method="POST" onSubmit="return valider('ProfilMembre')">
 									<input id="idMembre" name="idMembre" type="hidden" value="<?php echo $idM ?>">
@@ -254,7 +254,7 @@ if (isset($_GET['id'])) {
 									</div>
 								</form>
 
-								<!-- Fin form devenir membre-->
+								<!-- Fin changer profil membre--->
 							</div>
 
 						</div>

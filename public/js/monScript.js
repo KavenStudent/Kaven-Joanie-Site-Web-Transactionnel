@@ -14,19 +14,24 @@ let valider = (id) => {
   let password = myForm.password.value;
   let confirmPassword = myForm.confirmPassword.value;
   let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_])[A-Za-z\d\-_]{8,10}$/;
+  let valide = true;
 
   if (!(password.trim() === confirmPassword.trim())) {
 
     document.getElementById('msg-confirm-password-erreur').style.display = 'block';
-    return false;
+    valide = false;
 
   } else if (!pattern.test(password)) {
 
     document.getElementById('msg-password-erreur').style.display = 'block';
-    return false;
+    valide = false;
 
   }
-  return true;
+
+  if(valide){
+    enregistrerMembre();
+  }
+
 }
 
 // montre le password dans l'input password dans devenir membre et connexion
