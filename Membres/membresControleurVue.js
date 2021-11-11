@@ -33,7 +33,7 @@ function afficherPageMembre(json) {
 	<a class="nav-link active" aria-current="page" href="javascript:retourAccueilM()">Accueil</a>
 	</li>
 	<li class="nav-item">
-		<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-profil-Membre">Profil</a>
+		<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-profil-Membr  2e">Profil</a>
 	</li>
 
 	<li class="nav-item">
