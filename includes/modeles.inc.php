@@ -1,6 +1,6 @@
 <?php
 require_once("connexion.inc.php");
-class FilmsModele{
+class Modele{
 	private $requete;
 	private $params;
 	private $connexion;
@@ -70,38 +70,4 @@ class FilmsModele{
 	}
 }
 
-class MembreModele{
-	private $requete;
-	private $params;
-	private $connexion;
-	private $lastId;
-
-	function __construct($requete=null,$params=null){
-			$this->requete=$requete;
-			$this->params=$params;
-	}
-		
-	function obtenirConnexion(){
-		$maConnexion = new Connexion("localhost", "root", "", "bdfilmsjoaniekaven");
-		$maConnexion->connecter();
-		return $maConnexion->getConnexion();
-	}
-
-	function executer(){
-			$this->connexion = $this->obtenirConnexion();
-			$stmt = $this->connexion->prepare($this->requete);
-			$stmt->execute($this->params);
-			$this->lastId = $this->connexion->lastInsertId();
-			$this->deconnecter();
-			return $stmt;		
-	}
-
-	function deconnecter(){
-		return $this->connexion;
-	}
-
-	function getLastId(){
-		return $this->lastId;
-	}
-}
 ?>

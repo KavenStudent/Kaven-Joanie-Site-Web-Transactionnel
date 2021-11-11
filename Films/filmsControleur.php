@@ -7,10 +7,10 @@
 		$duree=$_POST['duree'];
 		$res=$_POST['res'];
 		try{
-			$unModele=new FilmsModele();
+			$unModele=new Modele();
 			$pochete=$unModele->verserFichier("pochettes", "pochette", "avatar.jpg",$titre);
 			$requete="INSERT INTO films VALUES(0,?,?,?,?)";
-			$unModele=new FilmsModele($requete,array($titre,$duree,$res,$pochete));
+			$unModele=new Modele($requete,array($titre,$duree,$res,$pochete));
 			$stmt=$unModele->executer();
 			$tabRes['action']="enregistrerFilm";
 			$tabRes['msg']="Film bien enregistre";
@@ -25,7 +25,7 @@
 		$tabRes['action']="listerFilm";
 		$requete= "SELECT * FROM films ORDER BY `films`.`annee` DESC";
 		try{
-			 $unModele=new FilmsModele($requete,array());
+			 $unModele=new Modele($requete,array());
 			 $stmt=$unModele->executer();
 			 $tabRes['listeFilms']=array();
 			 while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
@@ -42,12 +42,12 @@
 		$idf=$_POST['numE'];
 		try{
 			$requete="SELECT * FROM films WHERE idf=?";
-			$unModele=new FilmsModele($requete,array($idf));
+			$unModele=new Modele($requete,array($idf));
 			$stmt=$unModele->executer();
 			if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
 				$unModele->enleverFichier("pochettes",$ligne->pochette);
 				$requete="DELETE FROM films WHERE idf=?";
-				$unModele=new FilmsModele($requete,array($idf));
+				$unModele=new Modele($requete,array($idf));
 				$stmt=$unModele->executer();
 				$tabRes['action']="enleverFilm";
 				$tabRes['msg']="Film ".$idf." bien enleve";
@@ -68,7 +68,7 @@
 		$tabRes['action']="fiche";
 		$requete="SELECT * FROM films WHERE idf=?";
 		try{
-			 $unModele=new FilmsModele($requete,array($idf));
+			 $unModele=new Modele($requete,array($idf));
 			 $stmt=$unModele->executer();
 			 $tabRes['fiche']=array();
 			 if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
@@ -93,14 +93,14 @@
 		try{
 			//Recuperer ancienne pochette
 			$requette="SELECT pochette FROM films WHERE idf=?";
-			$unModele=new FilmsModele($requette,array($idf));
+			$unModele=new Modele($requette,array($idf));
 			$stmt=$unModele->executer();
 			$ligne=$stmt->fetch(PDO::FETCH_OBJ);
 			$anciennePochette=$ligne->pochette;
 			$pochette=$unModele->verserFichier("pochettes", "pochette",$anciennePochette,$titre);	
 			
 			$requete="UPDATE films SET titre=?,duree=?, res=?, pochette=? WHERE idf=?";
-			$unModele=new FilmsModele($requete,array($titre,$duree,$res,$pochette,$idf));
+			$unModele=new Modele($requete,array($titre,$duree,$res,$pochette,$idf));
 			$stmt=$unModele->executer();
 			$tabRes['action']="modifierFilm";
 			$tabRes['msg']="Film $idf bien modifie";

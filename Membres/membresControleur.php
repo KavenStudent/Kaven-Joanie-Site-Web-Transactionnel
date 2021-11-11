@@ -14,7 +14,7 @@ function enregistrerMembre(){
     try{
         // regarde si le courriel n'est pas utilisé
         $requete = "SELECT * FROM membres WHERE courriel=?";
-        $unModele=new MembreModele($requete,array($email));
+        $unModele=new Modele($requete,array($email));
         $stmt=$unModele->executer();
 
         // couriel deja utilisé existant
@@ -27,12 +27,12 @@ function enregistrerMembre(){
 
             // enregistre dans membre
             $requete = "INSERT INTO membres VALUES(0,?,?,?,?,?)";
-            $unModele=new MembreModele($requete,array($prenom, $nom, $email, $sexe, $dateNaissance));
+            $unModele=new Modele($requete,array($prenom, $nom, $email, $sexe, $dateNaissance));
             $stmt=$unModele->executer();
 
             // enregistre dans connexion
             $requete = "INSERT INTO connexion VALUES(0,?,?,'1','M')";
-            $unModele=new MembreModele($requete,array($email, $password));
+            $unModele=new Modele($requete,array($email, $password));
             $stmt=$unModele->executer();
 
             $idMembre = $unModele->getLastId();
@@ -58,7 +58,7 @@ function connexion(){
  
     try{
         $requete= "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-        $unModele=new FilmsModele($requete,array());
+        $unModele=new Modele($requete,array());
         $stmt=$unModele->executer();
         $tabRes['listeFilms']=array();
         while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
@@ -76,7 +76,7 @@ function listerFilm(){
 
     try{
         $requete= "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-         $unModele=new FilmsModele($requete,array());
+         $unModele=new Modele($requete,array());
          $stmt=$unModele->executer();
          $tabRes['listeFilms']=array();
          while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
