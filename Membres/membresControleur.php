@@ -55,10 +55,13 @@ function enregistrerMembre(){
 
 function connexion(){
     global $tabRes;
- 
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $isValid = false;
+
     try{
-        $requete= "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-        $unModele=new Modele($requete,array());
+        $requete = "SELECT * FROM connexion WHERE courriel=? AND motDePasse=?";
+        $unModele=new Modele($requete,array($email, $password));
         $stmt=$unModele->executer();
         $tabRes['listeFilms']=array();
         while($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
@@ -97,13 +100,13 @@ switch($action){
     case "connexion" :
         connexion();
     break;
-    case "enleverFilm" :
+    case "payerPanier" :
         enleverFilm();
     break;
     case "fiche" :
         fiche();
     break;
-    case "modifierFilm" :
+    case "modifierProfil" :
         modifierFilm();
     break;
 }

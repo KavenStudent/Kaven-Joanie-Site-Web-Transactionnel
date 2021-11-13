@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_GET['msg'])) {
 	$msg = $_GET['msg'];
 } else {
@@ -42,7 +43,17 @@ if (isset($_GET['msg'])) {
 
 
 <body onLoad="initialiser(<?php echo "'" . $msg . "'" ?>);">
-
+	<!-- pour navbar -->
+	<?php
+	if (!isset($_SESSION['usager'])) {
+		// include_once('includes/connexion.inc.php'); include le menu index
+	} else if ($_SESSION['usager'] == 'M') {
+		// include_once('includes/connexion.inc.php'); include le menu membre
+	} else {
+		// include_once('includes/connexion.inc.php'); include le menu admin
+	}
+	?>
+	
 	<div id=" site-content">
 		<!-- nav bar -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -436,18 +447,18 @@ if (isset($_GET['msg'])) {
 							<div class="myInput">
 								<label for="prenom" class="form-label">Prénom</label>
 								<input type="text" class="form-control" id="profil-prenom" name="prenom" value="<?php echo $prenom ?>" required>
-								
+
 							</div>
 							<div class="myInput">
 								<label for="nom" class="form-label">Nom</label>
 								<input type="text" class="form-control" id="profil-nom" name="nom" value="<?php echo $nom ?>" required>
-								
+
 							</div>
 
 							<div class="myInput">
 								<label for="pages" class="form-label">Courriel</label>
 								<input type="email" class="form-control" id="profil-email-Enreg" name="email" value="<?php echo $courriel ?>" required>
-							
+
 							</div>
 
 							<div class="myInput">
@@ -455,7 +466,7 @@ if (isset($_GET['msg'])) {
 								<input type="password" class="form-control" id="profil-password" name="password" value="<?php echo $motDePasse ?>" required>
 								<input class="montrerConfirmer" type="checkbox" onclick="montrerConfirmerPass()">Modifier le mot de passe
 								<span id="msg-password-erreur">Le mot de passe doit être entre 8 et 10 charactères et doit contenir des lettres majuscules, minuscules, des chiffres et les charactères "-_" </span>
-							
+
 							</div>
 
 							<div class="myInput" id="confirmerPasse">
@@ -463,7 +474,7 @@ if (isset($_GET['msg'])) {
 								<input type="password" class="form-control" id="profil-confirmPassword" name="confirmPassword" value="<?php echo $motDePasse ?>" required>
 								<input class="montrerPassword" type="checkbox" onclick="montrerPassword2()">Montrer le mot de passe
 								<span id="msg-confirm-password-erreur">Confirmation invalide</span>
-							
+
 							</div>
 
 							<hr class="line">
@@ -748,18 +759,18 @@ if (isset($_GET['msg'])) {
 							<div class="myInput">
 								<label for="titre" class="form-label">Titre</label>
 								<input type="text" class="form-control" id="titre-modifier" name="titre" required>
-								
+
 							</div>
 							<div class="myInput">
 								<label for="annee" class="form-label">Année</label>
 								<input type="number" class="form-control" id="annee-modifier" name="annee" min="0" required>
-							
+
 							</div>
 
 							<div class="myInput">
 								<label for="duree" class="form-label">Durée</label>
 								<input type="number" class="form-control" id="duree-modifier" name="duree" min="0" required>
-							
+
 							</div>
 
 							<div class="myInput">
