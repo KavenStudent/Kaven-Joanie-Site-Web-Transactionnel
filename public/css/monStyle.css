@@ -208,3 +208,7 @@ li {
 .modal {
     color: black;
 }
+
+.validation {
+    display: none;
+}

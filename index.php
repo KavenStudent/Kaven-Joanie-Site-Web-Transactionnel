@@ -1,7 +1,9 @@
 <?php
 session_start();
-if (isset($_GET['msg'])) {
-	$msg = $_GET['msg'];
+if (isset($_GET['admin'])) {
+	$msg = "Admin connecté";
+} else if (isset($_GET['membre'])) { // faire requete pour get le membre pour profil
+	$msg = "Bienvenue";
 } else {
 	$msg = "";
 }
@@ -41,89 +43,22 @@ if (isset($_GET['msg'])) {
 	<title>TP Joanie-Kaven</title>
 </head>
 
-
 <body onLoad="initialiser(<?php echo "'" . $msg . "'" ?>);">
-	<!-- pour navbar -->
-	<?php
-	if (!isset($_SESSION['usager'])) {
-		// include_once('includes/connexion.inc.php'); include le menu index
-	} else if ($_SESSION['usager'] == 'M') {
-		// include_once('includes/connexion.inc.php'); include le menu membre
-	} else {
-		// include_once('includes/connexion.inc.php'); include le menu admin
-	}
-	?>
-	
+
+
 	<div id=" site-content">
-		<!-- nav bar -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-			<div class="container-fluid">
-
-				<div class="company">
-					<img id="monLogo" class="navbar-brand" src="public/images/icon-logo-film.png" alt="" class="logo">
-					<h3> Kajo movie </h3>
-				</div>
-
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbar-choix">
-
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="javascript:retourAccueil()">Accueil</a>
-						</li>
-						<li class=" nav-item">
-							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Devenir
-								membre</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Connexion">Connexion</a>
-						</li>
-
-					</ul>
-
-					<div class="d-flex  nav-droite">
-						<select class="form-select" onChange="lister('categ',this.options[this.selectedIndex].value)">
-							<option value="dr">Choisir ...</option>
-							<option value="Comedy">Comédie</option>
-							<option value="Fantasy">Fantaisie</option>
-							<option value="Drama">Drama</option>
-							<option value="Music">Music</option>
-							<option value="Adventure">Adventure</option>
-							<option value="History">Historique</option>
-							<option value="Thriller">Suspense</option>
-							<option value="Animation">Animation</option>
-							<option value="Familly">Famille</option>
-							<option value="Biography">Biographie</option>
-							<option value="Action">Action</option>
-							<option value="Film-Noir">Film-Noir</option>
-							<option value="Romance">Romance</option>
-							<option value="Sci-Fi">Sci-Fi</option>
-							<option value="War">Guerre</option>
-							<option value="Western">Western</option>
-							<option value="Horror">Horreur</option>
-							<option value="Musical">Musical</option>
-							<option value="Sport">Sport</option>
-						</select>
-					</div>
-
-					<div class="d-flex nav-droite">
-						<input class="inputSearch" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
-						<button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
-					</div>
-
-
-					<div class="d-flex nav-droite">
-						<input class="inputSearch" type="search" id="rcres" placeholder="Réalisateur" aria-label="Recherche">
-						<button class="btn btn-outline-success" onClick="lister('res',document.getElementById('rcres').value)">Recherche</button>
-					</div>
-
-				</div>
-			</div>
-		</nav>
-		<!-- fin nav bar -->
+		<!-- navbar -->
+		<?php
+		if (isset($_SESSION['admin'])) {
+			include_once('includes/menu_admin.inc.php');
+		} else if (isset($_SESSION['membre'])) {
+			include_once('includes/menu_membre.inc.php');
+		} else {
+			include_once('includes/menu_index.inc.php');
+		}
+		?>
+		<!-- fin navbar -->
 
 		<!-- TOAST -->
 		<div class="toast-container position-absolute top-15 start-50 translate-middle-x">
@@ -143,86 +78,101 @@ if (isset($_GET['msg'])) {
 
 			<div class="container">
 				<!-- div des films -->
-				<div class='page' id='liste-film'> </div>
+				<div class='page' id='liste-film'>
 
 
-				<?php
-				require_once("BD/connexion.inc.php");
+					<?php
+					// require_once("BD/connexion.inc.php");
+					require_once("includes/modeles.inc.php");
 
-				if (isset($_POST['par'])) {
-					$par = $_POST['par'];
-					$valeurPar = strtolower(trim($_POST['valeurPar']));
-					switch ($par) {
-						case "tout":
-							$requette = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
-							$valeurPar = 1;
-							break;
-						case "res":
-							$requette = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
-							break;
-						case "categ":
-							$requette = "SELECT * FROM films f INNER JOIN filmgenre fg ON f.idFilm = fg.idFilm INNER JOIN genre g ON g.idGenre = fg.idGenre WHERE g.nomGenre = ? ORDER BY annee DESC";
-							break;
-						case "titre":
-							$requette = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
-							break;
+					if (isset($_POST['par'])) {
+						$par = $_POST['par'];
+						$valeurPar = strtolower(trim($_POST['valeurPar']));
+						switch ($par) {
+							case "tout":
+								$requete = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
+								$valeurPar = 1;
+								break;
+							case "res":
+								$requete = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+								break;
+							case "categ":
+								$requete = "SELECT * FROM films f INNER JOIN filmgenre fg ON f.idFilm = fg.idFilm INNER JOIN genre g ON g.idGenre = fg.idGenre WHERE g.nomGenre = ? ORDER BY annee DESC";
+								break;
+							case "titre":
+								$requete = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+								break;
+						}
+
+						$unModele = new Modele($requete, array($valeurPar));
+						$stmt = $unModele->executer();
+
+						// $stmt = $connexion->prepare($requete);
+						// $stmt->bind_param("s", $valeurPar);
+						// $stmt->execute();
+						// $listeFilms = $stmt->get_result();
+					} else {
+						$requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
+						$unModele = new Modele($requete, array());
+						$stmt = $unModele->executer();
+						// $listeFilms = mysqli_query($connexion, $requete);
 					}
 
-					$stmt = $connexion->prepare($requette);
-					$stmt->bind_param("s", $valeurPar);
-					$stmt->execute();
-					$listeFilms = $stmt->get_result();
-				} else {
-					$requette = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-					$listeFilms = mysqli_query($connexion, $requette);
-				}
+					try {
 
-				try {
+						// $rep = "<div class='page' id='liste-film'>";
+						$i = 0;
 
-					$rep = "<div class='page' id='liste-film'>";
-					$i = 0;
+						// $rep .= ' <div class="row">';
+						$rep = ' <div class="row">';
 
-					$rep .= ' <div class="row">';
+						// while ($ligne = mysqli_fetch_object($listeFilms)) {
+						while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+							if ($i % 4 == 0) {
+								$rep .= '</div>';
+								$rep .= ' <div class="row">';
+							}
 
-					while ($ligne = mysqli_fetch_object($listeFilms)) {
-						if ($i % 4 == 0) {
+							$rep .= '<div class="card">';
+
+
+
+							if (substr($ligne->image, 0, 4) === "http") {
+								$rep .= '<img class="image-film" src="' . ($ligne->image) . '" alt="image-film">';
+							} else {
+								$rep .= '<img class="image-film" src="imageFilm/' . ($ligne->image) . '" alt="image film">';
+							}
+
+							$rep .= '<div class="card-body">';
+							$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
+							$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
+							$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
+							$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'serveur/fiche.php\')">Plus d\'info</a>';
+
+							if (isset($_SESSION['membre'])) {
+								$rep .= '<a href="#" id="btnAJout" class="btn btn-primary" onclick="ajout(' . $ligne->idFilm . ')">Ajouter</a>';
+							}
 							$rep .= '</div>';
-							$rep .= ' <div class="row">';
+							$rep .= '</div>';
+
+							$i++;
 						}
-
-						$rep .= '<div class="card">';
-
-
-
-						if (substr($ligne->image, 0, 4) === "http") {
-							$rep .= '<img class="image-film" src="' . ($ligne->image) . '" alt="image-film">';
-						} else {
-							$rep .= '<img class="image-film" src="imageFilm/' . ($ligne->image) . '" alt="image film">';
-						}
-
-
-						$rep .= '<div class="card-body">';
-						$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
-						$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
-						$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-						$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'serveur/fiche.php\')">Plus d\'info</a>';
-						$rep .= '</div>';
-						$rep .= '</div>';
-
-						$i++;
+						$rep .= "</div>"; //fermer le dernier row				
+						// $rep .= "</div>";
+						//fermer le container
+						// mysqli_free_result($listeFilms);
+					} catch (Exception $e) {
+						echo "Probleme pour lister";
+					} finally {
+						echo $rep;
+						unset($rep);
+						unset($unModele);
+						// mysqli_close($connexion);
 					}
-					$rep .= "</div>"; //fermer le dernier row				
-					$rep .= "</div>"; //fermer le container
-					mysqli_free_result($listeFilms);
-				} catch (Exception $e) {
-					echo "Probleme pour lister";
-				} finally {
-					echo $rep;
-					unset($rep);
-					mysqli_close($connexion);
-				}
 
-				?>
+					?>
+					<!-- fin div des films -->
+				</div>
 
 				<!-- pagination -->
 				<ul id="pagin"> </ul>
@@ -279,6 +229,8 @@ if (isset($_GET['msg'])) {
 						<form class="form-enregistrer-membre" id="form-enregistrer-membre">
 							<input type="hidden" name="action" value="enregistrerMembre">
 
+							<input type="submit" id="validation-form-membre" class="validation" />
+
 							<div class="myInput">
 								<label for="prenom" class="form-label">Prénom</label>
 								<input type="text" class="form-control" id="prenom" name="prenom" required>
@@ -331,7 +283,7 @@ if (isset($_GET['msg'])) {
 							</div>
 
 							<div class="modal-footer">
-								<button type="button" id="submit-Enreg" class="btn btn-primary" onClick="valider('form-enregistrer-membre');">Enregistrer</button>
+								<button type="button" class="btn btn-primary" onClick="valider('form-enregistrer-membre');">Enregistrer</button>
 							</div>
 						</form>
 
@@ -357,6 +309,8 @@ if (isset($_GET['msg'])) {
 						<form class="form-connexion" id="form-connexion">
 							<input type="hidden" name="action" value="connexion">
 
+							<input type="submit" id="validation-connexion" class="validation" />
+
 							<div class="myInput">
 								<label for="pages" class="form-label">Courriel</label>
 								<input type="email" class="form-control" id="email-Connexion" name="email" required>
@@ -372,7 +326,7 @@ if (isset($_GET['msg'])) {
 
 
 							<div class="modal-footer">
-								<button type="button" id="submit-Connexion" class="btn btn-primary" onClick="connexion()">Connexion</button>
+								<button type="button" class="btn btn-primary" onClick="connexion()">Connexion</button>
 							</div>
 						</form>
 
@@ -502,7 +456,7 @@ if (isset($_GET['msg'])) {
 							</div>
 
 							<div class="modal-footer">
-								<button type="submit" id="submit-Enreg" class="btn btn-primary">Modifier</button>
+								<button type="submit" class="btn btn-primary">Modifier</button>
 							</div>
 						</form>
 
@@ -704,7 +658,7 @@ if (isset($_GET['msg'])) {
 							<!-- fin genres -->
 
 							<div class="modal-footer">
-								<button type="submit" id="submit-Film" class="btn btn-primary">Enregistrer Film</button>
+								<button type="submit" class="btn btn-primary">Enregistrer Film</button>
 							</div>
 						</form>
 
@@ -729,7 +683,7 @@ if (isset($_GET['msg'])) {
 						<form id="formFiche" action="../serveur/enleverFilm.php" method="POST">
 							<input type="hidden" id="id-film-delete" name="idFilm" value="">
 
-							<button type="submit" id="submit-Connexion" class="btn btn-primary">Confirmer Suppression</button>
+							<button type="submit" class="btn btn-primary">Confirmer Suppression</button>
 						</form>
 
 					</div>
@@ -942,7 +896,7 @@ if (isset($_GET['msg'])) {
 							</div>
 
 							<div class="modal-footer">
-								<button type="submit" id="submit-Film" class="btn btn-primary">Modifier Film</button>
+								<button type="submit" class="btn btn-primary">Modifier Film</button>
 							</div>
 						</form>
 
@@ -954,6 +908,33 @@ if (isset($_GET['msg'])) {
 		</div>
 		<!-- Fin modal modifier film-->
 
+		<!-- modal activer membres-->
+		<div class="modal fade" id="modal-Activer-Membre" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Confirmer la réactivation du membre</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+
+					<div class="modal-footer">
+						<form id="form-activer-membre">
+							<input type="hidden" id="id-membre-activer" name="idMembre" value="">
+
+							<input type="hidden" name="action" value="activerMembre">
+
+							<button type="button" class="btn btn-primary" onClick="activerMembre()">Confirmer réactivation</button>
+						</form>
+
+					</div>
+					</form>
+
+
+				</div>
+			</div>
+		</div>
+		<!-- Fin modal activer membres-->
+
 		<!-- modal desactiver membres-->
 		<div class="modal fade" id="modal-Supprimer-Membre" tabindex="-1">
 			<div class="modal-dialog">
@@ -964,10 +945,12 @@ if (isset($_GET['msg'])) {
 					</div>
 
 					<div class="modal-footer">
-						<form id="formFiche" action="../serveur/enleverMembre.php" method="POST">
+						<form id="form-desactiver-membre">
 							<input type="hidden" id="id-membre-delete" name="idMembre" value="">
 
-							<button type="submit" id="submit-Connexion" class="btn btn-primary">Confirmer Suppression</button>
+							<input type="hidden" name="action" value="desactiverMembre">
+
+							<button type="button" class="btn btn-primary" onClick="desactiverMembre()">Confirmer Suppression</button>
 						</form>
 
 					</div>
@@ -979,30 +962,6 @@ if (isset($_GET['msg'])) {
 		</div>
 		<!-- Fin modal desactiver membres-->
 
-		<!-- modal activer membres-->
-		<div class="modal fade" id="modal-Activer-Membre" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Confirmer la réactivation du membre</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-
-					<div class="modal-footer">
-						<form id="formFiche" action="../serveur/activerMembre.php" method="POST">
-							<input type="hidden" id="id-membre-activer" name="idMembre" value="">
-
-							<button type="submit" id="submit-Connexion" class="btn btn-primary">Confirmer réactivation</button>
-						</form>
-
-					</div>
-					</form>
-
-
-				</div>
-			</div>
-		</div>
-		<!-- Fin modal activer membres-->
 		<!-- fin partie admin -->
 
 		<script src="public/util/js/jquery-1.11.1.min.js"></script>

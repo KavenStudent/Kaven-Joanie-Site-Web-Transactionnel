@@ -16,7 +16,11 @@ let valider = (id) => {
   let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_])[A-Za-z\d\-_]{8,10}$/;
   let valide = true;
 
-  if (!(password.trim() === confirmPassword.trim())) {
+  if (!myForm.checkValidity()){
+    document.getElementById('validation-form-membre').click();
+    valide = false;
+
+	}else if (!(password.trim() === confirmPassword.trim())) {
 
     document.getElementById('msg-confirm-password-erreur').style.display = 'block';
     valide = false;
@@ -125,17 +129,15 @@ function envoyerIdFilm(id) {
   document.getElementById('id-film-delete').value = id;
 }
 
-// envoie l'id du membre pour le desactiver (admin.php)
-function envoyerIdMembre(id) {
-  document.getElementById('id-membre-delete').value = id;
-}
-
 // envoie l'id du membre pour le reactiver (admin.php)
 function envoyerIdMembreActive(id) {
   document.getElementById('id-membre-activer').value = id;
 }
 
-
+// envoie l'id du membre pour le desactiver (admin.php)
+function envoyerIdMembreDesactive(id) {
+  document.getElementById('id-membre-delete').value = id;
+}
 
 // Méthodes submit pour aller à une autre page
 function listerHistorique() {
@@ -154,9 +156,9 @@ function listerFilms() {
   document.getElementById('formListerFilms').submit();
 }
 
-function listerMembres() {
-  document.getElementById('formListerMembres').submit();
-}
+// function listerMembres() {
+//   document.getElementById('formListerMembres').submit();
+// }
 
 function AccueilAdmin() {
   document.getElementById('formAccueilAdmin').submit();
@@ -168,9 +170,10 @@ function listerLocation() {
 }
 
 
-function deconnexion() {
-  document.getElementById('deconnexion').submit();
-}
+// function deconnexion() {
+
+//   document.getElementById('deconnexion').submit();
+// }
 
 // obtient les info d'un film en json
 async function obtenirInfo(id, path) {
@@ -471,7 +474,7 @@ function pagination() {
   pageSize = 5;
 
   var pageCount = $(".row").length / pageSize;
-
+  $("#pagin").empty();
   for (var i = 0; i < pageCount; i++) {
 
     $("#pagin").append('<li><a href="#">' + (i + 1) + '</a></li> ');
@@ -500,7 +503,7 @@ function paginationTable() {
   nbLigne = 20;
 
   var pageCount = $(".uneLigne").length / nbLigne;
-
+  $("#pagin").empty();
   for (var i = 0; i < pageCount; i++) {
 
     $("#pagin").append('<li><a href="#">' + (i + 1) + '</a></li> ');
@@ -528,12 +531,6 @@ function paginationTable() {
 $(document).ready(function () {
   $(".toast-container").css("display", "none");
   pagination();
-
-  if (window.location.pathname == '/Kaven-Joanie-TP/pages/listerFilms.php' || window.location.pathname == '/Kaven-Joanie-TP/pages/listerMembres.php') {
-    paginationTable();
-  }
-
-  if (window.location.pathname == '/Kaven-Joanie-TP/pages/membre.php') {
-    afficherPanier();
-  }
+  afficherPanier();
+  
 });
