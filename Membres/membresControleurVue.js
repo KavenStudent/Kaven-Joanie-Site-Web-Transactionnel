@@ -3,7 +3,9 @@ var membresVue = function (reponse) {
 
 	switch (action) {
 		case "enregistrerMembre":
-			connecter(reponse);
+
+		case "connexion":
+
 		case "enlever":
 		case "modifier":
 			$('#messages').html(reponse.msg);
@@ -17,7 +19,15 @@ var membresVue = function (reponse) {
 		case "fiche":
 			afficherFiche(reponse);
 			break;
-
+		case "tableMembres":
+			afficherTableMembres(reponse);
+			break;
+		case "activerMembre":
+			afficherTableMembres(reponse);
+			break;
+		case "desactiverMembre":
+			afficherTableMembres(reponse);
+			break;
 	}
 }
 
@@ -26,6 +36,35 @@ function connecter(reponse) {
 	if (reponse.idMembre != null) {
 		afficherPageMembre(reponse);
 	}
+}
+
+
+function afficherTableMembres(json) {
+	let contenu = `<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">
+	<thead> <tr> <th>ID</th> <th>Prénom</th> <th>Nom</th> <th>Courriel</th> <th>Sexe</th>
+	<th>Date de naissance</th> <th>Statut</th> <th>Rôle</th> <th>Actions</th> <th></th> </tr> </thead> <tbody>`;
+
+	for (let i = 0; i < json.listeMembres.length; i++) {
+		contenu += ` <tr class="uneLigne"><td> ${json.listeMembres[i].idMembre} </td>
+		<td>${json.listeMembres[i].prenom}</td>
+		<td>${json.listeMembres[i].nom}</td>
+		<td>${json.listeMembres[i].courriel}</td>
+		<td>${json.listeMembres[i].sexe}</td>
+		<td>${json.listeMembres[i].dateDeNaissance}</td>
+		<td>${json.listeMembres[i].statut}</td>
+		<td>${json.listeMembres[i].role}</td>
+		<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Activer-Membre" onclick="envoyerIdMembreActive(${json.listeMembres[i].idMembre})"><i class="material-icons" data-toggle="tooltip" title="Activer">&#xe876;</i></a> </td>
+		<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Membre" onclick="envoyerIdMembreDesactive(${json.listeMembres[i].idMembre})"><i class="material-icons" data-toggle="tooltip" title="Désactiver">&#xE872;</i></a> </td>	</tr>`
+	}
+	// button a revoir maybe
+	contenu += `</tbody> </table> </div> </div> </div>`;
+
+	$('#liste-film').html(contenu);
+	paginationTable();
+}
+
+function afficherTablesFilms() {
+
 }
 
 function afficherPageMembre(json) {
@@ -56,22 +95,22 @@ function afficherPageMembre(json) {
 
 	//boucle
 	for (let i = 0; i < json.listeFilms.length; i++) {
-	
-	if ($j % 4 == 0) {
-		contenu += `</div> <div class="row">`;
-	}
 
-	contenu += `<div class="card">`;
+		if ($j % 4 == 0) {
+			contenu += `</div> <div class="row">`;
+		}
+
+		contenu += `<div class="card">`;
 
 
-	
-	if (json.listeFilms[i].image.substr(0,4) === "http") {
-		contenu += `<img class="image-film" src="${json.listeFilms[i].image}" alt="image-film">`;
-	} else {
-		contenu += `<img class="image-film" src="../imageFilm/${json.listeFilms[i].image}" alt="image film">`;
-	}
 
-	contenu += `<div class="card-body">
+		if (json.listeFilms[i].image.substr(0, 4) === "http") {
+			contenu += `<img class="image-film" src="${json.listeFilms[i].image}" alt="image-film">`;
+		} else {
+			contenu += `<img class="image-film" src="../imageFilm/${json.listeFilms[i].image}" alt="image film">`;
+		}
+
+		contenu += `<div class="card-body">
 				<h5 class="card-title">${json.listeFilms[i].titre}(${json.listeFilms[i].annee})</h5>
 				<p class="card-text">${json.listeFilms[i].realisateurs}</p>
 				<p class="card-text">${json.listeFilms[i].prix}</p>
@@ -80,13 +119,13 @@ function afficherPageMembre(json) {
 				</div> </div>
 				`;
 
-	// fonction a changer
-	// $rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'../serveur/fiche.php\')">Plus d\'info</a>';
-	// $rep .= '<a href="#" id="btnAJout" class="btn btn-primary" onclick="ajout(' . $ligne->idFilm . ')">Ajouter</a>';
+		// fonction a changer
+		// $rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'../serveur/fiche.php\')">Plus d\'info</a>';
+		// $rep .= '<a href="#" id="btnAJout" class="btn btn-primary" onclick="ajout(' . $ligne->idFilm . ')">Ajouter</a>';
 
-	$j++;
+		$j++;
 	} //fin boucle
-	
+
 	contenu += "</div>"; //fermer le dernier row
 
 	$('#liste-film').html(contenu);
