@@ -64,12 +64,12 @@ function montrerConfirmerPass() {
 function montrerPassword2() {
 
   if (visibleMotdePasse === true) {
-    $("#profil-password").prop("type", "password");
-    $("#profil-confirmPassword").prop("type", "password");
+    $("#password").prop("type", "password");
+    $("#confirmPassword").prop("type", "password");
     visibleMotdePasse = false;
   } else {
-    $("#profil-password").prop("type", "text");
-    $("#profil-confirmPassword").prop("type", "text");
+    $("#password").prop("type", "text");
+    $("#confirmPassword").prop("type", "text");
     visibleMotdePasse = true;
   }
 }
@@ -526,6 +526,18 @@ function paginationTable() {
     $(this).addClass("current");
     showPage(parseInt($(this).text()))
   });
+}
+
+function NbJours($debut, $fin)
+{
+
+    $tDeb = explode("-", $debut);
+    $tFin = explode("-", $fin);
+
+    $diff = mktime(0, 0, 0, $tFin[1], $tFin[2], $tFin[0]) -
+        mktime(0, 0, 0, $tDeb[1], $tDeb[2], $tDeb[0]);
+
+    return (($diff / 86400));
 }
 
 // ready
