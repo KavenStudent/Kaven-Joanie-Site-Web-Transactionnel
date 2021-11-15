@@ -35,6 +35,9 @@ var membresVue = function (reponse) {
 		case "tableHistoriqueLocation":
 			afficherTableHistoriqueLocation(reponse);
 			break;
+		case "profil":
+			afficherProfil(reponse);
+			break;
 	}
 }
 
@@ -150,7 +153,7 @@ function afficherTableHistoriqueLocation(json){
 		<tbody>`;
 
 	for (let i = 0; i < json.listeLocations.length; i++) {
-		contenu +=`<tr>
+		contenu +=`<tr class="uneLigne">
 		<td>${json.listeLocations[i].titre}</td>
 		<td>${json.listeLocations[i].dateAchat}</td>
 		<td>`
@@ -166,4 +169,28 @@ function afficherTableHistoriqueLocation(json){
 
 	$('#liste-film').html(contenu);
 	paginationTable();
+}
+
+function afficherProfil(json) {
+	// if(json.OK){
+	var monProfil = json.afficherProfil;
+
+	$("#idMembre").val(monProfil.idMembre);
+	$("#profil-prenom").val(monProfil.prenom);
+
+	$("#profil-nom").val(monProfil.nom);
+	$("#profil-email-Enreg").val(monProfil.courriel);
+	$("#profil-password").val(monProfil.motDePasse);
+	$("#profil-confirmPassword").val(monProfil.motDePasse);
+	if(monProfil.sexe == 'M'){
+		$('#profil-M').prop('checked', true);
+	}
+	else{
+		$('#profil-F').prop('checked', true);
+	}
+	$("#profil-dateNaissance").val(monProfil.dateDeNaissance);
+	$("#modal-profil-Membre").modal('show');
+
+	// }
+
 }

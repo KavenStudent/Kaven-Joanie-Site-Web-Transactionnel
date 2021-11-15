@@ -305,28 +305,29 @@ if (isset($_SESSION['admin'])) {
 
 						<!-- Form changer profil membre-->
 
-						<form class="formMembre" id="ProfilMembre" action="../serveur/modifierProfil.php" method="POST" onSubmit="return valider('ProfilMembre')">
-							<input id="idMembre" name="idMembre" type="hidden" value="<?php echo $idM ?>">
+						<!-- <form class="formMembre" id="ProfilMembre" action="../serveur/modifierProfil.php" method="POST" onSubmit="return valider('ProfilMembre')"> -->
+						<form class="formMembre" id="ProfilMembre">
+							<input id="idMembre" name="idMembre" type="hidden">
 							<div class="myInput">
 								<label for="prenom" class="form-label">Prénom</label>
-								<input type="text" class="form-control" id="profil-prenom" name="prenom" value="<?php echo $prenom ?>" required>
+								<input type="text" class="form-control" id="profil-prenom" name="prenom" required>
 
 							</div>
 							<div class="myInput">
 								<label for="nom" class="form-label">Nom</label>
-								<input type="text" class="form-control" id="profil-nom" name="nom" value="<?php echo $nom ?>" required>
+								<input type="text" class="form-control" id="profil-nom" name="nom" required>
 
 							</div>
 
 							<div class="myInput">
 								<label for="pages" class="form-label">Courriel</label>
-								<input type="email" class="form-control" id="profil-email-Enreg" name="email" value="<?php echo $courriel ?>" required>
+								<input type="email" class="form-control" id="profil-email-Enreg" name="email" required>
 
 							</div>
 
 							<div class="myInput">
 								<label for="password" class="form-label">Mot de passe</label>
-								<input type="password" class="form-control" id="profil-password" name="password" value="<?php echo $motDePasse ?>" required>
+								<input type="password" class="form-control" id="profil-password" name="password" required>
 								<input class="montrerConfirmer" type="checkbox" onclick="montrerConfirmerPass()">Modifier le mot de passe
 								<span id="msg-password-erreur">Le mot de passe doit être entre 8 et 10 charactères et doit contenir des lettres majuscules, minuscules, des chiffres et les charactères "-_" </span>
 
@@ -334,7 +335,7 @@ if (isset($_SESSION['admin'])) {
 
 							<div class="myInput" id="confirmerPasse">
 								<label for="confirmPassword" class="form-label">Confirmer mot de passe</label>
-								<input type="password" class="form-control" id="profil-confirmPassword" name="confirmPassword" value="<?php echo $motDePasse ?>" required>
+								<input type="password" class="form-control" id="profil-confirmPassword" name="confirmPassword" required>
 								<input class="montrerPassword" type="checkbox" onclick="montrerPassword2()">Montrer le mot de passe
 								<span id="msg-confirm-password-erreur">Confirmation invalide</span>
 
@@ -346,13 +347,13 @@ if (isset($_SESSION['admin'])) {
 								<p>Pour des raisons statistiques</p>
 
 								<div class="form-check">
-									<input class="form-check-input" type="radio" name="sexe" value="M" id="profil-M" <?php if ($sexe === 'M') echo 'checked' ?>>
+									<input class="form-check-input" type="radio" name="sexe" value="M" id="profil-M">
 									<label class="form-check-label" for="M">
 										Homme
 									</label>
 								</div>
 								<div class="form-check">
-									<input class="form-check-input" type="radio" name="sexe" value="F" id="profil-F" <?php if ($sexe === 'F') echo 'checked' ?>>
+									<input class="form-check-input" type="radio" name="sexe" value="F" id="profil-F">
 									<label class="form-check-label" for="F">
 										Femme
 									</label>
@@ -361,7 +362,7 @@ if (isset($_SESSION['admin'])) {
 							</div>
 							<div class="myInput">
 								<label for="dateNaissance" class="form-label">Date de naissance</label>
-								<input type="date" class="form-control" id="profil-dateNaissance" name="dateNaissance" value="<?php echo $dateDeNaissance ?>" required>
+								<input type="date" class="form-control" id="profil-dateNaissance" name="dateNaissance" required>
 							</div>
 
 							<div class="modal-footer">
@@ -847,7 +848,7 @@ if (isset($_SESSION['admin'])) {
 
 					<div class="modal-footer">
 						<form id="form-activer-membre">
-							<input type="hidden" id="id-membre-activer" name="idMembre" value="">
+							<input type="hidden" id="id-membre-activer" name="idMembre">
 
 							<input type="hidden" name="action" value="activerMembre">
 

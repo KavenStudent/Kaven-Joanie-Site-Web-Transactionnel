@@ -25,7 +25,8 @@ if (!isset($_SESSION['membre'])) {
                         <a class="nav-link" aria-current="page" href="javascript:listerFilms()">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-profil-Membre">Profil</a>
+                        <a class="nav-link" href="javascript:profil()" >Profil</a>
+                        <!-- data-bs-toggle="modal" data-bs-target="#modal-profil-Membre" -->
                     </li>
 
                     <li class="nav-item">
