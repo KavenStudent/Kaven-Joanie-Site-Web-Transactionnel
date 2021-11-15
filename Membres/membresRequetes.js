@@ -161,6 +161,7 @@ function desactiverMembre(){
 function tableHistoriques(){
 	var form = new FormData();
 	form.append('action', 'tableHistoriqueLocation');
+	form.append('idMembre', document.getElementById('myMemberid').value);
 
 	$.ajax({
 		type : 'POST',
@@ -173,6 +174,53 @@ function tableHistoriques(){
 		processData : false,
 		success : function (reponse){
 				membresVue(reponse);
+		},
+		fail : function (err){
+		 
+		}
+	});
+}
+
+function tableLocation(){
+	var form = new FormData();
+	form.append('action', 'tableLocation');
+	form.append('idMembre', document.getElementById('myMemberid').value);
+
+	$.ajax({
+		type : 'POST',
+		url : 'Membres/membresControleur.php',
+		data : form,
+		dataType : 'json', //text pour le voir en format de string
+		// async : false,
+		//cache : false,
+		contentType : false,
+		processData : false,
+		success : function (reponse){
+				membresVue(reponse);
+		},
+		fail : function (err){
+		 
+		}
+	});
+}
+
+function profil(){
+	var form = new FormData();
+	form.append('action', 'profil');
+	form.append('idMembre', document.getElementById('myMemberid').value);
+
+	$.ajax({
+		type : 'POST',
+		url : 'Membres/membresControleur.php',
+		data : form,
+		dataType : 'json', //text pour le voir en format de string
+		// async : false,
+		//cache : false,
+		contentType : false,
+		processData : false,
+		success : function (reponse){
+				membresVue(reponse);
+				// $('#modal-profil-Membre').show();
 		},
 		fail : function (err){
 		 
