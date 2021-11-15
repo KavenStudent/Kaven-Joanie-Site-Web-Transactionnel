@@ -254,5 +254,6 @@ switch ($action) {
     case "desactiverMembre":
         desactiverMembre();
         break;
+        
 }
 echo json_encode($tabRes);

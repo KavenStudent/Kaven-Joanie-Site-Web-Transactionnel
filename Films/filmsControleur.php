@@ -217,14 +217,16 @@ function fiche($usage)
 {
 	global $tabRes;
 	$idFilm = $_POST['idFilm'];
-
+	if (strcasecmp($usage , "panier") === 0){
+		$tabRes['duree'] = $_POST['jour'];
+	}
 	try {
 		// les info du film
 		$requete = "SELECT * FROM films WHERE idFilm=?";
 		$unModele = new Modele($requete, array($idFilm));
-		$stmt = $unModele->executer();		
+		$stmt = $unModele->executer();
 		$tabRes['unFilm'] = $stmt->fetch(PDO::FETCH_OBJ); // les infos du film
-	
+
 		//les genres du film
 		$requete = "SELECT nomgenre as genre FROM `genre` INNER JOIN filmgenre on genre.idGenre = filmgenre.idGenre where filmgenre.idFilm = ?";
 		$unModele = new Modele($requete, array($idFilm));
@@ -255,6 +257,12 @@ switch ($action) {
 		break;
 	case "formModifierFilm":
 		fiche("formModifierFilm");
+		break;
+	case "trailer":
+		fiche("trailer");
+		break;
+	case "panier":
+		fiche("panier");
 		break;
 	case "modifierFilm":
 		modifierFilm();
