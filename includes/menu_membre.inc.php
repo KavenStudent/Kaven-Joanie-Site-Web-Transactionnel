@@ -5,7 +5,7 @@ if (!isset($_SESSION['membre'])) {
 } else {
 
 ?>
-	<input type="hidden" id="myMemberid" value="<?php echo $_SESSION['membre']; ?>">
+	<input type="hidden" id="myMemberid" name="myMemberid" value="<?php echo $_SESSION['membre']; ?>">
     <!-- nav bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
@@ -25,11 +25,12 @@ if (!isset($_SESSION['membre'])) {
                         <a class="nav-link" aria-current="page" href="javascript:listerFilms()">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-profil-Membre">Profil</a>
+                        <a class="nav-link" href="javascript:profil()" >Profil</a>
+                        <!-- data-bs-toggle="modal" data-bs-target="#modal-profil-Membre" -->
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="javascript:listerHistorique();">Historique d'achat</a>
+                        <a class="nav-link" aria-current="page" href="javascript:tableHistoriques();">Historique d'achat</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="javascript:listerLocation();">Location en cours</a>

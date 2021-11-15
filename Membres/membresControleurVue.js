@@ -32,6 +32,12 @@ var membresVue = function (reponse) {
 				afficherTableMembres(reponse);
 			}
 			break;
+		case "tableHistoriqueLocation":
+			afficherTableHistoriqueLocation(reponse);
+			break;
+		case "profil":
+			afficherProfil(reponse);
+			break;
 	}
 }
 
@@ -130,5 +136,61 @@ function afficherPageMembre(json) {
 }
 
 function afficherPageAdmin() {
+
+}
+
+function afficherTableHistoriqueLocation(json){
+	let contenu = `<h1>Historique Location</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Titre</th>
+				<th scope="col">Date d'achat</th>
+				<th scope="col">Image</th>
+			</tr>
+		</thead>
+
+		<tbody>`;
+
+	for (let i = 0; i < json.listeLocations.length; i++) {
+		contenu +=`<tr class="uneLigne">
+		<td>${json.listeLocations[i].titre}</td>
+		<td>${json.listeLocations[i].dateAchat}</td>
+		<td>`
+		if (json.listeLocations[i].image.substr(0, 4) === "http") {
+			contenu +=`<img class="icon-film" src="${json.listeLocations[i].image}" alt="image-film">`;
+		} else {
+			contenu += `<img class="icon-film" src="imageFilm/${json.listeLocations[i].image}" alt="image film">`;
+		}
+		contenu +=`</td></tr>`
+	}
+	// button a revoir maybe
+	contenu += `</tbody> </table>`;
+
+	$('#liste-film').html(contenu);
+	paginationTable();
+}
+
+function afficherProfil(json) {
+	// if(json.OK){
+	var monProfil = json.afficherProfil;
+
+	$("#idMembre").val(monProfil.idMembre);
+	$("#profil-prenom").val(monProfil.prenom);
+
+	$("#profil-nom").val(monProfil.nom);
+	$("#profil-email-Enreg").val(monProfil.courriel);
+	$("#profil-password").val(monProfil.motDePasse);
+	$("#profil-confirmPassword").val(monProfil.motDePasse);
+	if(monProfil.sexe == 'M'){
+		$('#profil-M').prop('checked', true);
+	}
+	else{
+		$('#profil-F').prop('checked', true);
+	}
+	$("#profil-dateNaissance").val(monProfil.dateDeNaissance);
+	$("#modal-profil-Membre").modal('show');
+
+	// }
 
 }
