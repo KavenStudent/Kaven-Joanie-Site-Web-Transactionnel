@@ -194,64 +194,64 @@ async function obtenirInfo(id, path) {
 }
 
 // popule et montre le modal modifier film (admin modifier film)
-function populerModal(id, path) {
-  obtenirInfo(id, path).then(data => {
-    let genres = data[1];
+// function populerModal(id, path) { //done
+//   obtenirInfo(id, path).then(data => {
+//     let genres = data[1];
 
-    document.getElementById('id-modifier').value = data[0].idFilm;
-    document.getElementById('titre-modifier').value = data[0].titre;
-    document.getElementById('annee-modifier').value = data[0].annee;
-    document.getElementById('duree-modifier').value = data[0].duree;
-    document.getElementById('realisateur-modifier').value = data[0].realisateurs;
-    document.getElementById('acteur-modifier').value = data[0].acteurs;
-    document.getElementById('description-modifier').value = data[0].description;
-    document.getElementById('prix-modifier').value = data[0].prix;
-    document.getElementById('bandeAnnonce-modifier').value = data[0].bandeAnnonce;
+//     document.getElementById('id-modifier').value = data[0].idFilm;
+//     document.getElementById('titre-modifier').value = data[0].titre;
+//     document.getElementById('annee-modifier').value = data[0].annee;
+//     document.getElementById('duree-modifier').value = data[0].duree;
+//     document.getElementById('realisateur-modifier').value = data[0].realisateurs;
+//     document.getElementById('acteur-modifier').value = data[0].acteurs;
+//     document.getElementById('description-modifier').value = data[0].description;
+//     document.getElementById('prix-modifier').value = data[0].prix;
+//     document.getElementById('bandeAnnonce-modifier').value = data[0].bandeAnnonce;
 
-    // parcours les checkbox des genres
-    $('input[type=checkbox]').each(function () {
+//     // parcours les checkbox des genres
+//     $('input[type=checkbox]').each(function () {
 
-      genres.forEach(ligne => {
-        // si le value du checkbox est dans genres on le coche
-        if (ligne.genre === $(this).val()) {
-          $(this).prop('checked', true);
-        }
+//       genres.forEach(ligne => {
+//         // si le value du checkbox est dans genres on le coche
+//         if (ligne.genre === $(this).val()) {
+//           $(this).prop('checked', true);
+//         }
 
-      });
+//       });
 
-    });
+//     });
 
-  }).finally(() => {
-    $("#modal-modifier-film").modal('show');
-  });
+//   }).finally(() => {
+//     $("#modal-modifier-film").modal('show');
+//   });
 
-}
+// }
 
 // popule et montre le modal quand on clique 'plus d'info' dans les cards des films
-function afficherTrailer(id, path) {
-  obtenirInfo(id, path)
-    .then(data => {
-      let contenu = `<h4> ${data[0].titre} </h4>
-      <p><strong>Genres: </strong>`;
+// function afficherTrailer(id, path) { done
+//   obtenirInfo(id, path)
+//     .then(data => {
+//       let contenu = `<h4> ${data[0].titre} </h4>
+//       <p><strong>Genres: </strong>`;
 
-      for (i = 0; i < data[1].length; i++) {
-        contenu += data[1][i].genre + " ";
-      };
+//       for (i = 0; i < data[1].length; i++) {
+//         contenu += data[1][i].genre + " ";
+//       };
 
-      contenu += `</p><p><strong>Durée: </strong> ${data[0].duree} minutes</p>
-      <p><strong>Réalisateur: </strong>${data[0].realisateurs} </p>
-      <p><strong>Acteurs: </strong>${data[0].acteurs} </p>
-      <p><strong>Description: </strong>${data[0].description} </p>`;
+//       contenu += `</p><p><strong>Durée: </strong> ${data[0].duree} minutes</p>
+//       <p><strong>Réalisateur: </strong>${data[0].realisateurs} </p>
+//       <p><strong>Acteurs: </strong>${data[0].acteurs} </p>
+//       <p><strong>Description: </strong>${data[0].description} </p>`;
 
 
 
-      document.getElementById('trailer').src = data[0].bandeAnnonce;
-      document.getElementById('info-film').innerHTML = contenu;
-    })
-    .finally(() => {
-      $("#modal-trailer").modal('show');
-    });
-}
+//       document.getElementById('trailer').src = data[0].bandeAnnonce;
+//       document.getElementById('info-film').innerHTML = contenu;
+//     })
+//     .finally(() => {
+//       $("#modal-trailer").modal('show');
+//     });
+// }
 
 
 
@@ -263,73 +263,74 @@ function ajout(id) {
 }
 
 // envoie le film dans le panier
-function envoyerAuPanier() {
-  let jour = Math.trunc(document.getElementById('jour').value);
-  idLocation = document.getElementById('idLocation').value;
+// function envoyerAuPanier() {
+//   let jour = Math.trunc(document.getElementById('jour').value);
+//   idLocation = document.getElementById('idLocation').value;
 
-  if (jour < 1) { // si le jour est negatif met le jour a 1
-    jour = 1;
-  }
-  ajoutPanier(idLocation, jour);
-}
+//   if (jour < 1) { // si le jour est negatif met le jour a 1
+//     jour = 1;
+//   }
+//   ajoutPanier(idLocation, jour);
+// }
 
 // appelé par envoyerAuPanier ajoute l'item au panier
-function ajoutPanier(id, jours) {
-  path = "../serveur/fiche.php";
-  let existe = false;
-  let duree = jours;
+// function ajoutPanier(id, jours) {
+//   path = "../serveur/fiche.php";
+//   let existe = false;
+//   let duree = jours;
 
-  obtenirInfo(id, path).then(data => {
-    let prixTotal = data[0].prix * duree;
-    let idMembre = document.getElementById('idMembre').value;
-    let film = {
-      "idFilm": data[0].idFilm,
-      "titre": data[0].titre,
-      "dureeLocation": duree,
-      "image": data[0].image,
-      "prix": prixTotal.toFixed(2),
-      "idMembre": idMembre
-    };
 
-    panier = JSON.parse(localStorage.getItem("panier"));
+//   obtenirInfo(id, path).then(data => {
+//     let prixTotal = data[0].prix * duree;
+//     let idMembre = document.getElementById('idMembre').value;
+//     let film = {
+//       "idFilm": data[0].idFilm,
+//       "titre": data[0].titre,
+//       "dureeLocation": duree,
+//       "image": data[0].image,
+//       "prix": prixTotal.toFixed(2),
+//       "idMembre": idMembre
+//     };
 
-    // regarde si le film est deja dans le panier de
-    for (let i = 0; i < panier.length; i++) {
+//     panier = JSON.parse(localStorage.getItem("panier"));
 
-      if (panier[i].idFilm == data[0].idFilm) { // si existe augmente la duree de la location
-        existe = true;
+//     // regarde si le film est deja dans le panier de
+//     for (let i = 0; i < panier.length; i++) {
 
-        duree = panier[i].dureeLocation + jours;
-        prixTotal = data[0].prix * duree;
+//       if (panier[i].idFilm == data[0].idFilm) { // si existe augmente la duree de la location
+//         existe = true;
 
-        film = {
-          "idFilm": data[0].idFilm,
-          "titre": data[0].titre,
-          "dureeLocation": duree,
-          "image": data[0].image,
-          "prix": prixTotal.toFixed(2),
-          "idMembre": idMembre
-        };
+//         duree = panier[i].dureeLocation + jours;
+//         prixTotal = data[0].prix * duree;
+
+//         film = {
+//           "idFilm": data[0].idFilm,
+//           "titre": data[0].titre,
+//           "dureeLocation": duree,
+//           "image": data[0].image,
+//           "prix": prixTotal.toFixed(2),
+//           "idMembre": idMembre
+//         };
         
-        panier[i] = film;
-      }
-    }
+//         panier[i] = film;
+//       }
+//     }
 
-    // si le film n'existe pas on ajoute le film au panier
-    if (!existe) {
-      panier.push(film);
-    }
+//     // si le film n'existe pas on ajoute le film au panier
+//     if (!existe) {
+//       panier.push(film);
+//     }
 
-    localStorage.setItem("panier", JSON.stringify(panier));
+//     localStorage.setItem("panier", JSON.stringify(panier));
 
-  }).finally(() => {
-    $("#modal-location").modal('hide');
-    afficherPanier();
-    document.getElementById('jour').value = 1; // remet le input du nombre de jour à 1
-    let bsOffcanvas = new bootstrap.Offcanvas(document.getElementById("offcanvasRight"));
-    bsOffcanvas.show(); // affiche le canvas du panier
-  });
-}
+//   }).finally(() => {
+//     $("#modal-location").modal('hide');
+//     afficherPanier();
+//     document.getElementById('jour').value = 1; // remet le input du nombre de jour à 1
+//     let bsOffcanvas = new bootstrap.Offcanvas(document.getElementById("offcanvasRight"));
+//     bsOffcanvas.show(); // affiche le canvas du panier
+//   });
+// }
 
 // affiche les items du panier 
 function afficherPanier() {

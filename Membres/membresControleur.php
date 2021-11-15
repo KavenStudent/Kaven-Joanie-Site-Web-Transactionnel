@@ -348,5 +348,6 @@ switch ($action) {
     case "tableLocation":
         tableLocations();
         break;
+
 }
 echo json_encode($tabRes);

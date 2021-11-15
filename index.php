@@ -578,7 +578,7 @@ if (isset($_SESSION['admin'])) {
 
 							<div class="myInput">
 								<label for="bandeAnnonce" class="form-label">Bande Annonce</label>
-								<input type="text" class="form-control" id="bandeAnnonce" name="bandeAnnonce">
+								<input type="text" class="form-control" id="bandeAnnonce" name="bandeAnnonce" required>
 
 							</div>
 
@@ -612,7 +612,7 @@ if (isset($_SESSION['admin'])) {
 
 							<input type="hidden" name="action" value="deleteFilm">
 
-							<button type="button" class="btn btn-primary" onClick="deleteFilm()">Confirmer Suppression</button>						
+							<button type="button" class="btn btn-primary" onClick="deleteFilm()">Confirmer Suppression</button>
 						</form>
 
 					</div>
@@ -635,7 +635,11 @@ if (isset($_SESSION['admin'])) {
 					<div class="modal-body">
 						<!-- Form modifier film-->
 
-						<form class="formMembre" id="formMembre">
+						<form class="formMembre" id="form-modifier-film">
+
+							<input type="hidden" name="action" value="modifierFilm">
+
+							<input type="submit" id="validation-modifier-film" class="validation" />
 
 							<input type="hidden" class="form-control" id="id-modifier" name="id">
 
@@ -820,12 +824,12 @@ if (isset($_SESSION['admin'])) {
 							</div>
 							<div class="myInput">
 								<label for="bandeAnnonce" class="form-label">Bande Annonce</label>
-								<input type="text" class="form-control" id="bandeAnnonce-modifier" name="bandeAnnonce">
+								<input type="text" class="form-control" id="bandeAnnonce-modifier" name="bandeAnnonce" required>
 
 							</div>
 
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary">Modifier Film</button>
+								<button type="button" class="btn btn-primary" onClick="modifierFilm()">Modifier Film</button>
 							</div>
 						</form>
 
