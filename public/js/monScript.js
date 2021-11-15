@@ -140,34 +140,34 @@ function envoyerIdMembreDesactive(id) {
 }
 
 // Méthodes submit pour aller à une autre page
-function listerHistorique() {
-  document.getElementById('formHistorique').submit();
-}
+// function listerHistorique() {
+//   document.getElementById('formHistorique').submit();
+// }
 
-function retourAccueil() {
-  document.getElementById('formAccueil').submit();
-}
+// function retourAccueil() {
+//   document.getElementById('formAccueil').submit();
+// }
 
-function retourAccueilM() {
-  document.getElementById('formAccueilM').submit();
-}
+// function retourAccueilM() {
+//   document.getElementById('formAccueilM').submit();
+// }
 
-function listerFilms() {
-  document.getElementById('formListerFilms').submit();
-}
+// function listerFilms() {
+//   document.getElementById('formListerFilms').submit();
+// }
 
 // function listerMembres() {
 //   document.getElementById('formListerMembres').submit();
 // }
 
-function AccueilAdmin() {
-  document.getElementById('formAccueilAdmin').submit();
+// function AccueilAdmin() {
+//   document.getElementById('formAccueilAdmin').submit();
 
-}
+// }
 
-function listerLocation() {
-  document.getElementById('formLocation').submit();
-}
+// function listerLocation() {
+//   document.getElementById('formLocation').submit();
+// }
 
 
 // function deconnexion() {
@@ -530,7 +530,7 @@ function paginationTable() {
 // ready
 $(document).ready(function () {
   $(".toast-container").css("display", "none");
+  listerFilms();
   pagination();
   afficherPanier();
-  
 });

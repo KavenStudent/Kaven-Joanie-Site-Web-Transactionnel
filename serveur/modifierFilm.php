@@ -23,7 +23,7 @@
 try {
 	$image=$ligne->image;
     //image
-    if($_FILES['image']['tmp_name']!==""){
+    if($_FILES['image-modifier']['tmp_name']!==""){
 		//enlever ancienne pochette
 		if($image!="default.png"){
 			$rmPoc='../imageFilm/'.$image;
@@ -41,8 +41,8 @@ try {
 		}
 		$nomImage=sha1($titre.time());
 		//Upload de la photo
-		$tmp = $_FILES['image']['tmp_name'];
-		$fichier= $_FILES['image']['name'];
+		$tmp = $_FILES['image-modifier']['tmp_name'];
+		$fichier= $_FILES['image-modifier']['name'];
 		$extension=strrchr($fichier,'.');
 		$image=$nomImage.$extension;
 		@move_uploaded_file($tmp,$dossier.$nomImage.$extension);

@@ -1,8 +1,8 @@
 <?php
 session_start();
-if (isset($_GET['admin'])) {
+if (isset($_SESSION['admin'])) {
 	$msg = "Admin connecté";
-} else if (isset($_GET['membre'])) { // faire requete pour get le membre pour profil
+} else if (isset($_SESSION['membre'])) { // faire requete pour get le membre pour profil
 	$msg = "Bienvenue";
 } else {
 	$msg = "";
@@ -80,99 +80,8 @@ if (isset($_GET['admin'])) {
 				<!-- div des films -->
 				<div class='page' id='liste-film'>
 
-
-					<?php
-					// require_once("BD/connexion.inc.php");
-					require_once("includes/modeles.inc.php");
-
-					if (isset($_POST['par'])) {
-						$par = $_POST['par'];
-						$valeurPar = strtolower(trim($_POST['valeurPar']));
-						switch ($par) {
-							case "tout":
-								$requete = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
-								$valeurPar = 1;
-								break;
-							case "res":
-								$requete = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
-								break;
-							case "categ":
-								$requete = "SELECT * FROM films f INNER JOIN filmgenre fg ON f.idFilm = fg.idFilm INNER JOIN genre g ON g.idGenre = fg.idGenre WHERE g.nomGenre = ? ORDER BY annee DESC";
-								break;
-							case "titre":
-								$requete = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
-								break;
-						}
-
-						$unModele = new Modele($requete, array($valeurPar));
-						$stmt = $unModele->executer();
-
-						// $stmt = $connexion->prepare($requete);
-						// $stmt->bind_param("s", $valeurPar);
-						// $stmt->execute();
-						// $listeFilms = $stmt->get_result();
-					} else {
-						$requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-						$unModele = new Modele($requete, array());
-						$stmt = $unModele->executer();
-						// $listeFilms = mysqli_query($connexion, $requete);
-					}
-
-					try {
-
-						// $rep = "<div class='page' id='liste-film'>";
-						$i = 0;
-
-						// $rep .= ' <div class="row">';
-						$rep = ' <div class="row">';
-
-						// while ($ligne = mysqli_fetch_object($listeFilms)) {
-						while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-							if ($i % 4 == 0) {
-								$rep .= '</div>';
-								$rep .= ' <div class="row">';
-							}
-
-							$rep .= '<div class="card">';
-
-
-
-							if (substr($ligne->image, 0, 4) === "http") {
-								$rep .= '<img class="image-film" src="' . ($ligne->image) . '" alt="image-film">';
-							} else {
-								$rep .= '<img class="image-film" src="imageFilm/' . ($ligne->image) . '" alt="image film">';
-							}
-
-							$rep .= '<div class="card-body">';
-							$rep .= '<h5 class="card-title">' . ($ligne->titre) . '(' . ($ligne->annee) . ')' . "</h5>";
-							$rep .= '<p class="card-text">' . ($ligne->realisateurs) . '</p>';
-							$rep .= '<p class="card-text">' . ($ligne->prix) . '$</p>';
-							$rep .= '<a href="#" class="btn btn-primary" onclick="afficherTrailer(' . $ligne->idFilm . ',\'serveur/fiche.php\')">Plus d\'info</a>';
-
-							if (isset($_SESSION['membre'])) {
-								$rep .= '<a href="#" id="btnAJout" class="btn btn-primary" onclick="ajout(' . $ligne->idFilm . ')">Ajouter</a>';
-							}
-							$rep .= '</div>';
-							$rep .= '</div>';
-
-							$i++;
-						}
-						$rep .= "</div>"; //fermer le dernier row				
-						// $rep .= "</div>";
-						//fermer le container
-						// mysqli_free_result($listeFilms);
-					} catch (Exception $e) {
-						echo "Probleme pour lister";
-					} finally {
-						echo $rep;
-						unset($rep);
-						unset($unModele);
-						// mysqli_close($connexion);
-					}
-
-					?>
-					<!-- fin div des films -->
 				</div>
+				<!-- fin div des films -->
 
 				<!-- pagination -->
 				<ul id="pagin"> </ul>
@@ -481,7 +390,12 @@ if (isset($_GET['admin'])) {
 					<div class="modal-body">
 						<!-- Form creer film-->
 
-						<form class="formFilm" id="formFilm" enctype="multipart/form-data" action="serveur/enregistrerFilm.php" method="POST">
+						<form class="formFilm" id="form-creer-film">
+
+							<input type="hidden" name="action" value="enregistrerFilm">
+
+							<input type="submit" id="validation-creer-film" class="validation" />
+
 							<div class="myInput">
 								<label for="titre" class="form-label">Titre</label>
 								<input type="text" class="form-control" id="titre" name="titre" required>
@@ -509,142 +423,147 @@ if (isset($_GET['admin'])) {
 								<input type="text" class="form-control" id="acteur" name="acteur" required>
 
 							</div>
+
 							<div class="myInput">
 								<label for="description" class="form-label">Description</label>
-								<input type="text" class="form-control" id="description" name="description" required>
+								<textarea rows="3" class="form-control" id="description" name="description" required></textarea>
 
 							</div>
+
 							<!-- genres -->
-							<div class="genres-container">
+							<div class="myInput">
+								<div class="genres-container">
 
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value="Comedy" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Comedy
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Fantasy" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Fantasy
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Crime" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Crime
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Drama" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Drama
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Music" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Music
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Adventure" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Adventure
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="History" name="genres[]">
-									<label class="form-check-label" for="genres">
-										History
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Thriller" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Thriller
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Animation" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Animation
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Family" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Family
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Mystery" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Mystery
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Biography" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Biography
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Action" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Action
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Film-Noir" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Film-Noir
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Romance" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Romance
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Sci-Fi" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Sci-Fi
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="War" name="genres[]">
-									<label class="form-check-label" for="genres">
-										War
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Western" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Western
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Horror" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Horror
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Musical" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Musical
-									</label>
-								</div>
-								<div class="form-check ">
-									<input class="form-check-input" type="checkbox" value="Sport" name="genres[]">
-									<label class="form-check-label" for="genres">
-										Sport
-									</label>
-								</div>
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="Comedy" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Comedy
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Fantasy" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Fantasy
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Crime" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Crime
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Drama" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Drama
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Music" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Music
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Adventure" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Adventure
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="History" name="genres[]">
+										<label class="form-check-label" for="genres">
+											History
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Thriller" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Thriller
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Animation" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Animation
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Family" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Family
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Mystery" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Mystery
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Biography" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Biography
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Action" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Action
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Film-Noir" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Film-Noir
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Romance" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Romance
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Sci-Fi" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Sci-Fi
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="War" name="genres[]">
+										<label class="form-check-label" for="genres">
+											War
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Western" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Western
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Horror" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Horror
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Musical" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Musical
+										</label>
+									</div>
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox" value="Sport" name="genres[]">
+										<label class="form-check-label" for="genres">
+											Sport
+										</label>
+									</div>
 
+								</div>
 							</div>
+							<!-- fin genres -->
 							<div class="myInput">
 								<label for="prix" class="form-label">Prix</label>
 								<input type="text" class="form-control" id="prix" name="prix" required>
@@ -655,10 +574,17 @@ if (isset($_GET['admin'])) {
 								<input type="file" class="form-control" id="image" name="image">
 
 							</div>
-							<!-- fin genres -->
+
+							<div class="myInput">
+								<label for="bandeAnnonce" class="form-label">Bande Annonce</label>
+								<input type="text" class="form-control" id="bandeAnnonce" name="bandeAnnonce">
+
+							</div>
 
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary">Enregistrer Film</button>
+
+								<button type="button" class="btn btn-primary" onClick="enregistrerFilm()">Enregistrer Film</button>
+
 							</div>
 						</form>
 
@@ -680,10 +606,12 @@ if (isset($_GET['admin'])) {
 					</div>
 
 					<div class="modal-footer">
-						<form id="formFiche" action="../serveur/enleverFilm.php" method="POST">
+						<form id="form-delete-film">
 							<input type="hidden" id="id-film-delete" name="idFilm" value="">
 
-							<button type="submit" class="btn btn-primary">Confirmer Suppression</button>
+							<input type="hidden" name="action" value="deleteFilm">
+
+							<button type="button" class="btn btn-primary" onClick="deleteFilm()">Confirmer Suppression</button>						
 						</form>
 
 					</div>
@@ -706,7 +634,7 @@ if (isset($_GET['admin'])) {
 					<div class="modal-body">
 						<!-- Form modifier film-->
 
-						<form class="formMembre" id="formMembre" enctype="multipart/form-data" action="../serveur/modifierFilm.php" method="POST">
+						<form class="formMembre" id="formMembre">
 
 							<input type="hidden" class="form-control" id="id-modifier" name="id">
 
@@ -886,7 +814,7 @@ if (isset($_GET['admin'])) {
 							</div>
 							<div class="myInput">
 								<label for="image" class="form-label">Image</label>
-								<input type="file" class="form-control" id="image" name="image">
+								<input type="file" class="form-control" id="image-modifier" name="image">
 
 							</div>
 							<div class="myInput">

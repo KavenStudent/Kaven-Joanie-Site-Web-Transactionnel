@@ -229,7 +229,7 @@ if (isset($_GET['msg'])) {
 						<div class="modal-body">
 							<!-- Form creer film-->
 
-							<form class="formMembre" id="formMembre" enctype="multipart/form-data" action="../serveur/enregistrerFilm.php" method="POST">
+							<form class="formMembre" id="formMembre">
 								<div class="myInput">
 									<label for="titre" class="form-label">Titre</label>
 									<input type="text" class="form-control" id="titre" name="titre" required>

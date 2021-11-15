@@ -20,7 +20,7 @@ if (!isset($_SESSION['admin'])) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="javascript:AccueilAdmin();">Accueil</a>
+                        <a class="nav-link" aria-current="page" href="javascript:listerFilms();">Accueil</a>
                     </li>
 
                     <li class="nav-item">
@@ -28,7 +28,7 @@ if (!isset($_SESSION['admin'])) {
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript:listerFilms();">Lister Films</a>
+                        <a class="nav-link" href="javascript:tableFilms();">Lister Films</a>
                     </li>
 
                     <li class="nav-item">

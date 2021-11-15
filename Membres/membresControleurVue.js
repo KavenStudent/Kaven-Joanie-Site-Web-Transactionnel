@@ -23,10 +23,14 @@ var membresVue = function (reponse) {
 			afficherTableMembres(reponse);
 			break;
 		case "activerMembre":
-			afficherTableMembres(reponse);
+			if(reponse.listeMembres != null){
+				afficherTableMembres(reponse);
+			}	
 			break;
 		case "desactiverMembre":
-			afficherTableMembres(reponse);
+			if(reponse.listeMembres != null){
+				afficherTableMembres(reponse);
+			}
 			break;
 	}
 }
@@ -63,9 +67,6 @@ function afficherTableMembres(json) {
 	paginationTable();
 }
 
-function afficherTablesFilms() {
-
-}
 
 function afficherPageMembre(json) {
 	let contenu = `<li class="nav-item">
@@ -95,19 +96,16 @@ function afficherPageMembre(json) {
 
 	//boucle
 	for (let i = 0; i < json.listeFilms.length; i++) {
-
 		if ($j % 4 == 0) {
 			contenu += `</div> <div class="row">`;
 		}
 
 		contenu += `<div class="card">`;
 
-
-
 		if (json.listeFilms[i].image.substr(0, 4) === "http") {
 			contenu += `<img class="image-film" src="${json.listeFilms[i].image}" alt="image-film">`;
 		} else {
-			contenu += `<img class="image-film" src="../imageFilm/${json.listeFilms[i].image}" alt="image film">`;
+			contenu += `<img class="image-film" src="imageFilm/${json.listeFilms[i].image}" alt="image film">`;
 		}
 
 		contenu += `<div class="card-body">
