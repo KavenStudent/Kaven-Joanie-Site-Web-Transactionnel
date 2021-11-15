@@ -33,7 +33,7 @@ if (!isset($_SESSION['membre'])) {
                         <a class="nav-link" aria-current="page" href="javascript:tableHistoriques();">Historique d'achat</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="javascript:listerLocation();">Location en cours</a>
+                        <a class="nav-link" aria-current="page" href="javascript:tableLocation();">Location en cours</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="javascript:deconnexion()">Déconnexion</a>

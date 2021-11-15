@@ -23,12 +23,12 @@ var membresVue = function (reponse) {
 			afficherTableMembres(reponse);
 			break;
 		case "activerMembre":
-			if(reponse.listeMembres != null){
+			if (reponse.listeMembres != null) {
 				afficherTableMembres(reponse);
-			}	
+			}
 			break;
 		case "desactiverMembre":
-			if(reponse.listeMembres != null){
+			if (reponse.listeMembres != null) {
 				afficherTableMembres(reponse);
 			}
 			break;
@@ -37,6 +37,9 @@ var membresVue = function (reponse) {
 			break;
 		case "profil":
 			afficherProfil(reponse);
+			break;
+		case "tableLocation":
+			afficherTableLocation(reponse);
 			break;
 	}
 }
@@ -139,7 +142,7 @@ function afficherPageAdmin() {
 
 }
 
-function afficherTableHistoriqueLocation(json){
+function afficherTableHistoriqueLocation(json) {
 	let contenu = `<h1>Historique Location</h1>
 	<table class="table">
 		<thead>
@@ -153,16 +156,16 @@ function afficherTableHistoriqueLocation(json){
 		<tbody>`;
 
 	for (let i = 0; i < json.listeLocations.length; i++) {
-		contenu +=`<tr class="uneLigne">
+		contenu += `<tr class="uneLigne">
 		<td>${json.listeLocations[i].titre}</td>
 		<td>${json.listeLocations[i].dateAchat}</td>
 		<td>`
 		if (json.listeLocations[i].image.substr(0, 4) === "http") {
-			contenu +=`<img class="icon-film" src="${json.listeLocations[i].image}" alt="image-film">`;
+			contenu += `<img class="icon-film" src="${json.listeLocations[i].image}" alt="image-film">`;
 		} else {
 			contenu += `<img class="icon-film" src="imageFilm/${json.listeLocations[i].image}" alt="image film">`;
 		}
-		contenu +=`</td></tr>`
+		contenu += `</td></tr>`
 	}
 	// button a revoir maybe
 	contenu += `</tbody> </table>`;
@@ -171,6 +174,39 @@ function afficherTableHistoriqueLocation(json){
 	paginationTable();
 }
 
+
+function afficherTableLocation(json) {
+	let contenu = `<h1>Location en cours</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Titre</th>
+				<th scope="col">Date d'achat</th>
+				<th scope="col">Date de fin</th>
+				<th scope="col">Nombre jours restant locations</th>
+				<th scope="col">Image</th>
+			</tr>
+		</thead>
+
+		<tbody>`;
+	for (let i = 0; i < json.listeLocations.length; i++) {
+		contenu += `<tr class="uneLigne">
+		<td>${json.listeLocations[i].titre}</td>
+		<td>${json.listeLocations[i].dateAchat}</td>
+		<td>${json.listeLocations[i].dateFin}</td>
+		<td>${json.listeLocations[i].nbJourRestant}</td>
+		<td>`
+
+		if (json.listeLocations[i].image.substr(0, 4) === "http") {
+			contenu += `<img class="icon-film" src="${json.listeLocations[i].image}" alt="image-film">`;
+		} else {
+			contenu += `<img class="icon-film" src="imageFilm/${json.listeLocations[i].image}" alt="image film">`;
+		}
+	}
+	contenu += `</td></tr>`
+	$('#liste-film').html(contenu);
+	paginationTable();
+}
 function afficherProfil(json) {
 	// if(json.OK){
 	var monProfil = json.afficherProfil;
@@ -182,10 +218,10 @@ function afficherProfil(json) {
 	$("#profil-email-Enreg").val(monProfil.courriel);
 	$("#profil-password").val(monProfil.motDePasse);
 	$("#profil-confirmPassword").val(monProfil.motDePasse);
-	if(monProfil.sexe == 'M'){
+	if (monProfil.sexe == 'M') {
 		$('#profil-M').prop('checked', true);
 	}
-	else{
+	else {
 		$('#profil-F').prop('checked', true);
 	}
 	$("#profil-dateNaissance").val(monProfil.dateDeNaissance);
