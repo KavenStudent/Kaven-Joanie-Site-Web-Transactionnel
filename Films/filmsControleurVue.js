@@ -32,12 +32,12 @@ function listerCardsFilms(json) {
 		$i++;
 	}
 	contenu += `</div>`; //fermer le dernier row
-//button a revoir
+	//button a revoir
 	$('#liste-film').html(contenu);
 	pagination();
 }
 
-function afficherTableFilms(json){
+function afficherTableFilms(json) {
 	let contenu = `<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">
 	<thead> <tr> <th>ID</th> <th>Titre</th> <th>Année</th> <th>Durée</th> <th>Réalisateur</th>
 	<th>Acteurs</th> <th>Prix</th> <th>Image</th> <th>Actions</th> <th></th> </tr> </thead> <tbody>`;
@@ -56,13 +56,13 @@ function afficherTableFilms(json){
 		} else {
 			contenu += `<td><img class="icon-film" src="imageFilm/${json.listeFilms[i].image}" alt="image-film"></td>`;
 		}
-	// button a revoir maybe
-		contenu += `<td> <a class="btn btn-primary myButton" onclick="populerModal(${json.listeFilms[i].idFilm},'serveur/fiche.php')"><i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i></a> </td>
+		// button a revoir maybe
+		contenu += `<td> <a class="btn btn-primary myButton" onclick="afficherFormModifierFilm(${json.listeFilms[i].idFilm})"><i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i></a> </td>
 		<td> <a class="btn btn-primary myButton" data-bs-toggle="modal" data-bs-target="#modal-Supprimer-Film" onclick="envoyerIdFilm(${json.listeFilms[i].idFilm})"><i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i></a> </td>	</tr>`;
-		
-	
-	}
 
+
+	}
+	//,'serveur/fiche.php'
 	contenu += `</tbody> </table> </div> </div> </div>`;
 
 	$('#liste-film').html(contenu);
@@ -82,25 +82,52 @@ function afficherFiche(reponse) {
 		document.getElementById('divFormFiche').style.display = 'block';
 	} else {
 		$('#messages').html("Film " + $('#numF').val() + " introuvable");
-		setTimeout(function() {
+		setTimeout(function () {
 			$('#messages').html("");
 		}, 5000);
 	}
 
 }
 
+function remplirFormModifierFilm(reponse){
+	let genres = reponse.lesGenres;
+
+    document.getElementById('id-modifier').value = reponse.unFilm.idFilm;
+    document.getElementById('titre-modifier').value = reponse.unFilm.titre;
+    document.getElementById('annee-modifier').value = reponse.unFilm.annee;
+    document.getElementById('duree-modifier').value = reponse.unFilm.duree;
+    document.getElementById('realisateur-modifier').value = reponse.unFilm.realisateurs;
+    document.getElementById('acteur-modifier').value = reponse.unFilm.acteurs;
+    document.getElementById('description-modifier').value = reponse.unFilm.description;
+    document.getElementById('prix-modifier').value = reponse.unFilm.prix;
+    document.getElementById('bandeAnnonce-modifier').value = reponse.unFilm.bandeAnnonce;
+
+    // parcours les checkbox des genres
+    $('input[type=checkbox]').each(function () {
+
+      genres.forEach(ligne => {
+        // si le value du checkbox est dans genres on le coche
+        if (ligne.genre === $(this).val()) {
+          $(this).prop('checked', true);
+        }
+
+      });
+
+    });
+
+	$("#modal-modifier-film").modal('show');
+}
+
 var filmsVue = function (reponse) {
 	var action = reponse.action;
 	switch (action) {
 		case "enregistrer":
+			listerCardsFilms(reponse);
 		case "deleteFilm":
 			afficherTableFilms(reponse);
 			break;
-		case "modifier":
-			$('#messages').html(reponse.msg);
-			setTimeout(function () {
-				$('#messages').html("");
-			}, 5000);
+		case "modifierFilm":
+			afficherTableFilms(reponse);
 			break;
 		case "listerFilms":
 			listerCardsFilms(reponse);
@@ -111,5 +138,9 @@ var filmsVue = function (reponse) {
 		case "tableFilms":
 			afficherTableFilms(reponse);
 			break;
+		case "formModifierFilm":
+			remplirFormModifierFilm(reponse);
+			break;
+		
 	}
 }
