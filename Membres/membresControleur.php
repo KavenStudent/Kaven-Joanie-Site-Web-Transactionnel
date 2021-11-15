@@ -158,24 +158,27 @@ function activerMembre()
         $tabRes['action'] = "activerMembre";
 
         if ($idMembre == 1) { // si admin
-            $tabRes['msg'] = "Impossible de modifier l'administrateur";         
+            $tabRes['msg'] = "Impossible de modifier l'administrateur";       
+    
+        } else {
+
+            $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
+            $unModele = new Modele($requete, array($statut, $idMembre));
+            $stmt = $unModele->executer();
+            
+            $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
+            $unModele = new Modele($requete, array());
+            $stmt = $unModele->executer();
+            $tabRes['action'] = "tableMembres";
+            $tabRes['listeMembres'] = array();
+       
+            while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+                $tabRes['listeMembres'][] = $ligne;
+            }
+    
+            $tabRes['msg'] = "Le membre $idMembre a été réactivé";         
         }
 
-        $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
-        $unModele = new Modele($requete, array($statut, $idMembre));
-        $stmt = $unModele->executer();
-        
-        $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
-        $unModele = new Modele($requete, array());
-        $stmt = $unModele->executer();
-        $tabRes['action'] = "tableMembres";
-        $tabRes['listeMembres'] = array();
-   
-        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $tabRes['listeMembres'][] = $ligne;
-        }
-
-        $tabRes['msg'] = "Le membre $idMembre a été réactivé";         
     } catch (Exception $e) {
         echo "Problème avec la base de donnée";
     } finally {
@@ -195,23 +198,25 @@ function desactiverMembre()
 
         if ($idMembre == 1) { // si admin
             $tabRes['msg'] = "Impossible de modifier l'administrateur";         
+        } else {
+
+            $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
+            $unModele = new Modele($requete, array($statut, $idMembre));
+            $stmt = $unModele->executer();
+    
+            $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
+            $unModele = new Modele($requete, array());
+            $stmt = $unModele->executer();
+            $tabRes['action'] = "tableMembres";
+            $tabRes['listeMembres'] = array();
+    
+            while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+                $tabRes['listeMembres'][] = $ligne;
+            }
+    
+            $tabRes['msg'] = "Le membre $idMembre a été désactivé";         
         }
 
-        $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
-        $unModele = new Modele($requete, array($statut, $idMembre));
-        $stmt = $unModele->executer();
-
-        $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
-        $unModele = new Modele($requete, array());
-        $stmt = $unModele->executer();
-        $tabRes['action'] = "tableMembres";
-        $tabRes['listeMembres'] = array();
-
-        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $tabRes['listeMembres'][] = $ligne;
-        }
-
-        $tabRes['msg'] = "Le membre $idMembre a été désactivé";         
     } catch (Exception $e) {
         echo "Problème avec la base de donnée";
     } finally {
@@ -232,7 +237,7 @@ switch ($action) {
         deconnexion();
         break;
     case "payerPanier":
-        enleverFilm();
+        // enleverFilm();
         break;
     case "fiche":
         fiche();

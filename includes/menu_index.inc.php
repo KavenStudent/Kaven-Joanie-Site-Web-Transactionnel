@@ -21,7 +21,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbar-choix">
 
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="javascript:retourAccueil()">Accueil</a>
+                <a class="nav-link" aria-current="page" href="javascript:listerFilms()">Accueil</a>
             </li>
             <li class=" nav-item">
                 <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modal-Membre">Devenir
