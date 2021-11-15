@@ -158,3 +158,24 @@ function desactiverMembre(){
 		}
 	});
 }
+function tableHistoriques(){
+	var form = new FormData();
+	form.append('action', 'tableHistoriqueLocation');
+
+	$.ajax({
+		type : 'POST',
+		url : 'Membres/membresControleur.php',
+		data : form,
+		dataType : 'json', //text pour le voir en format de string
+		// async : false,
+		//cache : false,
+		contentType : false,
+		processData : false,
+		success : function (reponse){
+				membresVue(reponse);
+		},
+		fail : function (err){
+		 
+		}
+	});
+}

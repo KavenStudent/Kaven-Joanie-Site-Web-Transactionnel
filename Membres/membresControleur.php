@@ -224,6 +224,27 @@ function desactiverMembre()
     }
 }
 
+function tableHistoriques(){
+    global $tabRes;
+    //$idMembre = $_POST['myMemberid'];
+    $idMembre = 3;
+    
+    try {
+        $requete = "SELECT h.idMembre, f.idFilm, f.titre, h.dateAchat, f.image FROM historiquelocation h INNER JOIN films f ON h.idFilm = f.idFilm WHERE h.idMembre = ? ORDER by h.dateAchat DESC";
+        $unModele = new Modele($requete, array($idMembre));
+        $stmt = $unModele->executer();
+        $tabRes['action'] = "tableHistoriqueLocation";
+        $tabRes['listeLocations'] = array();
+
+        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+            $tabRes['listeLocations'][] = $ligne;
+        }
+    } catch (Exception $e) {
+    } finally {
+        //unset($unModele);
+    }
+}
+
 //Controller
 $action = $_POST['action'];
 switch ($action) {
@@ -253,6 +274,9 @@ switch ($action) {
         break;
     case "desactiverMembre":
         desactiverMembre();
+        break;
+    case "tableHistoriqueLocation":
+        tableHistoriques();
         break;
 }
 echo json_encode($tabRes);
