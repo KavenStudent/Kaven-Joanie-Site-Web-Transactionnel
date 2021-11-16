@@ -64,12 +64,12 @@ function montrerConfirmerPass() {
 function montrerPassword2() {
 
   if (visibleMotdePasse === true) {
-    $("#password").prop("type", "password");
-    $("#confirmPassword").prop("type", "password");
+    $("#profil-password").prop("type", "password");
+    $("#profil-confirmPassword").prop("type", "password");
     visibleMotdePasse = false;
   } else {
-    $("#password").prop("type", "text");
-    $("#confirmPassword").prop("type", "text");
+    $("#profil-password").prop("type", "text");
+    $("#profil-confirmPassword").prop("type", "text");
     visibleMotdePasse = true;
   }
 }

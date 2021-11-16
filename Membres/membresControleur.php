@@ -224,6 +224,91 @@ function desactiverMembre()
     }
 }
 
+function tableHistoriques(){
+    global $tabRes;
+    $idMembre = $_POST['idMembre'];
+    //$idMembre = 3;
+    
+    try {
+        $requete = "SELECT h.idMembre, f.idFilm, f.titre, h.dateAchat, f.image FROM historiquelocation h INNER JOIN films f ON h.idFilm = f.idFilm WHERE h.idMembre = ? ORDER by h.dateAchat DESC";
+        $unModele = new Modele($requete, array($idMembre));
+        $stmt = $unModele->executer();
+        $tabRes['action'] = "tableHistoriqueLocation";
+        $tabRes['listeLocations'] = array();
+
+        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+            $tabRes['listeLocations'][] = $ligne;
+        }
+    } catch (Exception $e) {
+    } finally {
+        //unset($unModele);
+    }
+}
+
+function tableLocations(){
+    global $tabRes;
+    $idMembre = $_POST['idMembre'];
+    //$idMembre = 3;
+    
+    try {
+        $requete = "SELECT h.idMembre, f.idFilm, f.titre, h.dateAchat, f.image FROM historiquelocation h INNER JOIN films f ON h.idFilm = f.idFilm WHERE h.idMembre = ? ORDER by h.dateAchat DESC";
+        $unModele = new Modele($requete, array($idMembre));
+        $stmt = $unModele->executer();
+        $tabRes['action'] = "tableHistoriqueLocation";
+        $tabRes['listeLocations'] = array();
+
+        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+            $tabRes['listeLocations'][] = $ligne;
+        }
+    } catch (Exception $e) {
+    } finally {
+        //unset($unModele);
+    }
+}
+function profil(){
+    global $tabRes;
+    $idMembre = $_POST['idMembre']; 
+    try {
+        $requete = $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.motDePasse, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE m.idMembre = ?";
+        $unModele = new Modele($requete, array($idMembre));
+        $stmt = $unModele->executer();
+        $tabRes['action'] = "profil";
+        // $tabRes['afficherProfil'] = array();
+
+        if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
+            $tabRes['afficherProfil'] = $ligne;
+            // $tabRes['OK']=true;
+        }
+        // else{
+        //     $tabRes['OK']=false;
+        // }
+    } catch (Exception $e) {
+    } finally {
+        unset($unModele);
+    }
+}
+
+// function fiche(){
+//     global $tabRes;
+//     $idf=$_POST['numF'];
+//     $tabRes['action']="fiche";
+//     $requete="SELECT * FROM films WHERE idf=?";
+//     try{
+//          $unModele=new filmsModele($requete,array($idf));
+//          $stmt=$unModele->executer();
+//          $tabRes['fiche']=array();
+//          if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
+//             $tabRes['fiche']=$ligne;
+//             $tabRes['OK']=true;
+//         }
+//         else{
+//             $tabRes['OK']=false;
+//         }
+//     }catch(Exception $e){
+//     }finally{
+//         unset($unModele);
+//     }
+// }
 //Controller
 $action = $_POST['action'];
 switch ($action) {
@@ -248,6 +333,15 @@ switch ($action) {
     case "desactiverMembre":
         desactiverMembre();
         break;
-        
+    case "tableHistoriqueLocation":
+        tableHistoriques();
+        break;
+    case "profil":
+        profil();
+        break;
+    case "tableLocation":
+        tableLocations();
+        break;
+
 }
 echo json_encode($tabRes);
