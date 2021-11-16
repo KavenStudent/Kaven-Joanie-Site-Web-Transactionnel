@@ -52,6 +52,51 @@ function enregistrerMembre()
     }
 }
 
+function modifierProfil()
+{
+    global $tabRes;
+    $idMembre =$_POST['idMembre'];
+    $prenom = $_POST['prenom'];
+    $nom = $_POST['nom'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $sexe = $_POST['sexe'];
+    $dateNaissance = $_POST['dateNaissance'];
+    
+    try {
+        
+        // regarde si le courriel n'est pas utilisé
+        $requete = "SELECT * FROM membres WHERE courriel=? and idMembre NOT IN ($idMembre)";
+        $unModele = new Modele($requete, array($email));
+        $stmt = $unModele->executer();
+        
+        // couriel deja utilisé existant
+        if ($stmt->fetch(PDO::FETCH_OBJ)) {
+
+            $tabRes['action'] = "modifierProfil";
+            $tabRes['msg'] = "Le courriel $email est déjà utilisé. Choisissez un autre courriel.";
+            
+        } else {
+
+            // modifie dans membre
+            $requete = "UPDATE membres SET prenom=?,nom=?,courriel=?,sexe=?,dateDeNaissance=? WHERE idMembre=?";
+            $unModele = new Modele($requete, array($prenom, $nom, $email, $sexe, $dateNaissance,$idMembre));
+            $stmt = $unModele->executer();
+
+            // modifie dans connexion
+            $requete = "UPDATE connexion SET courriel=?,motDePasse=? WHERE idMembre=?";
+            $unModele = new Modele($requete, array($email,$password,$idMembre));
+            $stmt = $unModele->executer();
+
+            $tabRes['msg'] = "Votre profil a bien modifie";
+            
+        }
+    } catch (Exception $e) {
+    } finally {
+        unset($unModele);
+    }
+}
+
 function connexion()
 {
     global $tabRes;
@@ -327,6 +372,9 @@ $action = $_POST['action'];
 switch ($action) {
     case "enregistrerMembre":
         enregistrerMembre();
+        break;
+    case "modifierProfil":
+        modifierProfil();
         break;
     case "connexion":
         connexion();

@@ -38,6 +38,38 @@ let valider = (id) => {
 
 }
 
+let validerM = (id) => {
+  let myForm = document.getElementById(id);
+  let password = myForm.password.value;
+  let confirmPassword = myForm.confirmPassword.value;
+  let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_])[A-Za-z\d\-_]{8,10}$/;
+  let valide = true;
+
+  if (!myForm.checkValidity()){
+    document.getElementById('validation-form-profil').click();
+    valide = false;
+
+	}else if (!(password.trim() === confirmPassword.trim())) {
+
+    document.getElementById('msg-confirm-password-erreur2').style.display = 'block';
+    valide = false;
+
+  } else if (!pattern.test(password)) {
+
+    document.getElementById('msg-password-erreur2').style.display = 'block';
+    valide = false;
+
+  }
+
+  if(valide){
+    document.getElementById('msg-confirm-password-erreur2').style.display = 'none';
+    document.getElementById('msg-password-erreur2').style.display = 'none';
+    //enregistrerMembre();
+    modifierProfil();
+  }
+
+}
+
 // montre le password dans l'input password dans devenir membre et connexion
 function montrerPassword(id) {
   var x = document.getElementById(id);
@@ -64,12 +96,12 @@ function montrerConfirmerPass() {
 function montrerPassword2() {
 
   if (visibleMotdePasse === true) {
-    $("#password").prop("type", "password");
-    $("#confirmPassword").prop("type", "password");
+    $("#profil-password").prop("type", "password");
+    $("#profil-confirmPassword").prop("type", "password");
     visibleMotdePasse = false;
   } else {
-    $("#password").prop("type", "text");
-    $("#confirmPassword").prop("type", "text");
+    $("#profil-password").prop("type", "text");
+    $("#profil-confirmPassword").prop("type", "text");
     visibleMotdePasse = true;
   }
 }
