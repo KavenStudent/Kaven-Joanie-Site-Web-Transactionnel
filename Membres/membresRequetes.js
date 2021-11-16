@@ -25,6 +25,31 @@ function enregistrerMembre(){
 	});
 }
 
+function modifierProfil(){
+	var form = new FormData(document.getElementById('ProfilMembre'));
+	//form.append('action', 'modifierProfil');
+	$.ajax({
+		type : 'POST',
+		url : 'Membres/membresControleur.php',
+		data : form,
+		dataType : 'json', 
+		contentType : false,
+		processData : false,
+		success : function (reponse){
+			if(reponse.msg != null){
+				initialiser(reponse.msg); // msg = Email deja utilise
+				$("#modal-profil-Membre").modal('hide');
+
+			}else{
+				membresVue(reponse);
+			}
+		},
+		fail : function (err){
+		 
+		}
+	});
+}
+
 function connexion(){
 	var form = new FormData(document.getElementById('form-connexion'));
 

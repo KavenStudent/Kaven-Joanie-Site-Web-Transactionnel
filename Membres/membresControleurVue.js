@@ -3,7 +3,12 @@ var membresVue = function (reponse) {
 
 	switch (action) {
 		case "enregistrerMembre":
-
+		case "modifierProfil":
+			$('#messages').html(reponse.msg);
+			setTimeout(function () {
+				$('#messages').html("");
+			}, 5000);
+			break;
 		case "connexion":
 
 		case "enlever":

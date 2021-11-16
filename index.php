@@ -308,6 +308,9 @@ if (isset($_SESSION['admin'])) {
 						<!-- <form class="formMembre" id="ProfilMembre" action="../serveur/modifierProfil.php" method="POST" onSubmit="return valider('ProfilMembre')"> -->
 						<form class="formMembre" id="ProfilMembre">
 							<input id="idMembre" name="idMembre" type="hidden">
+							<input type="hidden" name="action" value="modifierProfil">
+							<input type="submit" id="validation-form-profil" class="validation" />
+
 							<div class="myInput">
 								<label for="prenom" class="form-label">Prénom</label>
 								<input type="text" class="form-control" id="profil-prenom" name="prenom" required>
@@ -329,7 +332,7 @@ if (isset($_SESSION['admin'])) {
 								<label for="password" class="form-label">Mot de passe</label>
 								<input type="password" class="form-control" id="profil-password" name="password" required>
 								<input class="montrerConfirmer" type="checkbox" onclick="montrerConfirmerPass()">Modifier le mot de passe
-								<span id="msg-password-erreur">Le mot de passe doit être entre 8 et 10 charactères et doit contenir des lettres majuscules, minuscules, des chiffres et les charactères "-_" </span>
+								<span id="msg-password-erreur2">Le mot de passe doit être entre 8 et 10 charactères et doit contenir des lettres majuscules, minuscules, des chiffres et les charactères "-_" </span>
 
 							</div>
 
@@ -337,7 +340,7 @@ if (isset($_SESSION['admin'])) {
 								<label for="confirmPassword" class="form-label">Confirmer mot de passe</label>
 								<input type="password" class="form-control" id="profil-confirmPassword" name="confirmPassword" required>
 								<input class="montrerPassword" type="checkbox" onclick="montrerPassword2()">Montrer le mot de passe
-								<span id="msg-confirm-password-erreur">Confirmation invalide</span>
+								<span id="msg-confirm-password-erreur2">Confirmation invalide</span>
 
 							</div>
 
@@ -366,7 +369,7 @@ if (isset($_SESSION['admin'])) {
 							</div>
 
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary">Modifier</button>
+								<button type="button" class="btn btn-primary" onclick="validerM('ProfilMembre');">Modifier</button>
 							</div>
 						</form>
 

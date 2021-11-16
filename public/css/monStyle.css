@@ -20,12 +20,19 @@
     color: red;
     display: none;
 }
+#msg-password-erreur2 {
+    color: red;
+    display: none;
+}
 
 #msg-confirm-password-erreur {
     color: red;
     display: none;
 }
-
+#msg-confirm-password-erreur2 {
+    color: red;
+    display: none;
+}
 .card {
     align-items: center;
     padding: 5px;
