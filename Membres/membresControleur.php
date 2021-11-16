@@ -236,12 +236,6 @@ switch ($action) {
     case "deconnexion":
         deconnexion();
         break;
-    case "payerPanier":
-        // enleverFilm();
-        break;
-    case "fiche":
-        fiche();
-        break;
     case "modifierProfil":
         modifierFilm();
         break;

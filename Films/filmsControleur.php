@@ -217,7 +217,7 @@ function fiche($usage)
 {
 	global $tabRes;
 	$idFilm = $_POST['idFilm'];
-	if (strcasecmp($usage , "panier") === 0){
+	if (strcasecmp($usage, "panier") === 0) {
 		$tabRes['duree'] = $_POST['jour'];
 	}
 	try {
@@ -238,6 +238,46 @@ function fiche($usage)
 
 		$tabRes['action'] = $usage;
 	} catch (Exception $e) {
+	} finally {
+		unset($unModele);
+	}
+}
+
+function enregistrerPanier()
+{
+	global $tabRes;
+	$panier = $_POST['panier'];
+	$date = date("Y-m-d");
+	$total = 0;
+	try {
+
+
+		// parcours les item achetes et les insere dans location
+		foreach ($panier as $film) {
+			$total += (float)$film['prix'];
+
+			$idFilm = $film['idFilm'];
+			$dureeLocation = $film['dureeLocation'];
+			$idMembre = $film['idMembre'];
+			
+			$requete = "INSERT INTO location values(?,?,?,?)";
+			$unModele = new Modele($requete, array($idFilm, $idMembre, $date, $dureeLocation));
+			$stmt = $unModele->executer();
+		}
+
+		//parcours les item achetes et les insere dans paiement
+		foreach ($panier as $film) {
+
+			$idMembre = $film['idMembre'];
+			$idFilm = $film['idFilm'];
+			$prixFilm = $film['prix'];
+
+			$requete = "INSERT INTO paiement values(0,?,?,?,?)";
+			$unModele = new Modele($requete, array($idMembre, $idFilm,  $date, $prixFilm));
+			$stmt = $unModele->executer();
+		}
+		
+		$tabRes['msg'] = "Transaction de $total $ complété";
 	} finally {
 		unset($unModele);
 	}
@@ -270,5 +310,9 @@ switch ($action) {
 	case "tableFilms":
 		tableFilms();
 		break;
+	case "payerPanier":
+		enregistrerPanier();
+		break;
 }
+
 echo json_encode($tabRes);

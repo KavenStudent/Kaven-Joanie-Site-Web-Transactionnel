@@ -141,7 +141,7 @@ function ajouterAuPanier(reponse) {
 		if (panier[i].idFilm == reponse.unFilm.idFilm) { // si existe augmente la duree de la location
 			existe = true;
 
-			duree = panier[i].dureeLocation + jours;
+			duree = panier[i].dureeLocation + reponse.duree;
 			prixTotal = reponse.unFilm.prix * duree;
 
 			film = {

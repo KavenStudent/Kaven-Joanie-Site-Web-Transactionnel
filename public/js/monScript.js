@@ -415,44 +415,45 @@ function retirerFilm(idFilm) {
 }
 
 // paie le panier 
-function payerPanier() {
-  let total = 0;
+// function payerPanier() {
+//   let total = 0;
 
-  panier.forEach(unFilm => {
-    total += parseFloat(unFilm.prix);
-  });
+//   panier.forEach(unFilm => {
+//     total += parseFloat(unFilm.prix);
+//   });
 
-  $("#btnPayer").css('display', 'none');
-  id = document.getElementById("myMemberid").value;
+//   $("#btnPayer").css('display', 'none');
+//   id = document.getElementById("myMemberid").value;
 
-  paypal.Buttons({
-    createOrder: function (data, actions) {
-      // This function sets up the details of the transaction, including the amount and line item details.
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            value: total
-          }
-        }]
-      });
-    },
-    onApprove: function () {
-      fetch('../serveur/locationFilm.php', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(panier)
-      }).then(function () {
-        viderPanier();
-        alert('Transaction de ' + total + '$ complété');
+//   paypal.Buttons({
+//     createOrder: function (data, actions) {
+//       // This function sets up the details of the transaction, including the amount and line item details.
+//       return actions.order.create({
+//         purchase_units: [{
+//           amount: {
+//             value: total
+//           }
+//         }]
+//       });
+//     },
+//     onApprove: function () {
+//       fetch('../serveur/locationFilm.php', {
+//         method: 'POST',
+//         mode: 'cors',
+//         headers: {
+//           'content-type': 'application/json'
+//         },
+//         body: JSON.stringify(panier)
+//       }).then(function () {
+//         viderPanier();
+//         initialiser('Transaction de ' + total + '$ complété');
 
-      })
-    }
-  }).render('#paypal-button-container');
+//       })
+//     }
+//   }).render('#paypal-button-container');
 
-}
+// }
+
 // vide le panier 
 function viderPanier() {
   localStorage.setItem("panier", '[]');

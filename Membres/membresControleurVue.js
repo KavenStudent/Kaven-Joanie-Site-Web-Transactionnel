@@ -23,12 +23,12 @@ var membresVue = function (reponse) {
 			afficherTableMembres(reponse);
 			break;
 		case "activerMembre":
-			if(reponse.listeMembres != null){
+			if (reponse.listeMembres != null) {
 				afficherTableMembres(reponse);
-			}	
+			}
 			break;
 		case "desactiverMembre":
-			if(reponse.listeMembres != null){
+			if (reponse.listeMembres != null) {
 				afficherTableMembres(reponse);
 			}
 			break;
