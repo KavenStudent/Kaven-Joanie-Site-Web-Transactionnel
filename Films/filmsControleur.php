@@ -64,14 +64,31 @@ function enregistrerFilm()
 function listerFilms()
 {
 	global $tabRes;
+	$par = $_POST['par'];
+	$valeurPar = strtolower(trim($_POST['valeurPar']));
 	if (isset($_SESSION['membre'])) {
 		$tabRes['membre'] = $_SESSION['membre'];
 	}
 
 	$tabRes['action'] = "listerFilms";
-	$requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
+	switch ($par) {
+		case "tout":
+			$requete = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
+			$valeurPar = 1;
+			break;
+		case "res":
+			$requete = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+			break;
+		case "categ":
+			$requete = "SELECT * FROM films f INNER JOIN filmgenre fg ON f.idFilm = fg.idFilm INNER JOIN genre g ON g.idGenre = fg.idGenre WHERE g.nomGenre = ? ORDER BY annee DESC";
+			break;
+		case "titre":
+			$requete = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+			break;
+	}
+	//$requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
 	try {
-		$unModele = new Modele($requete, array());
+		$unModele = new Modele($requete, array($valeurPar));
 		$stmt = $unModele->executer();
 		$tabRes['listeFilms'] = array();
 		while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
@@ -86,11 +103,28 @@ function listerFilms()
 function tableFilms()
 {
 	global $tabRes;
+	$par = $_POST['par'];
+	$valeurPar = strtolower(trim($_POST['valeurPar']));
 	$tabRes['action'] = "tableFilms";
 
-	$requete = "SELECT * FROM films ORDER BY idFilm";
+	switch ($par) {
+		case "tout":
+			$requete = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
+			$valeurPar = 1;
+			break;
+		case "res":
+			$requete = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+			break;
+		case "categ":
+			$requete = "SELECT * FROM films f INNER JOIN filmgenre fg ON f.idFilm = fg.idFilm INNER JOIN genre g ON g.idGenre = fg.idGenre WHERE g.nomGenre = ? ORDER BY annee DESC";
+			break;
+		case "titre":
+			$requete = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
+			break;
+	}
+
 	try {
-		$unModele = new Modele($requete, array());
+		$unModele = new Modele($requete, array($valeurPar));
 		$stmt = $unModele->executer();
 		$tabRes['listeFilms'] = array();
 

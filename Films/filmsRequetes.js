@@ -1,5 +1,6 @@
 function listerFilms() { // fait
-	var form = new FormData();
+	var form = new FormData(document.getElementById('formLister'));
+	document.getElementById('afficher').value = "card";
 	form.append('action', 'listerFilms');
 
 	$.ajax({
@@ -17,7 +18,8 @@ function listerFilms() { // fait
 }
 
 function tableFilms() {
-	var form = new FormData();
+	var form = new FormData(document.getElementById('formLister'));
+	document.getElementById('afficher').value = "table";
 	form.append('action', 'tableFilms');
 
 	$.ajax({

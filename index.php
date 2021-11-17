@@ -121,6 +121,7 @@ if (isset($_SESSION['admin'])) {
 		<form id="formLister" action="index.php" method="POST">
 			<input type="hidden" id="par" name="par" value="tout">
 			<input type="hidden" id="valeurPar" name="valeurPar" value="">
+			<input type="hidden" id="afficher" name="afficher">
 		</form>
 
 		<!-- partie index -->
