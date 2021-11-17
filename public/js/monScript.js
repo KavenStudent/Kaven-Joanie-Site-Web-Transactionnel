@@ -500,7 +500,13 @@ function lister(par, valeurPar) {
     document.getElementById('par').value = par;
     document.getElementById('valeurPar').value = valeurPar;
   }
-  document.getElementById('formLister').submit();
+  let afficher =  document.getElementById('afficher').value
+  if (afficher == "card"){
+    listerFilms();
+  }else if (afficher == "table"){
+    tableFilms();
+  }
+    
 }
 
 // pagination des cards des films
