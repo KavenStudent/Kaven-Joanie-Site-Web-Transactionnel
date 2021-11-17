@@ -107,39 +107,39 @@ function montrerPassword2() {
 }
 
 //liste les films a partir d'un json
-function listerFilms() {
-  $.getJSON(jsonUrl, function (json) {
-    let contenu = `<div class="row">`;
-    let compteur = 0;
-    let compteur_row = 0;
+// function listerFilms() {
+//   $.getJSON(jsonUrl, function (json) {
+//     let contenu = `<div class="row">`;
+//     let compteur = 0;
+//     let compteur_row = 0;
 
-    for (let i = 0; i < 12; i++) {
+//     for (let i = 0; i < 12; i++) {
 
-      contenu += `<div class="card">
-      <a href="#"><img class="image-film" src="${json.movies[i].posterUrl}" alt="image film"></a>
-      <div class="card-body">
-        <h5 class="card-title">${json.movies[i].title} (${json.movies[i].year})</h5>
-        <p class="card-text">${json.movies[i].director}</p>
-        <a href="#" class="btn btn-primary">Plus d'info</a>
-      </div>
-      </div>`;
+//       contenu += `<div class="card">
+//       <a href="#"><img class="image-film" src="${json.movies[i].posterUrl}" alt="image film"></a>
+//       <div class="card-body">
+//         <h5 class="card-title">${json.movies[i].title} (${json.movies[i].year})</h5>
+//         <p class="card-text">${json.movies[i].director}</p>
+//         <a href="#" class="btn btn-primary">Plus d'info</a>
+//       </div>
+//       </div>`;
 
-      compteur++;
-      if (compteur == 4) {
-        compteur_row++;
-        contenu += `</div>`;
-        if (compteur_row != 3) {
-          contenu += `<div class="row">`;
-        }
-        compteur = 0;
-      }
+//       compteur++;
+//       if (compteur == 4) {
+//         compteur_row++;
+//         contenu += `</div>`;
+//         if (compteur_row != 3) {
+//           contenu += `<div class="row">`;
+//         }
+//         compteur = 0;
+//       }
 
-    }
-    contenu += `</div>`;
+//     }
+//     contenu += `</div>`;
 
-    $('#liste-film').html(contenu);
-  });
-}
+//     $('#liste-film').html(contenu);
+//   });
+// }
 
 // initialise les toast
 let initialiser = (message) => {
@@ -579,10 +579,23 @@ function NbJours($debut, $fin)
     return (($diff / 86400));
 }
 
+function resetSearchBar(){
+  $('#par').val('tout');
+  $('#valeurPar').val('');
+	$('select').prop('selectedIndex', 0);
+	$('input[type=search]').prop('value','');
+}
+
 // ready
 $(document).ready(function () {
   $(".toast-container").css("display", "none");
   listerFilms();
-  pagination();
   afficherPanier();
+  // empeche d'utiliser la touche enter dans les forms
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
 });

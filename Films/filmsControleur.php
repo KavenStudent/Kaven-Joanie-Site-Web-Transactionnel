@@ -252,7 +252,7 @@ function fiche($usage)
 	global $tabRes;
 	$idFilm = $_POST['idFilm'];
 	if (strcasecmp($usage, "panier") === 0) {
-		$tabRes['duree'] = $_POST['jour'];
+		$tabRes['duree'] = (int)$_POST['jour'];
 	}
 	try {
 		// les info du film

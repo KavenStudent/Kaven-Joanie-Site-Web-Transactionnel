@@ -26,7 +26,6 @@ if (!isset($_SESSION['membre'])) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:profil()" >Profil</a>
-                        <!-- data-bs-toggle="modal" data-bs-target="#modal-profil-Membre" -->
                     </li>
 
                     <li class="nav-item">

@@ -35,6 +35,7 @@ function listerCardsFilms(json) {
 	//button a revoir
 	$('#liste-film').html(contenu);
 	pagination();
+	resetSearchBar();
 }
 
 function afficherTableFilms(json) {
@@ -67,6 +68,7 @@ function afficherTableFilms(json) {
 
 	$('#liste-film').html(contenu);
 	paginationTable();
+	resetSearchBar();
 }
 
 

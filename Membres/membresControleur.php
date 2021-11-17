@@ -38,13 +38,8 @@ function enregistrerMembre()
 
             $idMembre = $unModele->getLastId();
             $_SESSION['membre'] = $idMembre;
-            // 
-            // listerFilm();
 
-            // a connecter apres
-            // $tabRes['action'] = "enregistrerMembre";
             $tabRes['idMembre'] = $idMembre;
-            // $tabRes['msg'] = "Membre bien enregistre";
         }
     } catch (Exception $e) {
     } finally {
@@ -88,7 +83,7 @@ function modifierProfil()
             $unModele = new Modele($requete, array($email,$password,$idMembre));
             $stmt = $unModele->executer();
 
-            $tabRes['msg'] = "Votre profil a bien modifie";
+            $tabRes['msg'] = "Profil à jour";
             
         }
     } catch (Exception $e) {
@@ -102,38 +97,34 @@ function connexion()
     global $tabRes;
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $isValid = false;
 
     try {
         $requete = "SELECT * FROM connexion WHERE courriel=? AND motDePasse=?";
         $unModele = new Modele($requete, array($email, $password));
         $stmt = $unModele->executer();
         $tabRes['action'] = "connexion";
+
+        // si usager existant dans la bd
         if ($usager = $stmt->fetch()) {
             $id = $usager['idMembre'];
-            // $tabRes['idMembre'] = $id;
-
-            // $tabRes['usager'] = $usager;
-
+         
             if ($usager['statut']) { // regarde si le compte est valide
                 $tabRes['idMembre'] = $usager['idMembre'];
 
                 if ($usager['role'] === 'M') { // regarde le role
                     $_SESSION['membre'] = $id;
-                    // $tabRes['msg'] = "M";
-                    // header("Location:../index.php");
-                    // exit;
+              
                 } else {
                     $_SESSION['admin'] = $id;
-                    // $tabRes['msg'] = "A";
-                    // header("Location:../index.php");
-                    // exit;
+                 
                 }
+
             } else { // si le compte est inactif
-                // header("Location:../index.php?msg=Compte+inactif.+Contacter+un+employé");
+               
                 $tabRes['msg'] = "Compte inactif. Contacter un employé";
             }
-        } else { // si erreur de connexion
+
+        } else { // si erreur de connexion ou usager inexistant
             $tabRes['msg'] = "Erreur de connexion. Vérifiez vos paramètes de connexion";
         }
     } catch (Exception $e) {
@@ -144,12 +135,9 @@ function connexion()
 
 function deconnexion()
 {
-    // global $tabRes;
-
     session_unset();
     session_destroy();
-    // header("Location:../index.php");
-    // exit;
+ 
 }
 
 function listerFilm()
@@ -269,7 +257,7 @@ function desactiverMembre()
     }
 }
 
-function tableHistoriques(){
+function tableHistoriquesLocation(){
     global $tabRes;
     $idMembre = $_POST['idMembre'];
     //$idMembre = 3;
@@ -305,7 +293,6 @@ function NbJours($debut, $fin)
 function tableLocations(){
     global $tabRes;
     $idMembre = $_POST['idMembre'];
-    //$idMembre = 3;
     
     try {
         $requete = "SELECT f.idFilm, f.titre ,l.dateAchat, l.dureeLocation, f.image FROM location l INNER JOIN films f ON l.idFilm = f.idFilm WHERE l.idMembre = ? ORDER by l.dateAchat DESC ";
@@ -382,9 +369,6 @@ switch ($action) {
     case "deconnexion":
         deconnexion();
         break;
-    case "modifierProfil":
-        modifierFilm();
-        break;
     case "tableMembres":
         tableMembres();
         break;
@@ -395,7 +379,7 @@ switch ($action) {
         desactiverMembre();
         break;
     case "tableHistoriqueLocation":
-        tableHistoriques();
+        tableHistoriquesLocation();
         break;
     case "profil":
         profil();

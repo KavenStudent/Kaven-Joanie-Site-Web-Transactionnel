@@ -112,13 +112,8 @@ if (isset($_SESSION['admin'])) {
 		</div>
 		<!-- Fin modal bande annonce -->
 
-
-		<!-- retour accueil index -->
-		<form id="formAccueil" action="index.php" methode="post">
-		</form>
-
-
-		<form id="formLister" action="index.php" method="POST">
+		<!-- pour faire recherche -->
+		<form id="formLister">
 			<input type="hidden" id="par" name="par" value="tout">
 			<input type="hidden" id="valeurPar" name="valeurPar" value="">
 			<input type="hidden" id="afficher" name="afficher">
@@ -306,7 +301,7 @@ if (isset($_SESSION['admin'])) {
 
 						<!-- Form changer profil membre-->
 
-						<!-- <form class="formMembre" id="ProfilMembre" action="../serveur/modifierProfil.php" method="POST" onSubmit="return valider('ProfilMembre')"> -->
+						
 						<form class="formMembre" id="ProfilMembre">
 							<input id="idMembre" name="idMembre" type="hidden">
 							<input type="hidden" name="action" value="modifierProfil">

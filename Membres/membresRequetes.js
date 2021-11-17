@@ -27,7 +27,6 @@ function enregistrerMembre(){
 
 function modifierProfil(){
 	var form = new FormData(document.getElementById('ProfilMembre'));
-	//form.append('action', 'modifierProfil');
 	$.ajax({
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
@@ -37,7 +36,7 @@ function modifierProfil(){
 		processData : false,
 		success : function (reponse){
 			if(reponse.msg != null){
-				initialiser(reponse.msg); // msg = Email deja utilise
+				initialiser(reponse.msg); // msg = Profil à jour
 				$("#modal-profil-Membre").modal('hide');
 
 			}else{
@@ -71,6 +70,7 @@ function connexion(){
 				if(reponse.msg != null){
 					initialiser(reponse.msg); // msg = erreur information connexion
 					$("#modal-Connexion").modal('hide');
+					document.getElementById('form-connexion').reset();
 				}else {
 					window.location.reload();
 				}
