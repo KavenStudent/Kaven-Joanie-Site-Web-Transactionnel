@@ -66,7 +66,7 @@ function listerFilms()
 	global $tabRes;
 	$par = $_POST['par'];
 	$valeurPar = strtolower(trim($_POST['valeurPar']));
-	if (isset($_SESSION['membre'])) {
+	if (isset($_SESSION['membre'])) { // pour ajouter le bouton panier dans les cards des membres
 		$tabRes['membre'] = $_SESSION['membre'];
 	}
 
