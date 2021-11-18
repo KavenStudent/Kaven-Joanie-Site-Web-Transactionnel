@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("../includes/modeles.inc.php");
+require_once("membre_DAO.inc.php");
 $tabRes = array();
 
 function enregistrerMembre()
@@ -140,40 +141,41 @@ function deconnexion()
  
 }
 
-function listerFilm()
-{
-    global $tabRes;
+// function listerFilm()
+// {
+//     global $tabRes;
 
-    try {
+//     try {
 
-        $requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-        $unModele = new Modele($requete, array());
-        $stmt = $unModele->executer();
-        $tabRes['listeFilms'] = array();
+//         $requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
+//         $unModele = new Modele($requete, array());
+//         $stmt = $unModele->executer();
+//         $tabRes['listeFilms'] = array();
 
-        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $tabRes['listeFilms'][] = $ligne;
-        }
-    } catch (Exception $e) {
-    } finally {
-        unset($unModele);
-    }
-}
+//         while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+//             $tabRes['listeFilms'][] = $ligne;
+//         }
+//     } catch (Exception $e) {
+//     } finally {
+//         unset($unModele);
+//     }
+// }
 
 function tableMembres()
 {
     global $tabRes;
     try {
 
-        $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
-        $unModele = new Modele($requete, array());
-        $stmt = $unModele->executer();
+        // $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
+        // $unModele = new Modele($requete, array());
+        // $stmt = $unModele->executer();
         $tabRes['action'] = "tableMembres";
-        $tabRes['listeMembres'] = array();
-
-        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $tabRes['listeMembres'][] = $ligne;
-        }
+        //$tabRes['listeMembres'] = array();
+        $dao = new MembreDaoImp();
+        $tabRes['listeMembres'] = $dao->getAllMembre();
+        // while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+        //     $tabRes['listeMembres'][] = $ligne;
+        // }
     } catch (Exception $e) {
     } finally {
         // unset($unModele);
