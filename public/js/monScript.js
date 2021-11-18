@@ -423,15 +423,15 @@ function afficherPanier() {
 
 // retire un film du panier
 function retirerFilm(idFilm) {
-
-  panier = panier.filter(item => item.idFilm !== idFilm)
+  
+  panier = panier.filter(item => item.idFilm != idFilm);
   localStorage.setItem("panier", JSON.stringify(panier));
   let total = 0;
 
   if (panier.length == 0) {
     $('#total').empty();
   }
-
+ 
   if (panier.length > 0) {
     panier.forEach(unFilm => {
       total += parseFloat(unFilm.prix);
