@@ -140,25 +140,25 @@ function deconnexion()
  
 }
 
-function listerFilm()
-{
-    global $tabRes;
+// function listerFilm()
+// {
+//     global $tabRes;
 
-    try {
+//     try {
 
-        $requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-        $unModele = new Modele($requete, array());
-        $stmt = $unModele->executer();
-        $tabRes['listeFilms'] = array();
+//         $requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
+//         $unModele = new Modele($requete, array());
+//         $stmt = $unModele->executer();
+//         $tabRes['listeFilms'] = array();
 
-        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $tabRes['listeFilms'][] = $ligne;
-        }
-    } catch (Exception $e) {
-    } finally {
-        unset($unModele);
-    }
-}
+//         while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+//             $tabRes['listeFilms'][] = $ligne;
+//         }
+//     } catch (Exception $e) {
+//     } finally {
+//         unset($unModele);
+//     }
+// }
 
 function tableMembres()
 {

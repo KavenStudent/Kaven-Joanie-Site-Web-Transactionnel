@@ -18,7 +18,6 @@ function enregistrerFilm()
 	$dossier = "imageFilm";
 	$image = "default.png";
 
-	$nomImage = sha1($titre . time());
 	try {
 		$unModele = new Modele();
 		$image = $unModele->verserFichier($dossier, "image", $image, $titre);
