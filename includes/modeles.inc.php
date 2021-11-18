@@ -10,26 +10,27 @@ class Modele{
 			$this->requete=$requete;
 			$this->params=$params;
 	}
-	
-    public function setParams(array $params)
-    {
-        $this->params = $params;
-    }
 
-	public function setRequete(string $requete)
-    {
-        $this->requete = $requete;
-    }
+	public function getRequete():string
+	{
+		return $this->requete;
+	}
 
 	public function getParams():array
 	{
 		return $this->params;
 	}
 
-	public function getRequete():string
-	{
-		return $this->requete;
-	}
+	public function setRequete(string $requete)
+    {
+        $this->requete = $requete;
+    }
+
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+    }
+
 	function obtenirConnexion(){
 		$maConnexion = new Connexion("localhost", "root", "", "bdfilmsjoaniekaven");
 		$maConnexion->connecter();

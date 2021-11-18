@@ -74,7 +74,7 @@ function afficherTableFilms(json) {
 
 function remplirFormModifierFilm(reponse) {
 	let genres = reponse.lesGenres;
-
+	
 	document.getElementById('id-modifier').value = reponse.unFilm.idFilm;
 	document.getElementById('titre-modifier').value = reponse.unFilm.titre;
 	document.getElementById('annee-modifier').value = reponse.unFilm.annee;
@@ -85,29 +85,38 @@ function remplirFormModifierFilm(reponse) {
 	document.getElementById('prix-modifier').value = reponse.unFilm.prix;
 	document.getElementById('bandeAnnonce-modifier').value = reponse.unFilm.bandeAnnonce;
 
-	// parcours les checkbox des genres
-	$('input[type=checkbox]').each(function () {
+	if (genres != null) {
+		// parcours les checkbox des genres
+		$('input[type=checkbox]').each(function () {
 
-		genres.forEach(ligne => {
-			// si le value du checkbox est dans genres on le coche
-			if (ligne.genre === $(this).val()) {
-				$(this).prop('checked', true);
-			}
+			genres.forEach(ligne => {
+			
+				// si le value du checkbox est dans genres on le coche
+				if (ligne.genre == $(this).val()) {
+					
+					$(this).prop('checked', true);
+				}
+
+			});
 
 		});
+	}
 
-	});
 
 	$("#modal-modifier-film").modal('show');
 }
 
 function remplirModalTrailer(reponse) {
+
 	let contenu = `<h4> ${reponse.unFilm.titre} </h4>
 	<p><strong>Genres: </strong>`;
 
-	for (i = 0; i < reponse.lesGenres.length; i++) {
-		contenu += reponse.lesGenres[i].genre + " ";
-	};
+	if (reponse.lesGenres != null) {
+		for (i = 0; i < reponse.lesGenres.length; i++) {
+			contenu += reponse.lesGenres[i].genre + " ";
+		};
+	}
+
 
 	contenu += `</p><p><strong>Durée: </strong> ${reponse.unFilm.duree} minutes</p>
 	<p><strong>Réalisateur: </strong>${reponse.unFilm.realisateurs} </p>

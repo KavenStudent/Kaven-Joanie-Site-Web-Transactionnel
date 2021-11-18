@@ -1,12 +1,15 @@
 <?php
 session_start();
 require_once("../includes/modeles.inc.php");
+require_once("film_DAO.inc.php");
+
 $tabRes = array();
 
 
 function enregistrerFilm()
 {
 	global $tabRes;
+	
 	$titre = $_POST['titre'];
 	$annee = $_POST['annee'];
 	$duree = $_POST['duree'];
@@ -15,49 +18,16 @@ function enregistrerFilm()
 	$description = $_POST['description'];
 	$prix = $_POST['prix'];
 	$bandeAnnonce = $_POST['bandeAnnonce'];
-	$dossier = "imageFilm";
 	$image = "default.png";
+	$tabGenres = $_POST['genres'];
+	$tabRes['action'] = "enregistrerFilm";
 
-	try {
-		$unModele = new Modele();
-		$image = $unModele->verserFichier($dossier, "image", $image, $titre);
+	$dao = new FilmDaoImp();
+	$nouveauFilm = new Film(0, $titre, $annee, $duree, $realisateur, $acteur, $description, $image, $bandeAnnonce, $prix, $tabGenres);
 
-		// enregistrer film
-		$requete = "INSERT INTO films values(0,?,?,?,?,?,?,?,?,?)";
-		$unModele = new Modele($requete, array($titre, $annee, $duree, $realisateur, $acteur, $description, $image, $bandeAnnonce, $prix));
-		$stmt = $unModele->executer();
-
-		$id = $unModele->getLastId();
-		$tabGenres = $_POST['genres'];
-
-		foreach ($tabGenres as $genre) {
-			$requete = "SELECT idGenre FROM genre WHERE nomGenre LIKE ?";
-			$unModele = new Modele($requete, array($genre));
-			$stmt = $unModele->executer();
-
-			$result = $stmt->fetch();
-			$idGenre = $result['idGenre'];
-
-			$requete = "INSERT INTO filmgenre values(?,?)";
-			$unModele = new Modele($requete, array($id, $idGenre));
-			$stmt = $unModele->executer();
-		}
-
-		$requete = "SELECT * FROM films ORDER BY idFilm";
-		$unModele = new Modele($requete, array());
-		$stmt = $unModele->executer();
-		$tabRes['listeFilms'] = array();
-
-		while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$tabRes['listeFilms'][] = $ligne;
-		}
-
-		$tabRes['action'] = "enregistrerFilm";
-		$tabRes['msg'] = "Le film $id a été enregistré";
-	} catch (Exception $e) {
-	} finally {
-		unset($unModele);
-	}
+	$tabRes['msg'] = $dao->enregistrerFilm($nouveauFilm);
+	$tabRes['listeFilms'] = $dao->getAllFilms("tout", 1);
+	
 }
 
 function listerFilms()
@@ -65,38 +35,15 @@ function listerFilms()
 	global $tabRes;
 	$par = $_POST['par'];
 	$valeurPar = strtolower(trim($_POST['valeurPar']));
+	$tabRes['action'] = "listerFilms";
+
 	if (isset($_SESSION['membre'])) { // pour ajouter le bouton panier dans les cards des membres
 		$tabRes['membre'] = $_SESSION['membre'];
 	}
 
-	$tabRes['action'] = "listerFilms";
-	switch ($par) {
-		case "tout":
-			$requete = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
-			$valeurPar = 1;
-			break;
-		case "res":
-			$requete = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
-			break;
-		case "categ":
-			$requete = "SELECT * FROM films f INNER JOIN filmgenre fg ON f.idFilm = fg.idFilm INNER JOIN genre g ON g.idGenre = fg.idGenre WHERE g.nomGenre = ? ORDER BY annee DESC";
-			break;
-		case "titre":
-			$requete = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
-			break;
-	}
-	//$requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-	try {
-		$unModele = new Modele($requete, array($valeurPar));
-		$stmt = $unModele->executer();
-		$tabRes['listeFilms'] = array();
-		while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$tabRes['listeFilms'][] = $ligne;
-		}
-	} catch (Exception $e) {
-	} finally {
-		unset($unModele);
-	}
+	$dao = new FilmDaoImp();
+
+	$tabRes['listeFilms'] = $dao->getAllFilms($par, $valeurPar);
 }
 
 function tableFilms()
@@ -106,77 +53,23 @@ function tableFilms()
 	$valeurPar = strtolower(trim($_POST['valeurPar']));
 	$tabRes['action'] = "tableFilms";
 
-	switch ($par) {
-		case "tout":
-			$requete = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
-			$valeurPar = 1;
-			break;
-		case "res":
-			$requete = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
-			break;
-		case "categ":
-			$requete = "SELECT * FROM films f INNER JOIN filmgenre fg ON f.idFilm = fg.idFilm INNER JOIN genre g ON g.idGenre = fg.idGenre WHERE g.nomGenre = ? ORDER BY annee DESC";
-			break;
-		case "titre":
-			$requete = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
-			break;
-	}
+	$dao = new FilmDaoImp();
 
-	try {
-		$unModele = new Modele($requete, array($valeurPar));
-		$stmt = $unModele->executer();
-		$tabRes['listeFilms'] = array();
-
-		while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$tabRes['listeFilms'][] = $ligne;
-		}
-	} catch (Exception $e) {
-	} finally {
-		unset($unModele);
-	}
+	$tabRes['listeFilms'] = $dao->getAllFilms($par, $valeurPar);
 }
 
 function deleteFilm()
 {
 	global $tabRes;
-
+	$dao = new FilmDaoImp();
 	$idFilm = $_POST['idFilm'];
-	try {
-		$requete = "SELECT * FROM films WHERE idFilm=?";
-		$unModele = new Modele($requete, array($idFilm));
-		$stmt = $unModele->executer();
+	$tabRes['action'] = "deleteFilm";
 
-		if ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$unModele->enleverFichier("imageFilm", $ligne->image); // enleve l'image
+	$dao->deleteFilm($idFilm);
 
-			// enleve le film de la bd
-			$requete = "DELETE FROM films WHERE idFilm=?";
-			$unModele = new Modele($requete, array($idFilm));
-			$stmt = $unModele->executer();
+	$tabRes['listeFilms'] = $dao->getAllFilms("tout", 1);
 
-			// enleve les genres du film de la bd
-			$requete = "DELETE FROM filmgenre WHERE idFilm=?";
-			$unModele = new Modele($requete, array($idFilm));
-			$stmt = $unModele->executer();
-
-			$requete = "SELECT * FROM films ORDER BY idFilm";
-			$unModele = new Modele($requete, array());
-			$stmt = $unModele->executer();
-			$tabRes['listeFilms'] = array();
-
-			while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-				$tabRes['listeFilms'][] = $ligne;
-			}
-			$tabRes['action'] = "deleteFilm";
-			$tabRes['msg'] = "Le film $idFilm a été enlevé";
-		} else {
-			$tabRes['action'] = "deleteFilm";
-			$tabRes['msg'] = "Le film $idFilm n'existe pas";
-		}
-	} catch (Exception $e) {
-	} finally {
-		unset($unModele);
-	}
+	$tabRes['msg'] = "Le film $idFilm a été enlevé";
 }
 
 function modifierFilm()
@@ -253,27 +146,24 @@ function fiche($usage)
 	if (strcasecmp($usage, "panier") === 0) {
 		$tabRes['duree'] = (int)$_POST['jour'];
 	}
-	try {
-		// les info du film
-		$requete = "SELECT * FROM films WHERE idFilm=?";
-		$unModele = new Modele($requete, array($idFilm));
-		$stmt = $unModele->executer();
-		$tabRes['unFilm'] = $stmt->fetch(PDO::FETCH_OBJ); // les infos du film
+	$tabRes['action'] = $usage;
 
-		//les genres du film
-		$requete = "SELECT nomgenre as genre FROM `genre` INNER JOIN filmgenre on genre.idGenre = filmgenre.idGenre where filmgenre.idFilm = ?";
-		$unModele = new Modele($requete, array($idFilm));
-		$stmt = $unModele->executer();
+	$dao = new FilmDaoImp();
 
-		while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$tabRes['lesGenres'][] = $ligne;
-		}
-
-		$tabRes['action'] = $usage;
-	} catch (Exception $e) {
-	} finally {
-		unset($unModele);
+	$unFilm = array();
+	
+	// convertissement du l'objet en array et en enleve le "Film" dans chaque attribut 
+	foreach ((array) $dao->getFilm($idFilm) as $k => $v) {
+		$k = preg_match('/^\x00(?:.*?)\x00(.+)/', $k, $matches) ? $matches[1] : $k;
+		$unFilm[$k] = $v;
 	}
+
+	$tabRes['unFilm'] = $unFilm;
+
+	foreach ($unFilm['genres'] as $genre) {
+		$tabRes['lesGenres'][] =  $genre;
+	}
+
 }
 
 function enregistrerPanier()
@@ -292,7 +182,7 @@ function enregistrerPanier()
 			$idFilm = $film['idFilm'];
 			$dureeLocation = $film['dureeLocation'];
 			$idMembre = $film['idMembre'];
-			
+
 			$requete = "INSERT INTO location values(?,?,?,?)";
 			$unModele = new Modele($requete, array($idFilm, $idMembre, $date, $dureeLocation));
 			$stmt = $unModele->executer();
@@ -309,14 +199,14 @@ function enregistrerPanier()
 			$unModele = new Modele($requete, array($idMembre, $idFilm,  $date, $prixFilm));
 			$stmt = $unModele->executer();
 		}
-		
+
 		$tabRes['msg'] = "Transaction de $total $ complété";
 	} finally {
 		unset($unModele);
 	}
 }
-//******************************************************
-//Controller
+
+//Controleur
 $action = $_POST['action'];
 switch ($action) {
 	case "enregistrerFilm":
