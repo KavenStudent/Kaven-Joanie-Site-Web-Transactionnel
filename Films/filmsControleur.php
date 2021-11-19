@@ -92,11 +92,10 @@ function modifierFilm()
 	$bandeAnnonce = $_POST['bandeAnnonce'];
 	$dossier = "imageFilm";
 	$tabGenres = $_POST['genres'];
-	$image = "default.png";
 
 	$dao = new FilmDaoImp();
-	$nouveauFilm = new Film($idFilm, $titre, $annee, $duree, $realisateur, $acteur, $description, $image, $bandeAnnonce, $prix, $tabGenres);
-	$id = $dao->enregistrerFilm($nouveauFilm, $dossier);
+	$nouveauFilm = new Film($idFilm, $titre, $annee, $duree, $realisateur, $acteur, $description, "", $bandeAnnonce, $prix, $tabGenres);
+	$id = $dao->modifierFilm($nouveauFilm, $dossier);
 
 	$tabRes['action'] = "modifierFilm";
 	$tabRes['msg'] = "Le film $id a été modifié";
