@@ -21,11 +21,13 @@ function enregistrerFilm()
 	$image = "default.png";
 	$tabGenres = $_POST['genres'];
 	$tabRes['action'] = "enregistrerFilm";
+	$dossier = "imageFilm";
 
 	$dao = new FilmDaoImp();
 	$nouveauFilm = new Film(0, $titre, $annee, $duree, $realisateur, $acteur, $description, $image, $bandeAnnonce, $prix, $tabGenres);
+	$id = $dao->enregistrerFilm($nouveauFilm, $dossier);
 
-	$tabRes['msg'] = $dao->enregistrerFilm($nouveauFilm);
+	$tabRes['msg'] = "Le film $id a été enregistré";
 	$tabRes['listeFilms'] = $dao->getAllFilms("tout", 1);
 	
 }
@@ -52,6 +54,10 @@ function tableFilms()
 	$par = $_POST['par'];
 	$valeurPar = strtolower(trim($_POST['valeurPar']));
 	$tabRes['action'] = "tableFilms";
+
+	if(strcasecmp($par, "tout") === 0){
+		$par = "id";
+	}
 
 	$dao = new FilmDaoImp();
 
@@ -85,58 +91,17 @@ function modifierFilm()
 	$prix = $_POST['prix'];
 	$bandeAnnonce = $_POST['bandeAnnonce'];
 	$dossier = "imageFilm";
+	$tabGenres = $_POST['genres'];
+	$image = "default.png";
 
-	try {
-		// cherche l'image du film
-		$requete = "SELECT image FROM films WHERE idFilm=?";
-		$unModele = new Modele($requete, array($idFilm));
-		$stmt = $unModele->executer();
-		$ligne = $stmt->fetch(PDO::FETCH_OBJ);
-		$ancienneImage = $ligne->image;
+	$dao = new FilmDaoImp();
+	$nouveauFilm = new Film($idFilm, $titre, $annee, $duree, $realisateur, $acteur, $description, $image, $bandeAnnonce, $prix, $tabGenres);
+	$id = $dao->enregistrerFilm($nouveauFilm, $dossier);
 
-		$image = $unModele->verserFichier($dossier, "image", $ancienneImage, $titre);
-
-		// update du film
-		$requete = "UPDATE films SET titre=?,annee=?,duree=?,realisateurs=?,acteurs=?,description=?,image=?,bandeAnnonce=?,prix=? WHERE idFilm=?";
-		$unModele = new Modele($requete, array($titre, $annee, $duree, $realisateur, $acteur, $description, $image, $bandeAnnonce, $prix, $idFilm));
-		$stmt = $unModele->executer();
-
-		// delete les genres du film
-		$requete = "DELETE FROM filmgenre WHERE idFilm=?";
-		$unModele = new Modele($requete, array($idFilm));
-		$stmt = $unModele->executer();
-
-		// ajout des genres du film
-		$tabGenres = $_POST['genres'];
-
-		foreach ($tabGenres as $genre) {
-			$requete = "SELECT idGenre FROM genre WHERE nomGenre LIKE ?";
-			$unModele = new Modele($requete, array($genre));
-			$stmt = $unModele->executer();
-
-			$result = $stmt->fetch();
-			$idGenre = $result['idGenre'];
-
-			$requete = "INSERT INTO filmgenre values(?,?)";
-			$unModele = new Modele($requete, array($idFilm, $idGenre));
-			$stmt = $unModele->executer();
-		}
-
-		$requete = "SELECT * FROM films ORDER BY idFilm";
-		$unModele = new Modele($requete, array());
-		$stmt = $unModele->executer();
-		$tabRes['listeFilms'] = array();
-
-		while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$tabRes['listeFilms'][] = $ligne;
-		}
-
-		$tabRes['action'] = "modifierFilm";
-		$tabRes['msg'] = "Le film $idFilm a été modifié";
-	} catch (Exception $e) {
-	} finally {
-		unset($unModele);
-	}
+	$tabRes['action'] = "modifierFilm";
+	$tabRes['msg'] = "Le film $id a été modifié";
+	$tabRes['listeFilms'] = $dao->getAllFilms("id", 1);
+	
 }
 
 function fiche($usage)
@@ -170,40 +135,10 @@ function enregistrerPanier()
 {
 	global $tabRes;
 	$panier = $_POST['panier'];
-	$date = date("Y-m-d");
-	$total = 0;
-	try {
+	$dao = new FilmDaoImp();
+	$total = $dao->enregistrerPanier($panier);
 
-
-		// parcours les item achetes et les insere dans location
-		foreach ($panier as $film) {
-			$total += (float)$film['prix'];
-
-			$idFilm = $film['idFilm'];
-			$dureeLocation = $film['dureeLocation'];
-			$idMembre = $film['idMembre'];
-
-			$requete = "INSERT INTO location values(?,?,?,?)";
-			$unModele = new Modele($requete, array($idFilm, $idMembre, $date, $dureeLocation));
-			$stmt = $unModele->executer();
-		}
-
-		//parcours les item achetes et les insere dans paiement
-		foreach ($panier as $film) {
-
-			$idMembre = $film['idMembre'];
-			$idFilm = $film['idFilm'];
-			$prixFilm = $film['prix'];
-
-			$requete = "INSERT INTO paiement values(0,?,?,?,?)";
-			$unModele = new Modele($requete, array($idMembre, $idFilm,  $date, $prixFilm));
-			$stmt = $unModele->executer();
-		}
-
-		$tabRes['msg'] = "Transaction de $total $ complété";
-	} finally {
-		unset($unModele);
-	}
+	$tabRes['msg'] = "Transaction de $total $ complété";
 }
 
 //Controleur

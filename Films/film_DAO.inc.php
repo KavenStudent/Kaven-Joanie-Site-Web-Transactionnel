@@ -140,11 +140,10 @@ interface FilmDao
 {
     public function getAllFilms(string $par, string $valeurPar): array;
     public function getFilm(int $idFilm): Film;
-    public function enregistrerFilm(Film $film): string;
-    // public function modifierFilm(Film $film); 
+    public function enregistrerFilm(Film $film, $dossier): int;
+    public function modifierFilm(Film $film, $dossier): int;
     public function deleteFilm(int $idFilm);
-    // public function enregistrerPanier(array $panier);
-
+    public function enregistrerPanier(array $panier): float;
 }
 
 class FilmDaoImp extends Modele implements FilmDao
@@ -159,8 +158,9 @@ class FilmDaoImp extends Modele implements FilmDao
                 $valeurPar = 1;
                 break;
             case "id":
-                $requete = "SELECT * FROM films WHERE 1=?";
+                $requete = "SELECT * FROM films WHERE 1=? ORDER BY idFilm";
                 $valeurPar = 1;
+                break;
             case "res":
                 $requete = "SELECT * FROM films WHERE LOWER(realisateurs) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
                 break;
@@ -222,10 +222,8 @@ class FilmDaoImp extends Modele implements FilmDao
         return $unFilm;
     }
 
-    public function enregistrerFilm(Film $film): string
+    public function enregistrerFilm(Film $film, $dossier): int
     {
-        $dossier = "imageFilm";
-
         try {
             // mettre image dans le dossier
             $image = $this->verserFichier($dossier, "image", $film->getImage(), $film->getTitre());
@@ -257,17 +255,66 @@ class FilmDaoImp extends Modele implements FilmDao
                 $stmt = $this->executer();
             }
         } catch (Exception $e) {
+            echo $e->getMessage();
         } finally {
-            unset($unModele);
+            unset($requete);
         }
 
-        return "Le film $id a été enregistré";
+        return $id;
     }
 
-    // public function modifierFilm(Film $film)
-    // {
+    public function modifierFilm(Film $film, $dossier): int
+    {
+        try {
+            // cherche l'image du film
+            $requete = "SELECT image FROM films WHERE idFilm=?";
+            $this->setRequete($requete);
+            $this->setParams(array($film->getId()));
+            $stmt = $this->executer();
+            $ligne = $stmt->fetch(PDO::FETCH_OBJ);
+            $ancienneImage = $ligne->image;
 
-    // }
+            $image = $this->verserFichier($dossier, "image", $ancienneImage, $film->getTitre());
+
+            // update du film
+            $requete = "UPDATE films SET titre=?,annee=?,duree=?,realisateurs=?,acteurs=?,description=?,image=?,bandeAnnonce=?,prix=? WHERE idFilm=?";
+            $this->setRequete($requete);
+            $this->setParams(array($film->getTitre(), $film->getAnnee(), $film->getDuree(), $film->getRealisateurs(), $film->getActeurs(), $film->getDescription(), $image, $film->getBandeAnnonce(), $film->getPrix(), $film->getId()));
+            $stmt = $this->executer();
+
+            // delete les genres du film
+            $requete = "DELETE FROM filmgenre WHERE idFilm=?";
+            $this->setRequete($requete);
+            $this->setParams(array($film->getId()));
+            $stmt = $this->executer();
+
+            // ajout des genres du film
+            $tabGenres = $film->getGenres();
+
+
+            foreach ($tabGenres as $genre) {
+
+                $requete = "SELECT idGenre FROM genre WHERE nomGenre LIKE ?";
+                $this->setRequete($requete);
+                $this->setParams(array($genre));
+                $stmt = $this->executer();
+
+                $result = $stmt->fetch(PDO::FETCH_OBJ);
+                $idGenre = $result->idGenre;
+
+                $requete = "INSERT INTO filmgenre values(?,?)";
+                $this->setRequete($requete);
+                $this->setParams(array($film->getId(), $idGenre));
+                $stmt = $this->executer();
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        } finally {
+            unset($requete);
+        }
+
+        return $film->getId();
+    }
 
     public function deleteFilm(int $idFilm)
     {
@@ -300,9 +347,43 @@ class FilmDaoImp extends Modele implements FilmDao
         }
     }
 
-    // public function enregistrerPanier(array $panier)
-    // {
+    public function enregistrerPanier(array $panier): float
+    {
+        $date = date("Y-m-d");
+        $total = 0;
+        try {
 
-    // }
+            // parcours les item achetes et les insere dans location
+            foreach ($panier as $film) {
+                $total += (float)$film['prix'];
 
+                $idFilm = $film['idFilm'];
+                $dureeLocation = $film['dureeLocation'];
+                $idMembre = $film['idMembre'];
+
+                $requete = "INSERT INTO location values(?,?,?,?)";
+                $this->setRequete($requete);
+                $this->setParams(array($idFilm, $idMembre, $date, $dureeLocation));
+                $stmt = $this->executer();
+    
+            }
+
+            //parcours les item achetes et les insere dans paiement
+            foreach ($panier as $film) {
+
+                $idMembre = $film['idMembre'];
+                $idFilm = $film['idFilm'];
+                $prixFilm = $film['prix'];
+
+                $requete = "INSERT INTO paiement values(0,?,?,?,?)";
+                $this->setRequete($requete);
+                $this->setParams(array($idMembre, $idFilm,  $date, $prixFilm));
+                $stmt = $this->executer();
+
+            }
+        } finally {
+            unset($requete);
+        }
+        return $total;
+    }
 }
