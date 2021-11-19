@@ -10,26 +10,27 @@ class Modele{
 			$this->requete=$requete;
 			$this->params=$params;
 	}
-	
-    public function setParams(array $params)
-    {
-        $this->params = $params;
-    }
 
-	public function setRequete(string $requete)
-    {
-        $this->requete = $requete;
-    }
+	public function getRequete():string
+	{
+		return $this->requete;
+	}
 
 	public function getParams():array
 	{
 		return $this->params;
 	}
 
-	public function getRequete():string
-	{
-		return $this->requete;
-	}
+	public function setRequete(string $requete)
+    {
+        $this->requete = $requete;
+    }
+
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+    }
+
 	function obtenirConnexion(){
 		$maConnexion = new Connexion("localhost", "root", "", "bdfilmsjoaniekaven");
 		$maConnexion->connecter();
@@ -69,18 +70,20 @@ class Modele{
 		$cheminDossier="../$dossier/";
 		$nomImage=sha1($chaine.time());
 		$image=$fichierDefaut;
+
 		if($_FILES[$inputNom]['tmp_name']!==""){
 			//Upload de la photo
 			$tmp = $_FILES[$inputNom]['tmp_name'];
 			$fichier= $_FILES[$inputNom]['name'];
 			$extension=strrchr($fichier,'.');
 			@move_uploaded_file($tmp,$cheminDossier.$nomImage.$extension);
-			// Enlever le fichier temporaire charg�
+			// Enlever le fichier temporaire charge
 			@unlink($tmp); //effacer le fichier temporaire
 			//Enlever l'ancienne pochette dans le cas de modifier
 			$this->enleverFichier($dossier,$image);
 			$image=$nomImage.$extension;
 		}
+		
 		return $image;
 	}
 
