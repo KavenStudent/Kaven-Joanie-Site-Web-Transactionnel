@@ -381,7 +381,9 @@ class FilmDaoImp extends Modele implements FilmDao
                 $stmt = $this->executer();
 
             }
-        } finally {
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }finally {
             unset($requete);
         }
         return $total;
