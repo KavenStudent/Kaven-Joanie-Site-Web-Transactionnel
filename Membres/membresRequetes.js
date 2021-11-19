@@ -67,7 +67,7 @@ function connexion(){
 			contentType : false,
 			processData : false,
 			success : function (reponse){
-				if(reponse.msg != null){
+				if(reponse.msg != ""){
 					initialiser(reponse.msg); // msg = erreur information connexion
 					$("#modal-Connexion").modal('hide');
 					document.getElementById('form-connexion').reset();

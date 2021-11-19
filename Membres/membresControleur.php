@@ -15,31 +15,18 @@ function enregistrerMembre()
     $dateNaissance = $_POST['dateNaissance'];
 
     try {
-        // regarde si le courriel n'est pas utilisé
-        $requete = "SELECT * FROM membres WHERE courriel=?";
-        $unModele = new Modele($requete, array($email));
-        $stmt = $unModele->executer();
-
+        $unMembre = new Membre(0,$prenom,$nom,$email,$sexe,$dateNaissance,$password,1);
+        $dao = new MembreDaoImp();
         // couriel deja utilisé existant
-        if ($stmt->fetch(PDO::FETCH_OBJ)) {
+        if ($dao->verifiCourriel($email)) {
 
             $tabRes['action'] = "enregistrerMembre";
             $tabRes['msg'] = "Le courriel $email est déjà utilisé. Choisissez un autre courriel.";
         } else {
 
-            // enregistre dans membre
-            $requete = "INSERT INTO membres VALUES(0,?,?,?,?,?)";
-            $unModele = new Modele($requete, array($prenom, $nom, $email, $sexe, $dateNaissance));
-            $stmt = $unModele->executer();
-
-            // enregistre dans connexion
-            $requete = "INSERT INTO connexion VALUES(0,?,?,'1','M')";
-            $unModele = new Modele($requete, array($email, $password));
-            $stmt = $unModele->executer();
-
-            $idMembre = $unModele->getLastId();
+            $dao->enregistrerMembre($unMembre);
+            $idMembre = $dao->getLastId();
             $_SESSION['membre'] = $idMembre;
-
             $tabRes['idMembre'] = $idMembre;
         }
     } catch (Exception $e) {
@@ -60,30 +47,18 @@ function modifierProfil()
     $dateNaissance = $_POST['dateNaissance'];
     
     try {
-        
-        // regarde si le courriel n'est pas utilisé
-        $requete = "SELECT * FROM membres WHERE courriel=? and idMembre NOT IN ($idMembre)";
-        $unModele = new Modele($requete, array($email));
-        $stmt = $unModele->executer();
+        $unMembre = new Membre($idMembre,$prenom,$nom,$email,$sexe,$dateNaissance,$password,1);
+        $dao = new MembreDaoImp();
         
         // couriel deja utilisé existant
-        if ($stmt->fetch(PDO::FETCH_OBJ)) {
+        if ($dao->verifiCourrielModifier($email,$idMembre)) {
 
             $tabRes['action'] = "modifierProfil";
             $tabRes['msg'] = "Le courriel $email est déjà utilisé. Choisissez un autre courriel.";
             
         } else {
 
-            // modifie dans membre
-            $requete = "UPDATE membres SET prenom=?,nom=?,courriel=?,sexe=?,dateDeNaissance=? WHERE idMembre=?";
-            $unModele = new Modele($requete, array($prenom, $nom, $email, $sexe, $dateNaissance,$idMembre));
-            $stmt = $unModele->executer();
-
-            // modifie dans connexion
-            $requete = "UPDATE connexion SET courriel=?,motDePasse=? WHERE idMembre=?";
-            $unModele = new Modele($requete, array($email,$password,$idMembre));
-            $stmt = $unModele->executer();
-
+            $dao->modifierMembre($unMembre);
             $tabRes['msg'] = "Profil à jour";
             
         }
@@ -100,34 +75,38 @@ function connexion()
     $password = $_POST['password'];
 
     try {
-        $requete = "SELECT * FROM connexion WHERE courriel=? AND motDePasse=?";
-        $unModele = new Modele($requete, array($email, $password));
-        $stmt = $unModele->executer();
+        // $requete = "SELECT * FROM connexion WHERE courriel=? AND motDePasse=?";
+        // $unModele = new Modele($requete, array($email, $password));
+        // $stmt = $unModele->executer();
         $tabRes['action'] = "connexion";
+        $dao = new MembreDaoImp();
+        $tabRes['msg'] = $dao->connecter($email,$password);
+        
 
         // si usager existant dans la bd
-        if ($usager = $stmt->fetch()) {
-            $id = $usager['idMembre'];
+        // if ($usager = $stmt->fetch()) {
+        //     $id = $usager['idMembre'];
          
-            if ($usager['statut']) { // regarde si le compte est valide
-                $tabRes['idMembre'] = $usager['idMembre'];
+        //     if ($usager['statut']) { // regarde si le compte est valide
+        //         $tabRes['idMembre'] = $usager['idMembre'];
 
-                if ($usager['role'] === 'M') { // regarde le role
-                    $_SESSION['membre'] = $id;
+        //         if ($usager['role'] === 'M') { // regarde le role
+        //             $_SESSION['membre'] = $id;
               
-                } else {
-                    $_SESSION['admin'] = $id;
+        //         } else {
+        //             $_SESSION['admin'] = $id;
                  
-                }
+        //         }
 
-            } else { // si le compte est inactif
+        //     } else { // si le compte est inactif
                
-                $tabRes['msg'] = "Compte inactif. Contacter un employé";
-            }
+        //         $tabRes['msg'] = "Compte inactif. Contacter un employé";
+        //     }
 
-        } else { // si erreur de connexion ou usager inexistant
-            $tabRes['msg'] = "Erreur de connexion. Vérifiez vos paramètes de connexion";
-        }
+        // } else { // si erreur de connexion ou usager inexistant
+        //     $tabRes['msg'] = "Erreur de connexion. Vérifiez vos paramètes de connexion";
+        // }
+
     } catch (Exception $e) {
     } finally {
         unset($unModele);
@@ -141,44 +120,17 @@ function deconnexion()
  
 }
 
-// function listerFilm()
-// {
-//     global $tabRes;
-
-//     try {
-
-//         $requete = "SELECT * FROM films ORDER BY `films`.`annee` DESC";
-//         $unModele = new Modele($requete, array());
-//         $stmt = $unModele->executer();
-//         $tabRes['listeFilms'] = array();
-
-//         while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-//             $tabRes['listeFilms'][] = $ligne;
-//         }
-//     } catch (Exception $e) {
-//     } finally {
-//         unset($unModele);
-//     }
-// }
-
 function tableMembres()
 {
     global $tabRes;
     try {
 
-        // $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
-        // $unModele = new Modele($requete, array());
-        // $stmt = $unModele->executer();
         $tabRes['action'] = "tableMembres";
-        //$tabRes['listeMembres'] = array();
         $dao = new MembreDaoImp();
         $tabRes['listeMembres'] = $dao->getAllMembre();
-        // while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-        //     $tabRes['listeMembres'][] = $ligne;
-        // }
     } catch (Exception $e) {
     } finally {
-        // unset($unModele);
+
     }
 }
 
