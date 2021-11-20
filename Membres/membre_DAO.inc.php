@@ -6,18 +6,18 @@ class Membre
     private $nom;
     private $courriel;
     private $sexe;
-    private $dateDeNaisssance;
+    private $dateDeNaissance;
     private $motDePasse;
     private $statue;
 
-    public function __construct(int $idMembre, string $prenom, string $nom, string $courriel, string $sexe, string $dateDeNaisssance, string $motDePasse, int $statue)
+    public function __construct(int $idMembre, string $prenom, string $nom, string $courriel, string $sexe, string $dateDeNaissance, string $motDePasse, int $statue)
     {
         $this->idMembre = $idMembre;
         $this->prenom = $prenom;
         $this->nom = $nom;
         $this->courriel = $courriel;
         $this->sexe = $sexe;
-        $this->dateDeNaisssance = $dateDeNaisssance;
+        $this->dateDeNaissance = $dateDeNaissance;
         $this->motDePasse = $motDePasse;
         $this->statue = $statue;
     }
@@ -65,11 +65,11 @@ class Membre
 
     public function getDateDeNaisssance(): string
     {
-        return $this->dateDeNaisssance;
+        return $this->dateDeNaissance;
     }
-    public function setDateDeNaisssance(string $dateDeNaisssance)
+    public function setDateDeNaisssance(string $dateDeNaissance)
     {
-        $this->dateDeNaisssance = $dateDeNaisssance;
+        $this->dateDeNaissance = $dateDeNaissance;
     }
     public function getMotdePasse(): string
     {
@@ -101,9 +101,6 @@ interface MembreDao
     public function afficherHistoriqueMembre(int $idMembre): array;
     public function afficherLocationMembre(int $idMembre): array;
     public function getMembre(int $idMembre):Membre;
-    // public function getMembre(int $idMembre):int; 
-    // public function updateMembre(Membre $Membre); 
-    // public function deleteMembre(int $idMembre); 
 }
 
 class MembreDaoImp extends Modele implements MembreDao
@@ -264,9 +261,4 @@ class MembreDaoImp extends Modele implements MembreDao
         return $unMembre;
     }
     
-    // public function getMembre(int $idMembre):int
-    // {
-
-    // }
-
 }
