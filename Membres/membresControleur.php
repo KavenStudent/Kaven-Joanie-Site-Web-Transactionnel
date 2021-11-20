@@ -148,20 +148,20 @@ function activerMembre()
             $tabRes['msg'] = "Impossible de modifier l'administrateur";       
     
         } else {
-
-            $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
-            $unModele = new Modele($requete, array($statut, $idMembre));
-            $stmt = $unModele->executer();
+            $dao = new MembreDaoImp();
+            $dao->changerStatueMembre($statut,$idMembre);
+            // $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
+            // $unModele = new Modele($requete, array($statut, $idMembre));
+            // $stmt = $unModele->executer();
             
-            $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
-            $unModele = new Modele($requete, array());
-            $stmt = $unModele->executer();
+            // $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
+            // $unModele = new Modele($requete, array());
+            // $stmt = $unModele->executer();
             $tabRes['action'] = "tableMembres";
-            $tabRes['listeMembres'] = array();
-       
-            while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-                $tabRes['listeMembres'][] = $ligne;
-            }
+            $tabRes['listeMembres'] = $dao->getAllMembre();
+            // while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+            //     $tabRes['listeMembres'][] = $ligne;
+            // }
     
             $tabRes['msg'] = "Le membre $idMembre a été réactivé";         
         }
@@ -186,20 +186,21 @@ function desactiverMembre()
         if ($idMembre == 1) { // si admin
             $tabRes['msg'] = "Impossible de modifier l'administrateur";         
         } else {
-
-            $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
-            $unModele = new Modele($requete, array($statut, $idMembre));
-            $stmt = $unModele->executer();
+            $dao = new MembreDaoImp();
+            $dao->changerStatueMembre($statut,$idMembre);
+            // $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
+            // $unModele = new Modele($requete, array($statut, $idMembre));
+            // $stmt = $unModele->executer();
     
-            $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
-            $unModele = new Modele($requete, array());
-            $stmt = $unModele->executer();
+            // $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
+            // $unModele = new Modele($requete, array());
+            // $stmt = $unModele->executer();
             $tabRes['action'] = "tableMembres";
-            $tabRes['listeMembres'] = array();
+            $tabRes['listeMembres'] = $dao->getAllMembre();
     
-            while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-                $tabRes['listeMembres'][] = $ligne;
-            }
+            // while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+            //     $tabRes['listeMembres'][] = $ligne;
+            // }
     
             $tabRes['msg'] = "Le membre $idMembre a été désactivé";         
         }
@@ -214,18 +215,18 @@ function desactiverMembre()
 function tableHistoriquesLocation(){
     global $tabRes;
     $idMembre = $_POST['idMembre'];
-    //$idMembre = 3;
     
     try {
-        $requete = "SELECT h.idMembre, f.idFilm, f.titre, h.dateAchat, f.image FROM historiquelocation h INNER JOIN films f ON h.idFilm = f.idFilm WHERE h.idMembre = ? ORDER by h.dateAchat DESC";
-        $unModele = new Modele($requete, array($idMembre));
-        $stmt = $unModele->executer();
+        // $requete = "SELECT h.idMembre, f.idFilm, f.titre, h.dateAchat, f.image FROM historiquelocation h INNER JOIN films f ON h.idFilm = f.idFilm WHERE h.idMembre = ? ORDER by h.dateAchat DESC";
+        // $unModele = new Modele($requete, array($idMembre));
+        // $stmt = $unModele->executer();
         $tabRes['action'] = "tableHistoriqueLocation";
-        $tabRes['listeLocations'] = array();
+        $dao = new MembreDaoImp();
+        $tabRes['listeLocations'] = $dao->afficherHistoriqueMembre($idMembre);
 
-        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $tabRes['listeLocations'][] = $ligne;
-        }
+        // while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+        //     $tabRes['listeLocations'][] = $ligne;
+        // }
     } catch (Exception $e) {
     } finally {
         unset($unModele);
@@ -249,36 +250,38 @@ function tableLocations(){
     $idMembre = $_POST['idMembre'];
     
     try {
-        $requete = "SELECT f.idFilm, f.titre ,l.dateAchat, l.dureeLocation, f.image FROM location l INNER JOIN films f ON l.idFilm = f.idFilm WHERE l.idMembre = ? ORDER by l.dateAchat DESC ";
-        $unModele = new Modele($requete, array($idMembre));
-        $stmt = $unModele->executer();
+        // $requete = "SELECT f.idFilm, f.titre ,l.dateAchat, l.dureeLocation, f.image FROM location l INNER JOIN films f ON l.idFilm = f.idFilm WHERE l.idMembre = ? ORDER by l.dateAchat DESC ";
+        // $unModele = new Modele($requete, array($idMembre));
+        // $stmt = $unModele->executer();
+        
         $tabRes['action'] = "tableLocation";
-        $tabRes['listeLocations'] = array();
+        $dao = new MembreDaoImp();
+        $tabRes['listeLocations'] = $dao->afficherLocationMembre($idMembre);
 
-        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
-            //Variable
-            $dateAujourd = date("Y-m-d");
-            $dateFin= date("Y-m-d", strtotime($ligne->dateAchat . "+ $ligne->dureeLocation days"));
-            //Ajouter colones
-            $ligne->dateFin = $dateFin;
-            $ligne->nbJourRestant = round(NbJours($dateAujourd, $dateFin));
-            //si la location n'est plus a louable il supprime de location et ajoute dans son historique
-            if ($ligne->nbJourRestant < 0) {
+        // while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+        //     //Variable
+        //     $dateAujourd = date("Y-m-d");
+        //     $dateFin= date("Y-m-d", strtotime($ligne->dateAchat . "+ $ligne->dureeLocation days"));
+        //     //Ajouter colones
+        //     $ligne->dateFin = $dateFin;
+        //     $ligne->nbJourRestant = round(NbJours($dateAujourd, $dateFin));
+        //     //si la location n'est plus a louable il supprime de location et ajoute dans son historique
+        //     if ($ligne->nbJourRestant < 0) {
 
-                $idFilm = $ligne->idFilm;
-                $requete1 = "DELETE FROM location WHERE idFilm=?";
-                $unModele = new Modele($requete1, array($idFilm));
-                $stmt = $unModele->executer();
+        //         $idFilm = $ligne->idFilm;
+        //         $requete1 = "DELETE FROM location WHERE idFilm=?";
+        //         $unModele = new Modele($requete1, array($idFilm));
+        //         $stmt = $unModele->executer();
     
-                $requete1 = "INSERT INTO historiquelocation VALUES(?,?,?)";
-                $unModele = new Modele($requete1, array($idFilm,$idMembre,$ligne->dateAchat));
-                $stmt = $unModele->executer();
-            }
-            else{
-                $tabRes['listeLocations'][] = $ligne;
-            }
+        //         $requete1 = "INSERT INTO historiquelocation VALUES(?,?,?)";
+        //         $unModele = new Modele($requete1, array($idFilm,$idMembre,$ligne->dateAchat));
+        //         $stmt = $unModele->executer();
+        //     }
+        //     else{
+        //         $tabRes['listeLocations'][] = $ligne;
+        //     }
             
-        }
+        //}
     } catch (Exception $e) {
     } finally {
         unset($unModele);
@@ -288,20 +291,21 @@ function profil(){
     global $tabRes;
     $idMembre = $_POST['idMembre']; 
     try {
-        $requete = $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.motDePasse, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE m.idMembre = ?";
-        $unModele = new Modele($requete, array($idMembre));
-        $stmt = $unModele->executer();
+        // $requete = $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.motDePasse, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE m.idMembre = ?";
+        // $unModele = new Modele($requete, array($idMembre));
+        // $stmt = $unModele->executer();
         
         $tabRes['action'] = "profil";
+        $dao = new MembreDaoImp();
+        $obj = $dao->getMembre($idMembre);
+        $tabRes['afficherProfil'] =(array) $obj;
         // $tabRes['afficherProfil'] = array();
 
-        if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
-            $tabRes['afficherProfil'] = $ligne;
-            // $tabRes['OK']=true;
-        }
-        // else{
-        //     $tabRes['OK']=false;
+        // if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
+        //     $tabRes['afficherProfil'] = $ligne;
+            
         // }
+        
     } catch (Exception $e) {
     } finally {
         unset($unModele);
