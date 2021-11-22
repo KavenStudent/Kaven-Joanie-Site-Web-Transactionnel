@@ -1,4 +1,5 @@
 <?php
+// Classe d'un Membre
 class Membre
 {
     private $idMembre;
@@ -89,17 +90,37 @@ class Membre
     }
 }
 
+//Interface MembreDao
 interface MembreDao
 {
+    //Retourne tout les membres
     public function getAllMembre(): array;
+
+    //Enregistre un membre
     public function enregistrerMembre(Membre $Membre);
+
+    //Verifie son courriel s'il existe deja dans la bd
     public function verifiCourriel(string $courriel): bool;
+
+    //Verifie son courriel s'il existe deja dans la bd excluant lui meme
     public function verifiCourrielModifier(string $courriel, int $idMembre): bool;
+
+    //Modifie un membre
     public function modifierMembre(Membre $Membre);
+
+    //Connecter un membre et renvoie dans sa page
     public function connecter(string $courriel, string $motDePasse): string;
+
+    //Change le statut d'un membre
     public function changerStatutMembre(int $statut, int $idMembre);
+
+    //Affiche l'historique de location d'un membre
     public function afficherHistoriqueMembre(int $idMembre): array;
+
+    //Affiche la location d'un membre
     public function afficherLocationMembre(int $idMembre): array;
+
+    //Affiche un membre
     public function getMembre(int $idMembre):Membre;
 }
 
@@ -179,23 +200,27 @@ class MembreDaoImp extends Modele implements MembreDao
         $stmt = $this->executer();
 
         if ($membre = $stmt->fetch(PDO::FETCH_OBJ)) {
+            // si le statut est actif
             if ($membre->statut == 1) {
 
+                //si c'est un membre
                 if ($membre->role === "M") {
                     $_SESSION['membre'] = $membre->idMembre;
                 } else {
                     $_SESSION['admin'] = $membre->idMembre;
                 }
-            } else {
+            } else {// si inactif
                 $msgErreur = "Compte inactif. Contacter un employé";
             }
-        } else {
+            
+        } else {//si le membre n'existe pas dans la bd
             $msgErreur = "Erreur de connexion. Vérifiez vos paramètes de connexion";
         }
         return $msgErreur;
     }
     public function changerStatutMembre(int $statut, int $idMembre)
     {
+        //modifie le statut
         $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
         $this->setRequete($requete);
         $this->setParams(array($statut, $idMembre));
@@ -234,10 +259,12 @@ class MembreDaoImp extends Modele implements MembreDao
             if ($ligne->nbJourRestant < 0) {
 
                 $idFilm = $ligne->idFilm;
+                //Enleve des locations en cours
                 $requete1 = "DELETE FROM location WHERE idFilm=?";
                 $unModele = new Modele($requete1, array($idFilm));
                 $stmt = $unModele->executer();
 
+                //Ajoute dans l'historiques de location
                 $requete1 = "INSERT INTO historiquelocation VALUES(?,?,?)";
                 $unModele = new Modele($requete1, array($idFilm, $idMembre, $ligne->dateAchat));
                 $stmt = $unModele->executer();
