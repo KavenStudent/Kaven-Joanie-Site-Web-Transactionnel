@@ -710,7 +710,7 @@ CREATE TABLE `paiement` (
   `idPaiement` int(11) NOT NULL,
   `idMembre` int(11) NOT NULL,
   `idFilm` int(11) NOT NULL,
-  `datePaiment` date NOT NULL,
+  `datePaiement` date NOT NULL,
   `prixFilm` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
