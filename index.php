@@ -403,12 +403,12 @@ if (isset($_SESSION['admin'])) {
 							</div>
 							<div class="myInput">
 								<label for="annee" class="form-label">Année</label>
-								<input type="number" class="form-control" id="annee" name="annee" min="0" required>
+								<input type="number" class="form-control" id="annee" name="annee" min="1000" required>
 							</div>
 
 							<div class="myInput">
 								<label for="duree" class="form-label">Durée</label>
-								<input type="number" class="form-control" id="duree" name="duree" min="0" required>
+								<input type="number" class="form-control" id="duree" name="duree" min="1" required>
 							</div>
 
 							<div class="myInput">
