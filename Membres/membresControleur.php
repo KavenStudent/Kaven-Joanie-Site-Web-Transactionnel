@@ -4,6 +4,7 @@ require_once("../includes/modele.inc.php");
 require_once("membre_DAO.inc.php");
 $tabRes = array();
 
+//Enregistre un membre
 function enregistrerMembre()
 {
     global $tabRes;
@@ -23,7 +24,7 @@ function enregistrerMembre()
             $tabRes['action'] = "enregistrerMembre";
             $tabRes['msg'] = "Le courriel $courriel est déjà utilisé. Choisissez un autre courriel.";
         } else {
-
+            //enregistre le membre
             $dao->enregistrerMembre($unMembre);
             $idMembre = $dao->getLastId();
             $_SESSION['membre'] = $idMembre;
@@ -34,7 +35,7 @@ function enregistrerMembre()
         unset($unModele);
     }
 }
-
+//modifie un membre
 function modifierProfil()
 {
     global $tabRes;
@@ -56,7 +57,7 @@ function modifierProfil()
             $tabRes['action'] = "modifierProfil";
             $tabRes['msg'] = "Le courriel $courriel est déjà utilisé. Choisissez un autre courriel.";
         } else {
-
+            //modifie le membre
             $dao->modifierMembre($unMembre);
             $tabRes['msg'] = "Profil à jour";
         }
@@ -65,7 +66,7 @@ function modifierProfil()
         unset($unModele);
     }
 }
-
+//Connexion d'un membre
 function connexion()
 {
     global $tabRes;
@@ -76,6 +77,7 @@ function connexion()
         
         $tabRes['action'] = "connexion";
         $dao = new MembreDaoImp();
+        //Connecter le membre
         $tabRes['msg'] = $dao->connecter($courriel, $password);
 
     } catch (Exception $e) {
@@ -83,13 +85,13 @@ function connexion()
         unset($unModele);
     }
 }
-
+//deconnexion d'un membre
 function deconnexion()
 {
     session_unset();
     session_destroy();
 }
-
+//table de tous les membre
 function tableMembres()
 {
     global $tabRes;
@@ -97,12 +99,13 @@ function tableMembres()
 
         $tabRes['action'] = "tableMembres";
         $dao = new MembreDaoImp();
+        //retourne tout les membre
         $tabRes['listeMembres'] = $dao->getAllMembre();
     } catch (Exception $e) {
     } finally {
     }
 }
-
+//Activation d'un membre
 function activerMembre()
 {
 
@@ -115,8 +118,9 @@ function activerMembre()
 
         if ($idMembre == 1) { // si admin
             $tabRes['msg'] = "Impossible de modifier l'administrateur";
-        } else {
+        } else { // si membre
             $dao = new MembreDaoImp();
+            //change son statut en actif
             $dao->changerStatutMembre($statut, $idMembre);
           
             $tabRes['action'] = "tableMembres";
@@ -131,6 +135,7 @@ function activerMembre()
     }
 }
 
+//Desactiver un membre
 function desactiverMembre()
 {
 
@@ -143,8 +148,9 @@ function desactiverMembre()
 
         if ($idMembre == 1) { // si admin
             $tabRes['msg'] = "Impossible de modifier l'administrateur";
-        } else {
+        } else { // si membre
             $dao = new MembreDaoImp();
+            //change son statut en desactiver
             $dao->changerStatutMembre($statut, $idMembre);
             
             $tabRes['action'] = "tableMembres";
@@ -158,7 +164,7 @@ function desactiverMembre()
         unset($unModele);
     }
 }
-
+//Table des historiques de locations
 function tableHistoriquesLocation()
 {
     global $tabRes;
@@ -175,7 +181,7 @@ function tableHistoriquesLocation()
         unset($unModele);
     }
 }
-
+//Permet de compter combien de jour entre le debut et la fin
 function NbJours($debut, $fin)
 {
 
@@ -187,7 +193,7 @@ function NbJours($debut, $fin)
 
     return (($diff / 86400));
 }
-
+//Table de locations
 function tableLocations()
 {
     global $tabRes;
@@ -204,6 +210,7 @@ function tableLocations()
         unset($unModele);
     }
 }
+//Affiche le profil d'un membre
 function profil()
 {
     global $tabRes;
@@ -213,7 +220,7 @@ function profil()
         $tabRes['action'] = "profil";
         $dao = new MembreDaoImp();
 
-        // convertissement du l'objet en array et en enleve le "Film" dans chaque attribut 
+        // convertissement du l'objet en array et en enleve le "Membre" dans chaque attribut 
         foreach ((array) $dao->getMembre($idMembre) as $k => $v) {
             $k = preg_match('/^\x00(?:.*?)\x00(.+)/', $k, $matches) ? $matches[1] : $k;
             $unMembre[$k] = $v;
