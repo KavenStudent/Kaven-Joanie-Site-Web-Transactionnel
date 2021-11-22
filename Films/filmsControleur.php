@@ -51,7 +51,6 @@ function tableFilms()
 	global $tabRes;
 	$par = $_POST['par'];
 	$valeurPar = strtolower(trim($_POST['valeurPar']));
-	$tabRes['action'] = "tableFilms";
 
 	if(strcasecmp($par, "tout") === 0){
 		$par = "id";
@@ -59,6 +58,7 @@ function tableFilms()
 
 	$dao = new FilmDaoImp();
 
+	$tabRes['action'] = "tableFilms";
 	$tabRes['listeFilms'] = $dao->getAllFilms($par, $valeurPar);
 }
 
@@ -67,12 +67,12 @@ function deleteFilm()
 	global $tabRes;
 	$dao = new FilmDaoImp();
 	$idFilm = $_POST['idFilm'];
-	$tabRes['action'] = "deleteFilm";
+
 
 	$dao->deleteFilm($idFilm);
 
+	$tabRes['action'] = "deleteFilm";
 	$tabRes['listeFilms'] = $dao->getAllFilms("tout", 1);
-
 	$tabRes['msg'] = "Le film $idFilm a été enlevé";
 }
 
@@ -89,7 +89,7 @@ function modifierFilm()
 	$prix = $_POST['prix'];
 	$bandeAnnonce = $_POST['bandeAnnonce'];
 	$dossier = "imageFilm";
-	$tabGenres = $_POST['genres'];
+	$tabGenres = $_POST['genres-modifier'];
 
 	$dao = new FilmDaoImp();
 	$nouveauFilm = new Film($idFilm, $titre, $annee, $duree, $realisateur, $acteur, $description, "", $bandeAnnonce, $prix, $tabGenres);
@@ -105,10 +105,9 @@ function fiche($usage)
 {
 	global $tabRes;
 	$idFilm = $_POST['idFilm'];
-	if (strcasecmp($usage, "panier") === 0) {
+	if (strcasecmp($usage, "panier") === 0) { // si on veut la fiche d'un film pour le panier on ajoute la durée
 		$tabRes['duree'] = (int)$_POST['jour'];
 	}
-	$tabRes['action'] = $usage;
 
 	$dao = new FilmDaoImp();
 
@@ -120,6 +119,7 @@ function fiche($usage)
 		$unFilm[$k] = $v;
 	}
 
+	$tabRes['action'] = $usage;
 	$tabRes['unFilm'] = $unFilm;
 
 	foreach ($unFilm['genres'] as $genre) {

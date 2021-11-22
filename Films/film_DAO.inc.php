@@ -152,6 +152,7 @@ class FilmDaoImp extends Modele implements FilmDao
     {
         $listeFilms = array();
 
+        // filtres de recherche
         switch (trim($par)) {
             case "tout":
                 $requete = "SELECT * FROM films WHERE 1=? ORDER BY annee DESC";
@@ -171,6 +172,7 @@ class FilmDaoImp extends Modele implements FilmDao
                 $requete = "SELECT * FROM films WHERE LOWER(titre) LIKE CONCAT('%', ?, '%') ORDER BY annee DESC";
                 break;
         }
+
         try {
 
             $this->setRequete($requete);

@@ -1,4 +1,3 @@
-var jsonUrl = './public/util/bdfilms.json';
 var visibleConfirmer = false;
 var visibleMotdePasse = false;
 var panier = null;
@@ -38,6 +37,7 @@ let valider = (id) => {
 
 }
 
+// valide le form pour changer le profil du membre
 let validerM = (id) => {
   let myForm = document.getElementById(id);
   let password = myForm.password.value;
@@ -64,7 +64,6 @@ let validerM = (id) => {
   if(valide){
     document.getElementById('msg-confirm-password-erreur2').style.display = 'none';
     document.getElementById('msg-password-erreur2').style.display = 'none';
-    //enregistrerMembre();
     modifierProfil();
   }
 
@@ -327,18 +326,7 @@ function paginationTable() {
   });
 }
 
-function NbJours($debut, $fin)
-{
-
-    $tDeb = explode("-", $debut);
-    $tFin = explode("-", $fin);
-
-    $diff = mktime(0, 0, 0, $tFin[1], $tFin[2], $tFin[0]) -
-        mktime(0, 0, 0, $tDeb[1], $tDeb[2], $tDeb[0]);
-
-    return (($diff / 86400));
-}
-
+// reinitialise les valeur des recherches
 function resetSearchBar(){
   $('#par').val('tout');
   $('#valeurPar').val('');

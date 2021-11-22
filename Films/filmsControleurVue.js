@@ -87,7 +87,8 @@ function remplirFormModifierFilm(reponse) {
 
 	if (genres != null) {
 		// parcours les checkbox des genres
-		$('input[type=checkbox]').each(function () {
+		// $('input[type=checkbox]').each(function () {
+		$('input[name*="genres-modifier"]').each(function () {
 
 			genres.forEach(ligne => {
 			

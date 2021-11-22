@@ -25,7 +25,6 @@ class Connexion{
 		   );
 		   $this->connexion = new PDO( $dns, $this->usager, $this->motPasse, $options );
 		 } catch ( Exception $e ) {
-			 //echo $e->getMessage();
 			 echo "Probleme de connexion au serveur de bd";
 			 exit();
 		 }
