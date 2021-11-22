@@ -1,10 +1,8 @@
 <?php
 session_start();
-require_once("../includes/modeles.inc.php");
+require_once("../includes/modele.inc.php");
 require_once("film_DAO.inc.php");
-
 $tabRes = array();
-
 
 function enregistrerFilm()
 {
