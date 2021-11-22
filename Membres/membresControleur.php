@@ -9,19 +9,19 @@ function enregistrerMembre()
     global $tabRes;
     $prenom = $_POST['prenom'];
     $nom = $_POST['nom'];
-    $email = $_POST['email'];
+    $courriel = $_POST['email'];
     $password = $_POST['password'];
     $sexe = $_POST['sexe'];
     $dateNaissance = $_POST['dateNaissance'];
 
     try {
-        $unMembre = new Membre(0, $prenom, $nom, $email, $sexe, $dateNaissance, $password, 1);
+        $unMembre = new Membre(0, $prenom, $nom, $courriel, $sexe, $dateNaissance, $password, 1);
         $dao = new MembreDaoImp();
         // couriel deja utilisé existant
-        if ($dao->verifiCourriel($email)) {
+        if ($dao->verifiCourriel($courriel)) {
 
             $tabRes['action'] = "enregistrerMembre";
-            $tabRes['msg'] = "Le courriel $email est déjà utilisé. Choisissez un autre courriel.";
+            $tabRes['msg'] = "Le courriel $courriel est déjà utilisé. Choisissez un autre courriel.";
         } else {
 
             $dao->enregistrerMembre($unMembre);
@@ -41,20 +41,20 @@ function modifierProfil()
     $idMembre = $_POST['idMembre'];
     $prenom = $_POST['prenom'];
     $nom = $_POST['nom'];
-    $email = $_POST['email'];
+    $courriel = $_POST['email'];
     $password = $_POST['password'];
     $sexe = $_POST['sexe'];
     $dateNaissance = $_POST['dateNaissance'];
 
     try {
-        $unMembre = new Membre($idMembre, $prenom, $nom, $email, $sexe, $dateNaissance, $password, 1);
+        $unMembre = new Membre($idMembre, $prenom, $nom, $courriel, $sexe, $dateNaissance, $password, 1);
         $dao = new MembreDaoImp();
 
         // couriel deja utilisé existant
-        if ($dao->verifiCourrielModifier($email, $idMembre)) {
+        if ($dao->verifiCourrielModifier($courriel, $idMembre)) {
 
             $tabRes['action'] = "modifierProfil";
-            $tabRes['msg'] = "Le courriel $email est déjà utilisé. Choisissez un autre courriel.";
+            $tabRes['msg'] = "Le courriel $courriel est déjà utilisé. Choisissez un autre courriel.";
         } else {
 
             $dao->modifierMembre($unMembre);
@@ -69,14 +69,14 @@ function modifierProfil()
 function connexion()
 {
     global $tabRes;
-    $email = $_POST['email'];
+    $courriel = $_POST['email'];
     $password = $_POST['password'];
 
     try {
         
         $tabRes['action'] = "connexion";
         $dao = new MembreDaoImp();
-        $tabRes['msg'] = $dao->connecter($email, $password);
+        $tabRes['msg'] = $dao->connecter($courriel, $password);
 
     } catch (Exception $e) {
     } finally {
@@ -117,7 +117,7 @@ function activerMembre()
             $tabRes['msg'] = "Impossible de modifier l'administrateur";
         } else {
             $dao = new MembreDaoImp();
-            $dao->changerStatueMembre($statut, $idMembre);
+            $dao->changerStatutMembre($statut, $idMembre);
           
             $tabRes['action'] = "tableMembres";
             $tabRes['listeMembres'] = $dao->getAllMembre();
@@ -145,7 +145,7 @@ function desactiverMembre()
             $tabRes['msg'] = "Impossible de modifier l'administrateur";
         } else {
             $dao = new MembreDaoImp();
-            $dao->changerStatueMembre($statut, $idMembre);
+            $dao->changerStatutMembre($statut, $idMembre);
             
             $tabRes['action'] = "tableMembres";
             $tabRes['listeMembres'] = $dao->getAllMembre();

@@ -8,9 +8,9 @@ class Membre
     private $sexe;
     private $dateDeNaissance;
     private $motDePasse;
-    private $statue;
+    private $statut;
 
-    public function __construct(int $idMembre, string $prenom, string $nom, string $courriel, string $sexe, string $dateDeNaissance, string $motDePasse, int $statue)
+    public function __construct(int $idMembre, string $prenom, string $nom, string $courriel, string $sexe, string $dateDeNaissance, string $motDePasse, int $statut)
     {
         $this->idMembre = $idMembre;
         $this->prenom = $prenom;
@@ -19,7 +19,7 @@ class Membre
         $this->sexe = $sexe;
         $this->dateDeNaissance = $dateDeNaissance;
         $this->motDePasse = $motDePasse;
-        $this->statue = $statue;
+        $this->statut = $statut;
     }
 
     public function getIdMembre(): int
@@ -81,11 +81,11 @@ class Membre
     }
     public function getStatue(): string
     {
-        return $this->statue;
+        return $this->statut;
     }
-    public function setStatue(string $statue)
+    public function setStatue(string $statut)
     {
-        $this->statue = $statue;
+        $this->statut = $statut;
     }
 }
 
@@ -97,7 +97,7 @@ interface MembreDao
     public function verifiCourrielModifier(string $courriel, int $idMembre): bool;
     public function modifierMembre(Membre $Membre);
     public function connecter(string $courriel, string $motDePasse): string;
-    public function changerStatueMembre(int $statue, int $idMembre);
+    public function changerStatutMembre(int $statut, int $idMembre);
     public function afficherHistoriqueMembre(int $idMembre): array;
     public function afficherLocationMembre(int $idMembre): array;
     public function getMembre(int $idMembre):Membre;
@@ -194,11 +194,11 @@ class MembreDaoImp extends Modele implements MembreDao
         }
         return $msgErreur;
     }
-    public function changerStatueMembre(int $statue, int $idMembre)
+    public function changerStatutMembre(int $statut, int $idMembre)
     {
         $requete = "UPDATE connexion SET statut=? WHERE idMembre=?";
         $this->setRequete($requete);
-        $this->setParams(array($statue, $idMembre));
+        $this->setParams(array($statut, $idMembre));
         $stmt = $this->executer();
     }
 
