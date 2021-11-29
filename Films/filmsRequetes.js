@@ -12,6 +12,7 @@ function listerFilms() { // fait
 		dataType: 'json',
 		success: function (reponse) {
 			filmsVue(reponse);
+			$('#rechercherFilm').attr("style", "display: flex !important");
 		},
 		fail: function (err) {}
 	});
@@ -31,6 +32,7 @@ function tableFilms() {
 		dataType: 'json',
 		success: function (reponse) {
 			filmsVue(reponse);
+			$('#rechercherFilm').attr("style", "display: flex !important");
 		},
 		fail: function (err) {}
 	});

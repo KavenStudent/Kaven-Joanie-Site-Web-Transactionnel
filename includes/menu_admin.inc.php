@@ -38,40 +38,42 @@ if (!isset($_SESSION['admin'])) {
                         <a class="nav-link" aria-current="page" href="javascript:deconnexion()">Déconnexion</a>
                     </li>
                 </ul>
-                <div class="d-flex  nav-droite">
-                    <select class="form-select" onChange="lister('categ',this.options[this.selectedIndex].value)">
-                        <option value="dr">Choisir ...</option>
-                        <option value="Comedy">Comédie</option>
-                        <option value="Fantasy">Fantaisie</option>
-                        <option value="Drama">Drama</option>
-                        <option value="Music">Music</option>
-                        <option value="Adventure">Adventure</option>
-                        <option value="History">Historique</option>
-                        <option value="Thriller">Suspense</option>
-                        <option value="Animation">Animation</option>
-                        <option value="Familly">Famille</option>
-                        <option value="Biography">Biographie</option>
-                        <option value="Action">Action</option>
-                        <option value="Film-Noir">Film-Noir</option>
-                        <option value="Romance">Romance</option>
-                        <option value="Sci-Fi">Sci-Fi</option>
-                        <option value="War">Guerre</option>
-                        <option value="Western">Western</option>
-                        <option value="Horror">Horreur</option>
-                        <option value="Musical">Musical</option>
-                        <option value="Sport">Sport</option>
-                    </select>
-                </div>
+                <div class="d-flex nav-droite" id="rechercherFilm">
+                    <div class="d-flex  nav-droite">
+                        <select class="form-select" onChange="lister('categ',this.options[this.selectedIndex].value)">
+                            <option value="dr">Choisir ...</option>
+                            <option value="Comedy">Comédie</option>
+                            <option value="Fantasy">Fantaisie</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Music">Music</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="History">Historique</option>
+                            <option value="Thriller">Suspense</option>
+                            <option value="Animation">Animation</option>
+                            <option value="Familly">Famille</option>
+                            <option value="Biography">Biographie</option>
+                            <option value="Action">Action</option>
+                            <option value="Film-Noir">Film-Noir</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Sci-Fi">Sci-Fi</option>
+                            <option value="War">Guerre</option>
+                            <option value="Western">Western</option>
+                            <option value="Horror">Horreur</option>
+                            <option value="Musical">Musical</option>
+                            <option value="Sport">Sport</option>
+                        </select>
+                    </div>
 
-                <div class="d-flex nav-droite">
-                    <input class="inputSearch" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
-                    <button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
-                </div>
+                    <div class="d-flex nav-droite">
+                        <input class="inputSearch" type="search" id="rctitre" placeholder="Titre" aria-label="Recherche">
+                        <button class="btn btn-outline-success" onClick="lister('titre',document.getElementById('rctitre').value)">Recherche</button>
+                    </div>
 
 
-                <div class="d-flex nav-droite">
-                    <input class="inputSearch" type="search" id="rcres" placeholder="Réalisateur" aria-label="Recherche">
-                    <button class="btn btn-outline-success" onClick="lister('res',document.getElementById('rcres').value)">Recherche</button>
+                    <div class="d-flex nav-droite">
+                        <input class="inputSearch" type="search" id="rcres" placeholder="Réalisateur" aria-label="Recherche">
+                        <button class="btn btn-outline-success" onClick="lister('res',document.getElementById('rcres').value)">Recherche</button>
+                    </div>
                 </div>
 
             </div>
