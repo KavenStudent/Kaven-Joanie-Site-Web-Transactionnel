@@ -1,4 +1,4 @@
-function listerFilms() { // fait
+function listerFilms() {
 	var form = new FormData(document.getElementById('formLister'));
 	document.getElementById('afficher').value = "card";
 	form.append('action', 'listerFilms');
@@ -36,7 +36,6 @@ function tableFilms() {
 	});
 }
 
-// faut refresh les changments
 function enregistrerFilm() {
 	var form = new FormData(document.getElementById('form-creer-film'));
 
@@ -49,8 +48,6 @@ function enregistrerFilm() {
 			url: 'Films/filmsControleur.php',
 			data: form,
 			dataType: 'json',
-			//async : false,
-			//cache : false,
 			contentType: false,
 			processData: false,
 			success: function (reponse) {
@@ -81,8 +78,6 @@ function modifierFilm() {
 			url: 'Films/filmsControleur.php',
 			data: form,
 			dataType: 'json',
-			//async : false,
-			//cache : false,
 			contentType: false,
 			processData: false,
 			success: function (reponse) {
@@ -101,7 +96,6 @@ function modifierFilm() {
 	}
 }
 
-// faut refresh les changments
 function deleteFilm() {
 	var form = new FormData(document.getElementById('form-delete-film'));
 

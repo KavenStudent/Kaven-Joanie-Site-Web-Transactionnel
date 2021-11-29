@@ -5,9 +5,7 @@ function enregistrerMembre(){
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
 		data : form,
-		dataType : 'json', //text pour le voir en format de string
-		// async : false,
-		//cache : false,
+		dataType : 'json',
 		contentType : false,
 		processData : false,
 		success : function (reponse){
@@ -61,9 +59,7 @@ function connexion(){
 			type : 'POST',
 			url : 'Membres/membresControleur.php',
 			data : form,
-			dataType : 'json', //text pour le voir en format de string
-			// async : false,
-			//cache : false,
+			dataType : 'json',
 			contentType : false,
 			processData : false,
 			success : function (reponse){
@@ -94,9 +90,7 @@ function deconnexion(){
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
 		data : form,
-		dataType : 'json', //text pour le voir en format de string
-		// async : false,
-		//cache : false,
+		dataType : 'json',
 		contentType : false,
 		processData : false,
 		success : function (reponse){
@@ -118,9 +112,7 @@ function tableMembres(){
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
 		data : form,
-		dataType : 'json', //text pour le voir en format de string
-		// async : false,
-		//cache : false,
+		dataType : 'json',
 		contentType : false,
 		processData : false,
 		success : function (reponse){
@@ -139,9 +131,7 @@ function activerMembre(){
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
 		data : form,
-		dataType : 'json', //text pour le voir en format de string
-		// async : false,
-		//cache : false,
+		dataType : 'json',
 		contentType : false,
 		processData : false,
 		success : function (reponse){
@@ -165,9 +155,7 @@ function desactiverMembre(){
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
 		data : form,
-		dataType : 'json', //text pour le voir en format de string
-		// async : false,
-		//cache : false,
+		dataType : 'json',
 		contentType : false,
 		processData : false,
 		success : function (reponse){
@@ -193,9 +181,7 @@ function tableHistoriques(){
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
 		data : form,
-		dataType : 'json', //text pour le voir en format de string
-		// async : false,
-		//cache : false,
+		dataType : 'json',
 		contentType : false,
 		processData : false,
 		success : function (reponse){
@@ -216,9 +202,7 @@ function tableLocation(){
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
 		data : form,
-		dataType : 'json', //text pour le voir en format de string
-		// async : false,
-		//cache : false,
+		dataType : 'json',
 		contentType : false,
 		processData : false,
 		success : function (reponse){
@@ -239,14 +223,12 @@ function profil(){
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
 		data : form,
-		dataType : 'json', //text pour le voir en format de string
-		// async : false,
-		//cache : false,
+		dataType : 'json',
 		contentType : false,
 		processData : false,
 		success : function (reponse){
 				membresVue(reponse);
-				// $('#modal-profil-Membre').show();
+			
 		},
 		fail : function (err){
 		 
