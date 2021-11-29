@@ -77,8 +77,8 @@ if (!isset($_SESSION['admin'])) {
                 </div>
 
                 <div class="d-flex nav-droite" id="rechercheMembre">
-                    <input class="inputSearch" type="search" id="membreNom" placeholder="Nom ou Prenom" aria-label="Recherche">
-                    <button class="btn btn-outline-success" onClick="listerMembre('membre',1)">Recherche</button>
+                    <input class="inputSearch" type="search" id="membreNom" placeholder="Nom" aria-label="Recherche">
+                    <button class="btn btn-outline-success" onClick="listerMembre('membre',document.getElementById('membreNom').value)">Recherche</button>
                 </div>
                 <!-- document.getElementById('membreNom').value -->
 

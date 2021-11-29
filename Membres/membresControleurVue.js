@@ -29,6 +29,9 @@ var membresVue = function (reponse) {
 
 
 function afficherTableMembres(json) {
+	$('#rechercherFilm').attr("style", "display: none !important");
+	$('#rechercheMembre').attr("style", "display: flex !important");
+
 	let contenu = `<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">
 	<thead> <tr> <th>ID</th> <th>Prénom</th> <th>Nom</th> <th>Courriel</th> <th>Sexe</th>
 	<th>Date de naissance</th> <th>Statut</th> <th>Rôle</th> <th>Actions</th> <th></th> </tr> </thead> <tbody>`;
@@ -50,10 +53,12 @@ function afficherTableMembres(json) {
 
 	$('#liste-film').html(contenu);
 	paginationTable();
+	resetSearchBar();
 }
 
 
 function afficherTableHistoriqueLocation(json) {
+	$('#rechercherFilm').attr("style", "display: none !important");
 	let contenu = `<h1>Historique Location</h1>
 	<table class="table">
 		<thead>
@@ -87,6 +92,7 @@ function afficherTableHistoriqueLocation(json) {
 
 
 function afficherTableLocation(json) {
+	$('#rechercherFilm').attr("style", "display: none !important");
 	let contenu = `<h1>Location en cours</h1>
 	<table class="table">
 		<thead>
