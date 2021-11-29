@@ -95,12 +95,13 @@ function deconnexion()
 function tableMembres()
 {
     global $tabRes;
+    $par = $_POST['par'];
+	$valeurPar = strtolower(trim($_POST['valeurPar']));
     try {
-
         $tabRes['action'] = "tableMembres";
         $dao = new MembreDaoImp();
         //retourne tout les membre
-        $tabRes['listeMembres'] = $dao->getAllMembre();
+        $tabRes['listeMembres'] = $dao->getAllMembreRecherche($par, $valeurPar);
     } catch (Exception $e) {
     } finally {
     }

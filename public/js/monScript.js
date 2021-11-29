@@ -268,6 +268,16 @@ function lister(par, valeurPar) {
     
 }
 
+// submit les criteres de recherche les membres
+function listerMembre(par, valeurPar) {
+  if (par !== "") {
+    document.getElementById('par').value = par;
+    document.getElementById('valeurPar').value = valeurPar;
+  }
+  tableMembres();
+    
+}
+
 // pagination des cards des films
 function pagination() {
   pageSize = 5;

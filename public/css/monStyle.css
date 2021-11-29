@@ -219,3 +219,7 @@ li {
 .validation {
     display: none;
 }
+
+#rechercheMembre{
+    display: none !important;
+}

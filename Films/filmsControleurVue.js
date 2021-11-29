@@ -1,5 +1,8 @@
 //vue films
 function listerCardsFilms(json) {
+	$('#rechercherFilm').attr("style", "display: flex !important");
+	$('#rechercheMembre').attr("style", "display: none !important");
+	
 	$i = 0;
 	let contenu = ` <div class="row">`;
 
@@ -39,6 +42,9 @@ function listerCardsFilms(json) {
 }
 
 function afficherTableFilms(json) {
+	$('#rechercherFilm').attr("style", "display: flex !important");
+	$('#rechercheMembre').attr("style", "display: none !important");
+
 	let contenu = `<div class="container-xl">	<div class="table-responsive"> <div class="table-wrapper">	<table class="table table-striped table-hover">
 	<thead> <tr> <th>ID</th> <th>Titre</th> <th>Année</th> <th>Durée</th> <th>Réalisateur</th>
 	<th>Acteurs</th> <th>Prix</th> <th>Image</th> <th>Actions</th> <th></th> </tr> </thead> <tbody>`;

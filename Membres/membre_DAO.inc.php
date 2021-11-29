@@ -96,6 +96,9 @@ interface MembreDao
     //Retourne tout les membres
     public function getAllMembre(): array;
 
+    //Retourne tout les membres avec de recherhce
+    public function getAllMembreRecherche(string $par, string $valeurPar): array;
+
     //Enregistre un membre
     public function enregistrerMembre(Membre $Membre);
 
@@ -121,7 +124,7 @@ interface MembreDao
     public function afficherLocationMembre(int $idMembre): array;
 
     //Affiche un membre
-    public function getMembre(int $idMembre):Membre;
+    public function getMembre(int $idMembre): Membre;
 }
 
 class MembreDaoImp extends Modele implements MembreDao
@@ -134,6 +137,29 @@ class MembreDaoImp extends Modele implements MembreDao
         $this->setRequete($requete);
         $this->setParams(array());
         $stmt = $this->executer();
+        while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
+            $tab[] = $ligne;
+        }
+        return $tab;
+    }
+    public function getAllMembreRecherche(string $par, string $valeurPar): array
+    {
+        $tab = array();
+
+        switch (trim($par)) {
+            case "membre":
+                $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE LOWER(nom) LIKE CONCAT('%', ?, '%') OR LOWER(prenom) LIKE CONCAT('%', ?, '%')";
+                break;
+            case "tout":
+                $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE 1=? OR 1=?";
+                $valeurPar = 1;
+                break;
+        }
+        // $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre";
+        $this->setRequete($requete);
+        $this->setParams(array(trim($valeurPar),trim($valeurPar)));
+        $stmt = $this->executer();
+
         while ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
             $tab[] = $ligne;
         }
@@ -209,11 +235,10 @@ class MembreDaoImp extends Modele implements MembreDao
                 } else {
                     $_SESSION['admin'] = $membre->idMembre;
                 }
-            } else {// si inactif
+            } else { // si inactif
                 $msgErreur = "Compte inactif. Contacter un employé";
             }
-            
-        } else {//si le membre n'existe pas dans la bd
+        } else { //si le membre n'existe pas dans la bd
             $msgErreur = "Erreur de connexion. Vérifiez vos paramètes de connexion";
         }
         return $msgErreur;
@@ -239,7 +264,7 @@ class MembreDaoImp extends Modele implements MembreDao
         }
         return $tab;
     }
-    
+
     public function afficherLocationMembre(int $idMembre): array
     {
         $tab = array();
@@ -268,24 +293,24 @@ class MembreDaoImp extends Modele implements MembreDao
                 $requete1 = "INSERT INTO historiquelocation VALUES(?,?,?)";
                 $unModele = new Modele($requete1, array($idFilm, $idMembre, $ligne->dateAchat));
                 $stmt = $unModele->executer();
-            }else{
+            } else {
                 $tab[] = $ligne;
             }
         }
         return $tab;
     }
-    public function getMembre(int $idMembre):Membre{
-        
+    public function getMembre(int $idMembre): Membre
+    {
+
         $requete = $requete = "SELECT m.idMembre, m.prenom, m.nom, m.courriel, m.sexe, m.dateDeNaissance, c.motDePasse, c.statut, c.role FROM membres m INNER JOIN connexion c ON m.idMembre = c.idMembre WHERE m.idMembre = ?";
         $this->setRequete($requete);
         $this->setParams(array($idMembre));
         $stmt = $this->executer();
-    
-        if($ligne=$stmt->fetch(PDO::FETCH_OBJ)){
+
+        if ($ligne = $stmt->fetch(PDO::FETCH_OBJ)) {
             $unMembre = new Membre($ligne->idMembre, $ligne->prenom, $ligne->nom, $ligne->courriel, $ligne->sexe, $ligne->dateDeNaissance, $ligne->motDePasse, $ligne->statut);
         }
 
         return $unMembre;
     }
-    
 }

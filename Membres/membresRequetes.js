@@ -111,7 +111,7 @@ function deconnexion(){
 }
 
 function tableMembres(){
-	var form = new FormData();
+	var form = new FormData(document.getElementById('formLister'));
 	form.append('action', 'tableMembres');
 
 	$.ajax({
@@ -125,7 +125,6 @@ function tableMembres(){
 		processData : false,
 		success : function (reponse){
 				membresVue(reponse);
-				$('#rechercherFilm').attr("style", "display: none !important");
 		},
 		fail : function (err){
 		 
@@ -200,8 +199,7 @@ function tableHistoriques(){
 		contentType : false,
 		processData : false,
 		success : function (reponse){
-				membresVue(reponse);
-				$('#rechercherFilm').attr("style", "display: none !important");
+				membresVue(reponse);	
 		},
 		fail : function (err){
 		 
@@ -225,7 +223,6 @@ function tableLocation(){
 		processData : false,
 		success : function (reponse){
 				membresVue(reponse);
-				$('#rechercherFilm').attr("style", "display: none !important");
 		},
 		fail : function (err){
 		 
