@@ -125,6 +125,7 @@ function tableMembres(){
 		processData : false,
 		success : function (reponse){
 				membresVue(reponse);
+				$('#rechercherFilm').attr("style", "display: none !important");
 		},
 		fail : function (err){
 		 
@@ -187,7 +188,8 @@ function tableHistoriques(){
 	var form = new FormData();
 	form.append('action', 'tableHistoriqueLocation');
 	form.append('idMembre', document.getElementById('myMemberid').value);
-
+	
+	
 	$.ajax({
 		type : 'POST',
 		url : 'Membres/membresControleur.php',
@@ -199,6 +201,7 @@ function tableHistoriques(){
 		processData : false,
 		success : function (reponse){
 				membresVue(reponse);
+				$('#rechercherFilm').attr("style", "display: none !important");
 		},
 		fail : function (err){
 		 
@@ -222,6 +225,7 @@ function tableLocation(){
 		processData : false,
 		success : function (reponse){
 				membresVue(reponse);
+				$('#rechercherFilm').attr("style", "display: none !important");
 		},
 		fail : function (err){
 		 
