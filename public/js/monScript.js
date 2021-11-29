@@ -326,7 +326,7 @@ function paginationTable() {
   });
 }
 
-// reinitialise les valeur des recherches
+// reinitialise les valeur des recherches films
 function resetSearchBar(){
   $('#par').val('tout');
   $('#valeurPar').val('');
