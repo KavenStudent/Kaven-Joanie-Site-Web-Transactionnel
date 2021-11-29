@@ -1,4 +1,3 @@
-//vue films
 function listerCardsFilms(json) {
 	$('#rechercherFilm').attr("style", "display: flex !important");
 	$('#rechercheMembre').attr("style", "display: none !important");

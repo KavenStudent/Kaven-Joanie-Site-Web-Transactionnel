@@ -253,7 +253,7 @@ function viderPanier() {
   $('#paypal-button-container').empty();
 }
 
-// submit les criteres de recherche
+// submit les criteres de recherche pour les films
 function lister(par, valeurPar) {
   if (par !== "") {
     document.getElementById('par').value = par;
@@ -268,7 +268,7 @@ function lister(par, valeurPar) {
     
 }
 
-// submit les criteres de recherche les membres
+// submit les criteres de recherche pour les membres
 function listerMembre(par, valeurPar) {
   if (par !== "") {
     document.getElementById('par').value = par;
