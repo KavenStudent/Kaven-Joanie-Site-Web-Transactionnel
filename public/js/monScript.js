@@ -349,6 +349,7 @@ $(document).ready(function () {
   $(".toast-container").css("display", "none");
   listerFilms();
   afficherPanier();
+  
   // empeche d'utiliser la touche enter dans les forms
   $(window).keydown(function(event){
     if(event.keyCode == 13) {
